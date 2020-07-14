@@ -7,7 +7,7 @@
 * <a href="#BFS">[代码框架] BFS</a>
 * <a href="#mergeSort">mergeSort</a>
 * <a href="#quickSort">quickSort</a>
-* 
+* <a href="#maxDepthBinaryTree">maxDepthBinaryTree</a>
 
 <div id="strStr" onclick="window.location.hash">
 
@@ -361,19 +361,19 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
 - python版本
     ```python
     def merge(left, right):
-    l = 0
-    r = 0
-    m = []
-    while l < len(left) and r < len(right):
-        if left[l] <= right[r]:
-            m.append(left[l])
-            l += 1
-        else:
-            m.append(right[r])
-            r += 1
-    remains = right[r:] if l == len(left) else left[l:]
-    m.extend(remains)
-    return m
+        l = 0
+        r = 0
+        m = []
+        while l < len(left) and r < len(right):
+            if left[l] <= right[r]:
+                m.append(left[l])
+                l += 1
+            else:
+                m.append(right[r])
+                r += 1
+        remains = right[r:] if l == len(left) else left[l:]
+        m.extend(remains)
+        return m
 
     def merge_sort(arr):
         if len(arr) <= 1:
@@ -478,20 +478,20 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
         if len(b) < 2:
             return arr
         # 选取基准，随便选哪个都可以，选中间的便于理解
-        mid = arr[len(b) // 2]
+        pivot = arr[len(b) // 2]
         # 定义基准值左右两个数列
         left, right = [], []
         # 从原始数组中移除基准值
-        b.remove(mid)
+        b.remove(pivot)
         for item in b:
             # 大于基准值放右边
-            if item >= mid:
+            if item >= pivot:
                 right.append(item)
             else:
                 # 小于基准值放左边
                 left.append(item)
         # 使用迭代进行比较
-        return quick_sort(left) + [mid] + quick_sort(right)
+        return quick_sort(left) + [pivot] + quick_sort(right)
     ```
 - cpp版本
     ```cpp
@@ -532,4 +532,46 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
         }
     }
     ```
+---
+<div id="maxDepthBinaryTree" onclick="window.location.hash">
+
+#### maxDepthBinaryTree
+linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/ "二叉树的最大深度")
+- struct BinaryTree
+    ```cpp
+    // Definition for a binary tree node.
+    struct TreeNode 
+    {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+    };
+    ```
+- **递归方式**
+  - 三个条件：递归定义，递归出口，递归拆解
+    ```cpp
+    class Solution {
+    public:
+        int maxDepth(TreeNode* root)
+        {
+            // recursive function
+            if(root == nullptr)
+            {
+                return 0;
+            }
+            auto lhs = maxDepth(root->left);
+            auto rhs = maxDepth(root->right);
+            return lhs > rhs ? lhs+1 : rhs+1;
+        }
+    };
+    ```
+- **广度优先**：使用队列
+```cpp
+
+```
+- 深度优先：用栈的循环版
+```cpp
+
+```
 ---
