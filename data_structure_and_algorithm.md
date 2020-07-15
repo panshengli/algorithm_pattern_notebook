@@ -567,9 +567,33 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
     };
     ```
 - **广度优先**：使用队列
-```cpp
-
-```
+    ```cpp
+    class Solution {
+    public:
+        int maxDepth(TreeNode* root)
+        {
+            if(root == nullptr) return 0;
+            std::deque<TreeNode*> q;
+            q.push_back(root);
+            int deep = 0;
+            while(!q.empty())
+            {
+                deep ++;
+                int num = q.size();
+                // 注意必须用num赋值，因为后面会对q.size()进行操作
+                // 不可用 for(int i = 0; i<q.size();i++)
+                for(int i = 0; i < num; i++)
+                {
+                    TreeNode* p = q.front();
+                    q.pop_front();
+                    if(p->left) q.push_back(p->left);
+                    if(p->right) q.push_back(p->right);
+                }
+            }
+            return deep;
+        }
+    };
+    ```
 - 深度优先：用栈的循环版
 ```cpp
 
