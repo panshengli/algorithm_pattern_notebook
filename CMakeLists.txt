@@ -6,4 +6,3 @@ INCLUDE_DIRECTORIES(
     ${OpenCV_INCLUEDE_DIRS}
 )
 ADD_EXECUTABLE(rabin_karp src/rabin_karp.cpp)
-

@@ -9,6 +9,12 @@
 * <a href="#quickSort">quickSort</a>
 * <a href="#maxDepthBinaryTree">maxDepthBinaryTree</a>
 
+
+[//]: # (Image References)
+[image1]: .readme/dfs.png "dfs"
+
+
+
 <div id="strStr" onclick="window.location.hash">
 
 #### strStr
@@ -560,9 +566,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
             {
                 return 0;
             }
-            auto lhs = maxDepth(root->left);
-            auto rhs = maxDepth(root->right);
-            return lhs > rhs ? lhs+1 : rhs+1;
+            return 1+std::max(maxDepth(root->left),maxDepth(root->right));
         }
     };
     ```
@@ -595,8 +599,42 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
     };
     ```
 - 深度优先：用栈的循环版
-```cpp
-
-```
-
+![alt text][image1]
+    ```cpp
+    class Solution {
+    public:
+        int maxDepth(TreeNode* root)
+        {
+            // DFS 
+            if (root == nullptr) {return 0;}
+            int curHeight = 0;
+            int maxHeight = 0;
+            findMaxHeight(root, curHeight,maxHeight); 
+            return maxHeight;
+        }
+        
+        void findMaxHeight(TreeNode* _root, int& _curHeight, int& _maxHeight)
+        {
+            _curHeight += 1;
+            if (_root -> left != nullptr || _root -> right != nullptr)
+            {
+                if(_root -> left != nullptr)
+                {
+                    findMaxHeight(_root -> left, _curHeight, _maxHeight);
+                    _curHeight -= 1;
+                }
+                // 注意：不要使用else if
+                if(_root -> right != nullptr)
+                {
+                    findMaxHeight(_root -> right, _curHeight, _maxHeight);
+                    _curHeight -= 1;
+                }
+            }
+            else
+            {
+                _maxHeight = std::max(_curHeight,_maxHeight);
+            }
+        }
+    };
+    ```
 ---
