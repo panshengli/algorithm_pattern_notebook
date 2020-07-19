@@ -4,6 +4,10 @@
 * <a href="#binaryTree">[代码框架] binaryTree</a>
 * <a href="#BFS">[代码框架] BFS</a>
 * <a href="#maxDepthBinaryTree">maxDepthBinaryTree</a>
+* <a href="#balancedTree">balancedTree</a>
+
+
+
 
 
 [//]: # (Image References)
@@ -284,3 +288,33 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
     };
     ```
 ---
+
+<div id="balancedTree" onclick="window.location.hash">
+
+#### balancedTree
+linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高度平衡的二叉树")
+- 一棵高度平衡二叉树定义为：  一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。
+    ```cpp
+    class Solution {
+    public:
+        bool isBalanced(TreeNode* root) 
+        {
+            if (root == nullptr)
+            {
+                return true;
+            }
+            return std::abs(heightTree(root->left)-heightTree(root->right))<2
+                && isBalanced(root->left) && isBalanced(root->right);
+        }
+        
+    private:
+        int heightTree(TreeNode* root)
+        {
+            if (root == nullptr)
+            {
+                return 0;
+            }
+            return 1+std::max(heightTree(root->left),heightTree(root->right));ss
+        }
+    };
+    ```
