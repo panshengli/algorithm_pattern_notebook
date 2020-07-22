@@ -6,7 +6,7 @@
 * <a href="#maxDepthBinaryTree">maxDepthBinaryTree</a>
 * <a href="#balancedTree">balancedTree</a>
 * <a href="#binary-tree-maximum-path-sum">binary-tree-maximum-path-sum</a>
-
+* <a href="#lowest-common-ancestor-of-a-binary-tree">lowest-common-ancestor-of-a-binary-tree</a>
 
 
 
@@ -326,6 +326,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
 
 #### binary-tree-maximum-path-sum
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/ "二叉树中的最大路径和")
+- 给定一个非空二叉树，返回其最大路径和
 - 理解如何递归很关键
     ```cpp
     class Solution {
@@ -357,3 +358,50 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
     };
     ```
 ---
+
+<div id="lowest-common-ancestor-of-a-binary-tree" onclick="window.location.hash">
+
+#### lowest-common-ancestor-of-a-binary-tree
+linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ "二叉树的最近公共祖先")
+- 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
+- **ADT**
+    left == null && right == null return null
+    left == null && right ！= null return right
+    right == null && left ！= null return left
+    right ！= null && left ！=null return root
+
+    ```cpp
+    class Solution {
+    public:
+        TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
+        {
+            if(root == NULL)
+            {
+                return root;
+            }
+            if(root->val == p->val || root->val == q->val)
+            {
+                return root;
+            }
+            TreeNode* left_son = lowestCommonAncestor(root->left,p,q);
+            TreeNode* right_son = lowestCommonAncestor(root->right,p,q);
+            if(left_son == NULL && right_son == NULL)
+            {
+                return NULL;
+            }
+            if(left_son != NULL && right_son == NULL)
+            {
+                return left_son;
+            }
+            if(left_son == NULL && right_son != NULL)
+            {
+                return right_son;
+            }
+            if(left_son != NULL && right_son != NULL)
+            {
+                return root;
+            }
+            return root;
+        }
+    };
+    ```
