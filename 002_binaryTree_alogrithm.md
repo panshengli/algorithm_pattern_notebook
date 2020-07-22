@@ -5,6 +5,7 @@
 * <a href="#BFS">[代码框架] BFS</a>
 * <a href="#maxDepthBinaryTree">maxDepthBinaryTree</a>
 * <a href="#balancedTree">balancedTree</a>
+* <a href="#binary-tree-maximum-path-sum">binary-tree-maximum-path-sum</a>
 
 
 
@@ -318,3 +319,41 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
         }
     };
     ```
+
+---
+
+<div id="binary-tree-maximum-path-sum" onclick="window.location.hash">
+
+#### binary-tree-maximum-path-sum
+linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/ "二叉树中的最大路径和")
+- 理解如何递归很关键
+    ```cpp
+    class Solution {
+    public:
+        int maxPathSum(TreeNode* root) 
+        {
+            if(root == nullptr)
+            {
+                return 0;
+            }
+            dfs(root);
+            return maxValue_;
+        }
+        int dfs(TreeNode* root)
+        {
+            if(root == nullptr)
+            {
+                return 0;
+            }
+            int leftMax = std::max(0,dfs(root->left));
+            int rightMax = std::max(0,dfs(root->right));
+            maxValue_ = std::max(maxValue_,root->val+leftMax+rightMax);
+            return root->val + std::max(leftMax,rightMax);
+        }
+
+    private:
+        const int kMinInt = INT_MIN;
+        int maxValue_ = kMinInt;
+    };
+    ```
+---
