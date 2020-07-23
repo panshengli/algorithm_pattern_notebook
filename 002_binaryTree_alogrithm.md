@@ -1,12 +1,15 @@
 ## BinaryTree Algorithm
 
 ## 📑 index
-* <a href="#binaryTree">[代码框架] binaryTree</a>
-* <a href="#BFS">[代码框架] BFS</a>
-* <a href="#maxDepthBinaryTree">maxDepthBinaryTree</a>
-* <a href="#balancedTree">balancedTree</a>
-* <a href="#binary-tree-maximum-path-sum">binary-tree-maximum-path-sum</a>
-* <a href="#lowest-common-ancestor-of-a-binary-tree">lowest-common-ancestor-of-a-binary-tree</a>
+* <a href="#binaryTree">1. [代码框架] binaryTree</a>
+* <a href="#BFS">2. [代码框架] BFS</a>
+* <a href="#maxDepthBinaryTree">3. maxDepthBinaryTree</a>
+* <a href="#balancedTree">4. balancedTree</a>
+* <a href="#binary-tree-maximum-path-sum">5. binary-tree-maximum-path-sum</a>
+* <a href="#lowest-common-ancestor-of-a-binary-tree">6. lowest-common-ancestor-of-a-binary-tree</a>
+* <a href="#binary-tree-level-order-traversal">7. binary-tree-level-order-traversal[与3类似]</a>
+* <a href="#binary-tree-level-order-traversal-ii">8. binary-tree-level-order-traversal-ii[与7类似]</a>
+* <a href="#binary-tree-zigzag-level-order-traversal">9. binary-tree-zigzag-level-order-traversal[与8类似]</a>
 
 
 
@@ -17,7 +20,7 @@
 
 <div id="binaryTree" onclick="window.location.hash">
 
-#### binaryTree
+#### 1. binaryTree
 1. 三种递归遍历 
     Refer by [更简单的非递归遍历二叉树的方法](https://www.jianshu.com/p/49c8cfd07410)
     ```cpp
@@ -153,7 +156,7 @@
 
 <div id="BFS" onclick="window.location.hash">
 
-#### BFS
+#### 2. BFS
 - 队列 q 就不说了，BFS 的核心数据结构；
 - cur.adj() 泛指 cur 相邻的节点，比如说二维数组中，cur 上下左右四面的位置就是相邻节点；
 - visited 的主要作用是防止走回头路，大部分时候都是必须的，但是像一般的二叉树结构，没有子节点到父节点的指针，不会走回头路就不需要 visited。
@@ -192,7 +195,7 @@
 
 <div id="maxDepthBinaryTree" onclick="window.location.hash">
 
-#### maxDepthBinaryTree
+#### 3. maxDepthBinaryTree
 linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/ "二叉树的最大深度")
 - struct BinaryTree
     ```cpp
@@ -292,7 +295,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
 
 <div id="balancedTree" onclick="window.location.hash">
 
-#### balancedTree
+#### 4. balancedTree
 linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高度平衡的二叉树")
 - 一棵高度平衡二叉树定义为：  一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。
     ```cpp
@@ -324,7 +327,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
 
 <div id="binary-tree-maximum-path-sum" onclick="window.location.hash">
 
-#### binary-tree-maximum-path-sum
+#### 5. binary-tree-maximum-path-sum
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/ "二叉树中的最大路径和")
 - 给定一个非空二叉树，返回其最大路径和
 - 理解如何递归很关键
@@ -361,7 +364,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
 
 <div id="lowest-common-ancestor-of-a-binary-tree" onclick="window.location.hash">
 
-#### lowest-common-ancestor-of-a-binary-tree
+#### 6. lowest-common-ancestor-of-a-binary-tree
 linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ "二叉树的最近公共祖先")
 - 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
 - **ADT**
@@ -405,3 +408,121 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
         }
     };
     ```
+---
+
+<div id="binary-tree-level-order-traversal" onclick="window.location.hash">
+
+#### 7. binary-tree-level-order-traversal
+- 给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 
+- 即逐层地，从左到右访问所有节点 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/submissions/ "二叉树的层序遍历")
+- **注意c++中queue()[push,pop]和deque()[push_back,pop_front]的使用**
+- DFS 与 BFS区别
+  1. DFS遍历的代码比BFS简洁太多了！
+  2. 因为递归的方式隐含地使用了系统的栈，我们不需要自己维护一个数据结构。
+  3. 如果只是简单地将二叉树遍历一遍，那么DFS显然是更方便的选择
+    ```java
+    void dfs(TreeNode root)
+    {
+        if (root == null)
+        {
+            return;
+        }
+        dfs(root.left);
+        dfs(root.right);
+    }
+    ```
+    ```java
+    void bfs(TreeNode root)
+    {
+        // 注意c++为deque
+        Queue<TreeNode> queue = new ArrayDeque<>();
+        queue.add(root);
+        while (!queue.isEmpty())
+        {
+            TreeNode node = queue.poll();
+            // Java 的 pop 写作 poll()
+            if (node.left != null)
+            {
+                queue.add(node.left);
+            }
+            if (node.right != null)
+            {
+                queue.add(node.right);
+            }
+        }
+    }
+    ```
+- BFS cpp代码
+    ```cpp
+    class Solution {
+    public:
+        vector<vector<int>> levelOrder(TreeNode* root) 
+        {
+            std::vector<std::vector<int>> level_lists;
+            if(root == nullptr)
+            {
+                return level_lists;
+            }
+            std::vector<int> level_value;
+            // 注意如果使用deque 则为push_back()
+            // 如果使用queue 则为push()
+            std::deque<TreeNode*> q;
+            q.push_back(root);
+            while(!q.empty())
+            {
+                int num = q.size();
+                for(int i = 0;i<num;i++)
+                {
+                    TreeNode* p = q.front();
+                    level_value.push_back(p->val);
+                    // 如果使用deque,则为pop_front()
+                    // 使用queue 则为pop()
+                    q.pop_front();
+                    if (p->left) q.push_back(p->left);
+                    if (p->right) q.push_back(p->right);
+                }
+                level_lists.emplace_back(level_value);
+                level_value.clear();
+            }
+            return level_lists;
+        }
+    };
+    ```
+---
+
+<div id="binary-tree-level-order-traversal-ii" onclick="window.location.hash">
+
+#### 8. binary-tree-level-order-traversal-ii
+- 给定一个二叉树，返回其节点值自底向上的层次遍历。
+- 即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历
+- linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii/ "二叉树的层次遍历 II")
+- **注意BFS做法:**
+  1. 与7类似,需要用std::list每次都往队头塞**
+    ```cpp
+    std::list<std::vector<int>> level_lists;
+    std::vector<std::vector<int>> level_vectors;
+    level_vectors.assign(level_lists.begin(),level_lists.end());
+    ```
+  2. 用std::reverse函数实现
+   ```cpp
+   std::vector<std::vector<int>> level_vectors;
+   std::reverse(level_vectors.begin(),level_vectors.end());
+   ```
+- 本题还可用DFS实现(略)
+---
+
+<div id="binary-tree-zigzag-level-order-traversal" onclick="window.location.hash">
+
+#### 9. binary-tree-zigzag-level-order-traversal
+- 给定一个二叉树，返回其节点值的锯齿形层次遍历。
+- linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/ "二叉树的锯齿形层次遍历")
+- **注意BFS做法:**
+  1. 对应层判断一下奇偶
+   ```cpp
+    // 注意与!levels%2区别
+    // 该段代码不能放入循环体内部
+    if (!(levels%2))
+    {
+        std::reverse(level_value.begin(),level_value.end());
+    }
+   ```
