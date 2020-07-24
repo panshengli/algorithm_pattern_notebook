@@ -1,18 +1,19 @@
 ## BinaryTree Algorithm
 
 ## 📑 index
-* <a href="#binaryTree">1. [代码框架] binaryTree</a>
-* <a href="#BFS">2. [代码框架] BFS</a>
-* <a href="#maxDepthBinaryTree">3. maxDepthBinaryTree</a>
-* <a href="#balancedTree">4. balancedTree</a>
-* <a href="#binary-tree-maximum-path-sum">5. binary-tree-maximum-path-sum</a>
-* <a href="#lowest-common-ancestor-of-a-binary-tree">6. lowest-common-ancestor-of-a-binary-tree</a>
-* <a href="#binary-tree-level-order-traversal">7. binary-tree-level-order-traversal[与3类似]</a>
-* <a href="#binary-tree-level-order-traversal-ii">8. binary-tree-level-order-traversal-ii[与7类似]</a>
-* <a href="#binary-tree-zigzag-level-order-traversal">9. binary-tree-zigzag-level-order-traversal[与8类似]</a>
-
-
-
+- 二叉树遍历
+  * <a href="#binaryTree">1. [代码框架] binaryTree</a>
+  * <a href="#BFS">2. [代码框架] BFS</a>
+  * <a href="#maxDepthBinaryTree">3. maxDepthBinaryTree</a>
+  * <a href="#balancedTree">4. balancedTree</a>
+  * <a href="#binary-tree-maximum-path-sum">5. binary-tree-maximum-path-sum</a>
+  * <a href="#lowest-common-ancestor-of-a-binary-tree">6. lowest-common-ancestor-of-a-binary-tree</a>
+- BFS 层次应用
+  * <a href="#binary-tree-level-order-traversal">7. binary-tree-level-order-traversal[与3类似]</a>
+  * <a href="#binary-tree-level-order-traversal-ii">8. binary-tree-level-order-traversal-ii[与7类似]</a>
+  * <a href="#binary-tree-zigzag-level-order-traversal">9. binary-tree-zigzag-level-order-traversal[与8类似]</a>
+- 二叉搜索树应用
+  * <a href="#validate-binary-search-tree">10. validate-binary-search-tree</a>
 
 [//]: # (Image References)
 [image1]: .readme/dfs.png "dfs"
@@ -526,3 +527,39 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
         std::reverse(level_value.begin(),level_value.end());
     }
    ```
+---
+
+<div id="validate-binary-search-tree" onclick="window.location.hash">
+
+#### 10. validate-binary-search-tree
+- 给定一个二叉树，判断其是否是一个有效的二叉搜索树
+- linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree/ "验证二叉搜索树")
+- 思路一：**利用Recursion方法**
+    ```cpp
+    class Solution {
+    public:
+        bool isValidBST(TreeNode* root) 
+        {
+            return recursionSearch(root,kIntMax_,kIntMin_);
+        }
+        bool recursionSearch(TreeNode* root, int64_t _max, int64_t _min)
+        {
+            // recursion exit
+            if(root==nullptr)
+            {
+                return true;
+            }
+            if(root->val >= _max || root->val <= _min)
+            {
+                return false;
+            }
+            return recursionSearch(root->left,root->val,_min)&&recursionSearch(root->right,_max,root->val);
+        }
+    private:
+        // test_case中测试用例
+        int64_t kIntMax_ = LONG_MAX;
+        int64_t kIntMin_ = LONG_MIN;
+    };
+    ```
+- 思路二：中序遍历方式
+二叉搜索树一个明显的特点就是中序遍历以后是一个有序数组，通过这个对比判断是否二叉搜索树

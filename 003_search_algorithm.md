@@ -1,8 +1,9 @@
 ## Search Algorithm
 
 ## 📑 index
-* <a href="#mergeSort">mergeSort</a>
-* <a href="#quickSort">quickSort</a>
+- 分治法应用
+  * <a href="#mergeSort">mergeSort</a>
+  * <a href="#quickSort">quickSort</a>
 
 
 [//]: # (Image References)
