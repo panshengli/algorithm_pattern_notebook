@@ -562,4 +562,42 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
     };
     ```
 - 思路二：中序遍历方式
-二叉搜索树一个明显的特点就是中序遍历以后是一个有序数组，通过这个对比判断是否二叉搜索树
+二叉搜索树一个明显的特点就是**中序遍历以后是一个有序数组**，通过这个对比判断是否二叉搜索树
+  - 递归版本
+    ```cpp
+    class Solution {
+    public:
+        bool isValidBST(TreeNode* root) 
+        {
+            if (root == nullptr)
+            {
+                return true;
+            }
+            inOrderTraversal(root);
+            int inorder_num = inorder_lists_.size();
+            for(int i = 1; i<inorder_num;i++)
+            {
+                if(inorder_lists_[i-1]>=inorder_lists_[i])
+                    return false;
+            }
+            return true;
+        }
+        void inOrderTraversal(TreeNode* root)
+        {
+            // 注意recursion的出口
+            if(root != nullptr)
+            {
+                inOrderTraversal(root->left);
+                inorder_lists_.push_back(root->val);
+                inOrderTraversal(root->right);
+            }
+            
+        }
+    private:
+        vector<int64_t> inorder_lists_;
+    };
+    ```
+- 非递归版本
+```cpp
+
+```
