@@ -14,6 +14,10 @@
   * <a href="#binary-tree-zigzag-level-order-traversal">9. binary-tree-zigzag-level-order-traversal[与8类似]</a>
 - 二叉搜索树应用
   * <a href="#validate-binary-search-tree">10. validate-binary-search-tree</a>
+  * <a href="#insert-into-a-binary-search-tree">11. insert-into-a-binary-search-tree</a>
+
+
+
 
 [//]: # (Image References)
 [image1]: .readme/dfs.png "dfs"
@@ -45,7 +49,6 @@
     }
     ```
 2. **更简单的非递归遍历二叉树**
-- 
 - 有重合元素的局部有序一定能导致整体有序
 - 将栈顶元素取出，使以此元素为“根”结点的局部有序入栈，但若此前已通过该结点将其局部入栈，则直接出栈输出即可。
     ```cpp
@@ -234,7 +237,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
         int val;
         TreeNode *left;
         TreeNode *right;
-        TreeNode(int x) : val(x), left(NULL), right(NULL) {}
+        TreeNode() : val(0), left(nullptr), right(nullptr) {}
+        TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
     };
     ```
 - **递归方式**
@@ -625,7 +630,62 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
         vector<int64_t> inorder_lists_;
     };
     ```
-- 非递归版本
-```cpp
+- 非递归版本 **更简单的非递归遍历二叉树版本一致**
+    ```cpp
+    class Solution {
+    public:
+        bool isValidBST(TreeNode* root) {
+            if(root == nullptr)
+            {
+                return true;
+            }
+            inOrderTravesal(root);
+            int num = vector_paths_.size();
+            for(int i=0; i<num-1;i++)
+            {
+                if(vector_paths_[i]>=vector_paths_[i+1])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+        void inOrderTravesal(TreeNode* root)
+        {
+            std::stack<std::pair<TreeNode*,bool>> s;
+            s.push(std::make_pair(root,false));
+            bool visited;
+            while(!s.empty())
+            {
+                root = s.top().first;
+                visited = s.top().second;
+                s.pop();
+                if(root==nullptr)
+                {
+                    continue;
+                }
+                // 重点核心: 此前已通过该结点将其局部入栈，则直接出栈输出
+                if(visited)
+                {
+                    vector_paths_.push_back(root->val);
+                }
+                else
+                {
+                    s.push(std::make_pair(root->right,false));
+                    s.push(std::make_pair(root,true));
+                    s.push(std::make_pair(root->left,false));
+                }
+            }
+        }
+    private:
+        std::vector<int64_t> vector_paths_;
+    };
+    ```
+---
 
-```
+<div id="insert-into-a-binary-search-tree" onclick="window.location.hash">
+
+#### 11. insert-into-a-binary-search-tree
+- 给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。 
+- 返回插入后二叉搜索树的根节点。 保证原始二叉搜索树中不存在新值。
+- linkage: [leetcode](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/ "二叉搜索树中的插入操作")
