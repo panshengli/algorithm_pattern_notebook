@@ -45,11 +45,12 @@
     }
     ```
 2. **更简单的非递归遍历二叉树**
+- 
 - 有重合元素的局部有序一定能导致整体有序
 - 将栈顶元素取出，使以此元素为“根”结点的局部有序入栈，但若此前已通过该结点将其局部入栈，则直接出栈输出即可。
     ```cpp
     // 非递归遍历
-    void orderTraversalNew(TreeNode *root, vector<int> &path)
+    void orderTraversal(TreeNode *root, vector<int> &path)
     {
         stack< pair<TreeNode *, bool> > s;
         s.push(make_pair(root, false));
@@ -61,6 +62,7 @@
             s.pop();
             if(root == NULL)
                 continue;
+            // 若此前已通过该结点将其局部入栈，则直接出栈输出即可
             if(visited)
             {
                 path.push_back(root->val);
@@ -84,7 +86,7 @@
     ```
     ```cpp
     // 非递归前序遍历简化
-    void preorderTraversalNew(TreeNode *root, vector<int> &path)
+    void preorderTraversal(TreeNode *root, vector<int> &path)
     {
         stack<TreeNode *> s;
         s.push(root);
@@ -105,7 +107,7 @@
         }
     }
     ```
-3. 教科书上的非递归遍历
+1. 教科书上的非递归遍历
     ```cpp
     //非递归前序遍历
     void preorderTraversal(TreeNode *root, vector<int> &path)
@@ -153,6 +155,32 @@
         }
     }
     ```
+    ```cpp
+    // 非递归后序遍历
+    void posOrderUnRecur(TreeNode* root) {
+        if (root == nullptr) {
+            return;
+        }
+        std::stack<TreeNode*> s1, s2;
+        s1.push(root);
+        while (!s1.empty()) {
+            TreeNode* root = s1.top();
+            s2.push(root);
+            s1.pop();
+            if (root->left != nullptr) {
+                s1.push(root->left);
+            }
+            if (root->right != nullptr) {
+                s1.push(root->right);
+            }
+        }
+
+        while (!s2.empty()) {
+            std::cout << s2.top()->value << ",";
+            s2.pop();
+        }
+    }
+    ```
 ---
 
 <div id="BFS" onclick="window.location.hash">
@@ -164,9 +192,9 @@
 
     ```cpp
     // 计算从起点 start 到终点 target 的最近距离
-    int BFS(Node start, Node target) {
-        Queue<Node> q; // 核心数据结构
-        Set<Node> visited; // 避免走回头路
+    int BFS(TreeNode start, TreeNode target) {
+        Queue<TreeNode> q; // 核心数据结构
+        Set<TreeNode> visited; // 避免走回头路
 
         q.offer(start); // 将起点加入队列
         visited.add(start);
@@ -176,12 +204,12 @@
             int sz = q.size();
             /* 将当前队列中的所有节点向四周扩散 */
             for (int i = 0; i < sz; i++) {
-                Node cur = q.poll();
+                TreeNode cur = q.poll();
                 /* 划重点：这里判断是否到达终点 */
                 if (cur is target)
                     return step;
                 /* 将 cur 的相邻节点加入队列 */
-                for (Node x : cur.adj())
+                for (TreeNode x : cur.adj())
                     if (x not in visited) {
                         q.offer(x);
                         visited.add(x);
