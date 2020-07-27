@@ -1,4 +1,18 @@
 ## BinaryTree Algorithm
+- struct BinaryTree
+    ```cpp
+    // Definition for a binary tree node.
+    struct TreeNode 
+    {
+        int val;
+        TreeNode *left;
+        TreeNode *right;
+        TreeNode() : val(0), left(nullptr), right(nullptr) {}
+        TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+        TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+    };
+    ```
+---
 
 ## 📑 index
 - 二叉树遍历
@@ -195,7 +209,8 @@
 
     ```cpp
     // 计算从起点 start 到终点 target 的最近距离
-    int BFS(TreeNode start, TreeNode target) {
+    int BFS(TreeNode start, TreeNode target) 
+    {
         Queue<TreeNode> q; // 核心数据结构
         Set<TreeNode> visited; // 避免走回头路
 
@@ -229,19 +244,6 @@
 
 #### 3. maxDepthBinaryTree
 linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/ "二叉树的最大深度")
-- struct BinaryTree
-    ```cpp
-    // Definition for a binary tree node.
-    struct TreeNode 
-    {
-        int val;
-        TreeNode *left;
-        TreeNode *right;
-        TreeNode() : val(0), left(nullptr), right(nullptr) {}
-        TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
-        TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
-    };
-    ```
 - **递归方式**
   - 三个条件：递归定义，递归出口，递归拆解
     ```cpp
@@ -687,5 +689,80 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 
 #### 11. insert-into-a-binary-search-tree
 - 给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。 
-- 返回插入后二叉搜索树的根节点。 保证原始二叉搜索树中不存在新值。
+- 返回插入后二叉搜索树的根节点。 保证原始二叉搜索树中不插入存在的值。
+- 只要符合二叉搜索树即可，不需要维护子树的高度差。
 - linkage: [leetcode](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/ "二叉搜索树中的插入操作")
+- 思路一：**DFS Recursion**
+    1、若 root == null，则返回 TreeNode(val)。
+    2、若 val > root.val，插入到右子树
+    3、若 val < root.val，插入到左子树
+    4、返回 root
+```cpp
+class Solution {
+public:
+    TreeNode* insertIntoBST(TreeNode* root, int val) {
+        if(root == nullptr)
+        {
+            // 注意： 返回一个new TreeNode
+            return new TreeNode(val);
+        }
+        if(val > root->val)
+        {
+            // 注意：向右递归后返回结果
+            root->right = insertIntoBST(root->right, val);
+        }
+        if(val < root->val)
+        {
+            root->left = insertIntoBST(root->left, val);
+        }
+        return root;
+    }
+};
+```
+- 思路二：**迭代非Recursion**
+    1、二叉搜索树，如果val小于等于当前节点，则直接向左遍历，大于当前节点，则向右遍历。
+    2、终止条件为下一个遍历节点为空，这个节点也就是需要插入节点的位置。
+    3、在开始需要保存一个root指针，用于当做返回结果。
+    ```cpp
+    class Solution {
+    public:
+        TreeNode* insertIntoBST(TreeNode* root, int val) 
+        {
+            // 重点1：一定赋予临时变量， 直接操作root只返回插入后的三个值
+            TreeNode* res = root;
+            if(root==nullptr)
+            {
+                return new TreeNode(val);
+            }
+            while(root != nullptr)
+            {
+                if(val < root->val)
+                {
+                    if(root->left ==nullptr)
+                    {
+                        root->left = new TreeNode(val);
+                        break;
+                    }
+                    else
+                    {
+                        //重点2：将下一节点赋予当前指针
+                        root = root->left;
+                    }
+                }
+                if(val > root->val)
+                {
+                    if(root->right ==nullptr)
+                    {
+                        root->right = new TreeNode(val);
+                        break;
+                    }
+                    else
+                    {
+                        root = root->right;
+                    }
+                }
+            }
+            return res;
+        }
+    };
+    ```
