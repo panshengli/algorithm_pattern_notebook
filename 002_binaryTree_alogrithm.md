@@ -358,7 +358,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "é«˜å
         }
     };
     ```
-
 ---
 
 <div id="binary-tree-maximum-path-sum" onclick="window.location.hash">

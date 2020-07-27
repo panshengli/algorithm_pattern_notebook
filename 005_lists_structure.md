@@ -10,23 +10,42 @@
 ```
 ---
 
-## 链表相关的核心点
-- null 异常处理
-- dummy node 哑巴节点
-- 快慢指针
-- 插入一个节点到排序链表
-- 从一个链表中移除一个节点
-- 翻转链表
-- 合并两个链表
-- 找到链表的中间节点
 
 ## 📑 index
-* <a href="#subsets">subSets</a>
+* <a href="#​remove-duplicates-from-sorted-list​">​remove-duplicates-from-sorted-list​</a>
 
 
-<div id="subSets" onclick="window.location.hash">
+<div id="​remove-duplicates-from-sorted-list​" onclick="window.location.hash">
 
-#### subSets
-linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所有子集")
-
+#### ​remove-duplicates-from-sorted-list​
+linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
+- 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
+- 迭代版本（直接法）
+```cpp
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) 
+    {
+        ListNode* _head = head;
+        if(head == nullptr)
+        {
+            return _head;
+        }
+        // 注意1：判断当前head->next是否为空，并非head为空
+        while(head->next!=nullptr)
+        {
+            if(head->next->val == head->val)
+            {
+                //注意2：删除操作
+                head->next = head->next->next;
+            }
+            else
+            {
+                head = head->next;
+            }
+        }
+        return _head;
+    }
+};
+```
 ---
