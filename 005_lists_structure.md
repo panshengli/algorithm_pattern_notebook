@@ -48,4 +48,50 @@ public:
     }
 };
 ```
+- 递归版本一
+- 有重先去重，头结点定位到重复元素最后一个
+    ```cpp
+    class Solution {
+    public:
+        ListNode* deleteDuplicates(ListNode* head) {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            if(head->val == head->next->val)
+            {
+                // 如果有重复，头节点定位到重复元素的最后一个，相当于去重
+                head = deleteDuplicates(head->next);
+            }
+            else
+            {
+                // 无重复后连接到下一个节点，再考虑下个节点
+                head->next = deleteDuplicates(head->next);
+            }
+            return head;
+        }
+    };
+    ```
+- 递归版本二
+- 删除头节点后面挂接的链表中的重复元素
+    ```cpp
+    class Solution {
+    public:
+        ListNode* deleteDuplicates(ListNode* head) {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            // 删除头节点后面挂接的链表中的重复元素
+            head->next = deleteDuplicates(head->next);
+            if(head->val == head->next->val)
+            {
+                // 无重复后连接到下一个节点，再考虑下个节点
+                head = head->next;
+            }
+            return head;
+        }
+    }; 
+    ```
+- 快慢指针
 ---
