@@ -13,6 +13,8 @@
 
 ## 📑 index
 * <a href="#​remove-duplicates-from-sorted-list​">​remove-duplicates-from-sorted-list​</a>
+* <a href="#​​remove-duplicates-from-sorted-list-ii​​">​remove-duplicates-from-sorted-list-ii​</a>
+
 
 
 <div id="​remove-duplicates-from-sorted-list​" onclick="window.location.hash">
@@ -86,7 +88,6 @@ public:
             head->next = deleteDuplicates(head->next);
             if(head->val == head->next->val)
             {
-                // 无重复后连接到下一个节点，再考虑下个节点
                 head = head->next;
             }
             return head;
@@ -94,4 +95,40 @@ public:
     }; 
     ```
 - 快慢指针
+```cpp
+class Solution {
+public:
+    ListNode* deleteDuplicates(ListNode* head) 
+    {
+        ListNode* slow = head;
+        ListNode* fast = head;
+        if(head == nullptr)
+        {
+            return slow;
+        }
+        // 注意while判断的条件
+        while(fast != nullptr)
+        {
+            if(slow->val != fast->val)
+            {
+                // 若不相等，则将慢指针slow指向快指针fast的地址
+                slow->next = fast;
+                slow = slow->next;
+            }
+            // fast指向下一个
+            fast = fast->next;
+        }
+        // 最后slow指向空
+        slow->next = nullptr;
+        return head;
+    }
+};
+```
 ---
+
+<div id="​​remove-duplicates-from-sorted-list-ii​​" onclick="window.location.hash">
+
+#### ​​remove-duplicates-from-sorted-list-ii​
+linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
+- 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
+- 
