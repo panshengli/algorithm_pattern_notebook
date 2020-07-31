@@ -131,4 +131,47 @@ public:
 #### ​​remove-duplicates-from-sorted-list-ii​
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
 - 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
+- 方式一： 迭代方法(注意元素去重以及边界条件处理)
 - 
+    ```cpp
+    class Solution {
+    public:
+        ListNode* deleteDuplicates(ListNode* head)
+        {
+            // 注意一：哨兵节点：指向链表，用于最后返回结果
+            ListNode* tmp = new ListNode();
+            tmp->next = head;
+            ListNode* fast = head;
+            ListNode* slow = tmp;
+            if(head == NULL)
+            {
+                return fast;
+            }
+            // 注意二：一定要包含fast!= nullptr,需要考虑边界条件
+            while(fast != nullptr&&fast->next != NULL)
+            {
+                // 注意三：找重复节点
+                if(fast->val == fast->next->val)
+                {
+                    int tmp_node = fast->val;
+                    // 注意四：一定要包含fast->next!= nullptr,需要考虑边界条件
+                    while(fast->next != nullptr &&fast->next->val ==tmp_node)
+                    {
+                        fast = fast->next;
+                    }
+                    // 注意五：循环后返回重复元素的末尾
+                    fast = fast->next;
+                    slow->next = fast;
+                }
+                else
+                {
+                    fast = fast->next;
+                    slow = slow->next;
+                }
+            }
+            return tmp->next;
+        }
+    };
+    ```
+
+---
