@@ -14,6 +14,7 @@
 ## 📑 index
 * <a href="#​remove-duplicates-from-sorted-list​">​remove-duplicates-from-sorted-list​</a>
 * <a href="#​​remove-duplicates-from-sorted-list-ii​​">​remove-duplicates-from-sorted-list-ii​</a>
+* <a href="#​​​reverse-linked-list​​​">​​reverse-linked-list​</a>
 
 
 
@@ -132,7 +133,6 @@ public:
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
 - 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
 - 方式一： 迭代方法(注意元素去重以及边界条件处理)
-- 
     ```cpp
     class Solution {
     public:
@@ -173,5 +173,41 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
         }
     };
     ```
-
+- 方式二：Recursion
+    ```cpp
+    class Solution {
+    public:
+        ListNode* deleteDuplicates(ListNode* head) 
+        {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            // 注意：下一个元素
+            ListNode * next = head->next;
+            if(next->val == head->val)
+            {
+                while(next != nullptr && next->val == head->val)
+                {
+                    next = next -> next;
+                }
+                // 因为要将重复的都删了，所以直接返回递归函数
+                return deleteDuplicates(next);
+            }
+            else
+            {
+                //如果不重复就将当前节点指向递归函数
+                head->next = deleteDuplicates(head->next);
+                return head;
+            }
+        }
+    };
+    ```
 ---
+
+<div id="​​​​reverse-linked-list​​​" onclick="window.location.hash">
+
+#### ​​​reverse-linked-list​​​
+linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反转一个单链表")
+- 反转一个单链表
+- 
