@@ -15,8 +15,12 @@
 * <a href="#​remove-duplicates-from-sorted-list​">​remove-duplicates-from-sorted-list​</a>
 * <a href="#​​remove-duplicates-from-sorted-list-ii​​">​remove-duplicates-from-sorted-list-ii​</a>
 * <a href="#​​​reverse-linked-list​​​">​​reverse-linked-list​</a>
+* <a href="#​reverse-linked-list-ii​​​​">​​​reverse-linked-list-ii​​</a>
 
 
+[//]: # (Image References)
+[image1]: .readme/traversal.gif "traversal"
+[image2]: .readme/recursion.gif "recursion"
 
 <div id="​remove-duplicates-from-sorted-list​" onclick="window.location.hash">
 
@@ -96,35 +100,35 @@ public:
     }; 
     ```
 - 快慢指针
-```cpp
-class Solution {
-public:
-    ListNode* deleteDuplicates(ListNode* head) 
-    {
-        ListNode* slow = head;
-        ListNode* fast = head;
-        if(head == nullptr)
+    ```cpp
+    class Solution {
+    public:
+        ListNode* deleteDuplicates(ListNode* head) 
         {
-            return slow;
-        }
-        // 注意while判断的条件
-        while(fast != nullptr)
-        {
-            if(slow->val != fast->val)
+            ListNode* slow = head;
+            ListNode* fast = head;
+            if(head == nullptr)
             {
-                // 若不相等，则将慢指针slow指向快指针fast的地址
-                slow->next = fast;
-                slow = slow->next;
+                return slow;
             }
-            // fast指向下一个
-            fast = fast->next;
+            // 注意while判断的条件
+            while(fast != nullptr)
+            {
+                if(slow->val != fast->val)
+                {
+                    // 若不相等，则将慢指针slow指向快指针fast的地址
+                    slow->next = fast;
+                    slow = slow->next;
+                }
+                // fast指向下一个
+                fast = fast->next;
+            }
+            // 最后slow指向空
+            slow->next = nullptr;
+            return head;
         }
-        // 最后slow指向空
-        slow->next = nullptr;
-        return head;
-    }
-};
-```
+    };
+    ```
 ---
 
 <div id="​​remove-duplicates-from-sorted-list-ii​​" onclick="window.location.hash">
@@ -210,4 +214,93 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
 #### ​​​reverse-linked-list​​​
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反转一个单链表")
 - 反转一个单链表
-- 
+- 定义两个指针： preprepre 和 curcurcur ；preprepre 在前 curcurcur 在后
+- 每次让 preprepre 的 nextnextnext 指向 curcurcur ，实现一次局部反转
+- 局部反转完成之后， preprepre 和 curcurcur 同时往前移动一个位置
+- 循环上述过程，直至 preprepre 到达链表尾部
+![alt text][image1]
+- 思路一：迭代双指针方式
+    ```cpp
+    class Solution {
+    public:
+        ListNode* reverseList(ListNode* head)
+        {
+            if(head == nullptr)
+            {
+                return head;
+            }
+            // 注意：此处pre不能等于new ListNode()
+            ListNode* pre = nullptr;
+            ListNode* cur = head;
+            while(cur != nullptr)
+            {
+                // 注意：此处用临时变量指向cur->next
+                ListNode* tmp_next = cur->next;
+                cur->next = pre;
+                // 双指针移动
+                pre = cur;
+                cur = tmp_next;
+            }
+            return pre;
+        }
+    };
+    ```
+- 思路二：递归方式
+- 使用递归函数，一直递归到链表的最后一个结点，该结点就是反转后的头结点，记作ret
+- 每次函数在返回的过程中，让当前结点的下一个结点的next指针指向当前节点
+- 同时让当前结点的next指针指向NULL，从而实现从链表尾部开始的局部反转
+- 当递归函数全部出栈后，链表反转完成
+![alt text][image2]
+    ```cpp
+    class Solution {
+    public:
+        ListNode* reverseList(ListNode* head) 
+        {
+            // 注意：head->next == nullptr要添加，为了使cur指向最后一个node->val
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            // 注意：定义一个临时node，坐标链表的开头
+            ListNode* cur = reverseList(head->next);
+            head->next->next = head;
+            head->next = nullptr;
+            return cur;
+        }
+    };
+    ```
+---
+
+<div id="​​​​reverse-linked-list-ii​​​" onclick="window.location.hash">
+
+#### ​​​reverse-linked-list​​​-ii
+linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "反转链表 II")
+- 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
+- 方法一：迭代方式-头插法
+    ```cpp
+    class Solution {
+    public:
+        ListNode* reverseBetween(ListNode* head, int m, int n) 
+        {
+            ListNode* dummy = new ListNode();
+            dummy->next = head;
+            ListNode* pre = dummy;
+            for(int i=1;i<m;i++)
+            {
+                pre = pre->next;
+            }    
+            head = pre->next;
+            for(int i=m;i<n;i++)
+            {
+                ListNode* next = head->next;
+                // 头结点指向(next)下一链表的next位置
+                head->next = next->next;
+                // next节点指向pre节点的指向
+                next->next = pre->next;
+                // pre指向next节点
+                pre->next = next;
+            }
+            return dummy->next;
+        }
+    };
+    ```
