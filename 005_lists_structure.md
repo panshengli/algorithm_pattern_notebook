@@ -276,7 +276,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反�
 #### ​​​reverse-linked-list​​​-ii
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "反转链表 II")
 - 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
-- 方法一：迭代方式-头插法
+- 方法一：迭代法-头插法
     ```cpp
     class Solution {
     public:
@@ -293,7 +293,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
             for(int i=m;i<n;i++)
             {
                 ListNode* next = head->next;
-                // 头结点指向(next)下一链表的next位置
+                // 头结点指向(next)链表的next的指向
                 head->next = next->next;
                 // next节点指向pre节点的指向
                 next->next = pre->next;
@@ -304,3 +304,65 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
         }
     };
     ```
+- 方法二：递归法(值交换法)
+- 核心思想：
+  - 第一步：将指针分别指向所翻转的首尾位置
+  - 第二步：递归，递归的出口为n==1
+  - 第三步：将左右指针的值交换，同时左指针指向节点
+  - 第四步：判断是否为两指针是否重合，结束
+    ```cpp
+    class Solution {
+    public:
+        ListNode* reverseBetween(ListNode* head, int m, int n) 
+        {
+            if(head == nullptr)
+            {
+                return head;
+            }
+            // 注意一：为了获取head的首地址
+            left_ = head;
+            recurseReversion(head,m,n);
+            return head;
+        }
+
+        void recurseReversion(ListNode * right, int m, int n)
+        {
+            if(n == 1)
+            {
+                return;
+            }
+            right = right->next;
+            if(m>1)
+            {
+                left_= left_->next;
+            }
+            recurseReversion(right,m-1,n-1);
+            // 注意二：通过奇偶数来判断是否交换
+            if(left_ == right || right->next == left_)
+            {
+                flag_ = true;
+            }
+            if(!flag_)
+            {
+                // 注意三：交换左右值
+                int tmp_val = right->val;
+                right->val = left_->val;
+                left_->val = tmp_val;
+                // 注意四：交换后左值向右移，右值通过traceback自动向前移动
+                left_ = left_->next;
+            }
+        }
+
+    private:
+        bool flag_ = false;
+        ListNode* left_;
+    };
+    ```
+---
+- 方法三：递归法(反向传递法)
+- 该方法继承`​​​reverse-linked-list​​​`中迭代方法
+- [参考方法](https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/bu-bu-chai-jie-ru-he-di-gui-di-fan-zhuan-lian-biao/ "步步拆解：如何递归地反转链表的一部分")
+- 本方法一定要注意**递归的出口**和**调用**及**返回值的连接**
+```cpp
+
+```
