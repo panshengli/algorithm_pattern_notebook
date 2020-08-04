@@ -501,3 +501,4 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
 #### ​​partition-list​​​​
 linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链表")
 - 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
+- **思路：将大于等于x的节点，放到另外一个链表，最后连接这两个链表**
