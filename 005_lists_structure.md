@@ -16,6 +16,7 @@
 * <a href="#​​remove-duplicates-from-sorted-list-ii​​">​remove-duplicates-from-sorted-list-ii​</a>
 * <a href="#​​​reverse-linked-list​​​">​​reverse-linked-list​</a>
 * <a href="#​reverse-linked-list-ii​​​​">​​​reverse-linked-list-ii​​</a>
+* <a href="#​merge-two-sorted-lists​​​​​">​​​​merge-two-sorted-lists​​​</a>
 
 
 [//]: # (Image References)
@@ -358,11 +359,106 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
         ListNode* left_;
     };
     ```
----
+
 - 方法三：递归法(反向传递法)
 - 该方法继承`​​​reverse-linked-list​​​`中迭代方法
-- [参考方法](https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/bu-bu-chai-jie-ru-he-di-gui-di-fan-zhuan-lian-biao/ "步步拆解：如何递归地反转链表的一部分")
+- [参考方法: 如何递归地反转链表的一部分](https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/bu-bu-chai-jie-ru-he-di-gui-di-fan-zhuan-lian-biao/ "步步拆解：如何递归地反转链表的一部分")
 - 本方法一定要注意**递归的出口**和**调用**及**返回值的连接**
-```cpp
+    ```cpp
+    class Solution {
+    public:
+        ListNode* reverseBetween(ListNode* head, int m, int n) 
+        {
+            if(head == nullptr)
+            {
+                return head;
+            }
+            if(m == 1)
+            {
+                // 注意：需要返回reverse前N项翻转
+                return reverseN(head,n);
+            }
+            // 注意：前m项指向翻转后第一个节点
+            head->next = reverseBetween(head->next,m-1,n-1);
+            return head;
+        }
+        
+        ListNode* reverseN(ListNode* head, int n)
+        {
+            if(n == 1)
+            {
+                // 注意：pre_flag_需要指向最后节点的下一节点
+                pre_flag_ = head->next;
+                // 注意：一定要有递归的出口，即返回值
+                return head;
+            }
+            ListNode* last = reverseN(head->next,n-1);
+            head->next->next = head;
+            // 注意：反转之后的head节点和后面的节点连起来
+            head->next = pre_flag_;
+            return last;
+        }
 
-```
+    private:
+        ListNode* pre_flag_ = nullptr;
+    };
+    ```
+---
+
+<div id="merge-two-sorted-lists​" onclick="window.location.hash">
+
+#### ​merge-two-sorted-lists
+linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "合并两个有序链表")
+- 将两个**升序链表**合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的
+- 迭代版本(谁值大指向谁，然后节点指向下一节点)
+- 关键步骤：
+  - 1.临时变量的定义和操作
+  - 2.列表的遍历循环条件
+  - 3.遍历后列表的指向
+    ```cpp
+    class Solution {
+    public:
+        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) 
+        {
+            if(l1 == nullptr)
+            {
+                return l2;
+            }
+            if(l2 == nullptr)
+            {
+                return l1;
+            }
+            // 注意：声明临时变量，用于返回
+            ListNode* merge_list = new ListNode();
+            // 注意：对merge_list进行操作
+            ListNode* cur = merge_list;
+            // 注意：当遍历完某一个链表时，退出循环
+            while(l1 != nullptr && l2 != nullptr)
+            {
+                if(l1->val <= l2->val)
+                {
+                    // 注意：cur指向l1，并非cur =l1
+                    cur->next = l1;
+                    l1 = l1->next;
+                }
+                else
+                {
+                    cur->next = l2;
+                    l2 = l2->next;
+                }
+                cur = cur->next;
+            }
+            // cur指向剩余链表
+            if(l1 == nullptr)
+            {
+                cur->next = l2;
+            }
+            if(l2 == nullptr)
+            {
+                cur->next = l1;
+            }
+            return merge_list->next;
+        }
+    };
+    ```
+- 递归版本
