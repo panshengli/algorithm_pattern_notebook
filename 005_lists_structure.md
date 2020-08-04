@@ -17,6 +17,13 @@
 * <a href="#​​​reverse-linked-list​​​">​​reverse-linked-list​</a>
 * <a href="#​reverse-linked-list-ii​​​​">​​​reverse-linked-list-ii​​</a>
 * <a href="#​merge-two-sorted-lists​​​​​">​​​​merge-two-sorted-lists​​​</a>
+* <a href="#​partition-list​​​​​​">​partition-list​​​​</a>
+
+
+
+
+
+
 
 
 [//]: # (Image References)
@@ -462,3 +469,35 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
     };
     ```
 - 递归版本
+- 思路参考：[一看就会，一写就废？详解递归](https://leetcode-cn.com/problems/merge-two-sorted-lists/solution/yi-kan-jiu-hui-yi-xie-jiu-fei-xiang-jie-di-gui-by-/)
+    ```cpp
+    class Solution {
+    public:
+        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) 
+        {
+            // 终止条件：当两个链表都为空时，表示我们对链表已合并完成
+            if(l1==nullptr)
+                return l2;
+            if(l2==nullptr)
+                return l1;
+            if(l1->val <= l2->val)
+            {
+                l1->next = mergeTwoLists(l1->next,l2);
+                // 注意：递归的结束后返回的结果
+                return l1;
+            }
+            else
+            {
+                l2->next = mergeTwoLists(l1,l2->next);
+                return l2;
+            }
+        }
+    };
+    ```
+---
+
+<div id="​partition-list​​​​​" onclick="window.location.hash">
+
+#### ​​partition-list​​​​
+linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链表")
+- 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
