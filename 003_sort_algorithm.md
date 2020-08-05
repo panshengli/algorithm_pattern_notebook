@@ -1,9 +1,23 @@
 ## Search Algorithm
 
+- 各种排序算法指标对比
+    排序方法 | 平均情况 | 最好情况 | 最坏情况 | 辅助空间 | 稳定性
+    :-: | :-: | :-: | :-: | :-: | :-:
+    冒泡排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定
+    简单选择排序 | O(n2) | O(n2) | O(n2) | O(1) | 稳定
+    直接插入排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定
+    希尔排序 | O(nlogn)~O(n2) | O(n1.3) | O(n2) | O(1) | 不稳定
+    堆排序 | O(nlogn) | O(nlogn) | O(nlogn) | **O(1)** | 不稳定
+    **归并排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | O(n) | **稳定**
+    **快速排序** | **O(nlogn)** | O(nlogn) | O(n2) | O(logn)~O(n) | 不稳定
+---
+
 ## 📑 index
 - 分治法应用
-  * <a href="#mergeSort">mergeSort</a>
-  * <a href="#quickSort">quickSort</a>
+  * <a href="#mergeSort">1. [代码框架]mergeSort</a>
+  * <a href="#quickSort">2. [代码框架]quickSort</a>
+  * <a href="#sortList">3. ​sort-list​</a>
+
 
 
 [//]: # (Image References)
@@ -124,7 +138,7 @@
 <div id="quickSort" onclick="window.location.hash">
 
 #### quickSort
-- 快速排序是一种基于分治技术的重要排序算法
+- 快速排序是一种基于**分治技术**的重要排序算法
 - 快排是一种不稳定排序，比如基准值的前后都存在与基准值相同的元素，那么相同值就会被放在一边，这样就打乱了之前的相对顺序
 - 时间复杂度：快排的时间复杂度为O(nlogn)
 - 空间复杂度：排序时需要另外申请空间，并且随着数列规模增大而增大，其复杂度为：O(nlogn)
@@ -192,3 +206,10 @@
     }
     ```
 ---
+
+<div id="sortList" onclick="window.location.hash">
+
+#### 3. ​sort-list
+linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
+- 在**O(nlogn)时间复杂度**和常数级空间复杂度下，对链表进行排序
+- 只有 heapSort, mergeSort, quickSort
