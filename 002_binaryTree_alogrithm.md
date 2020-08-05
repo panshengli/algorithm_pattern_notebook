@@ -32,10 +32,10 @@
 
 
 
-
 [//]: # (Image References)
 [image1]: .readme/dfs.png "dfs"
 
+---
 
 <div id="binaryTree" onclick="window.location.hash">
 

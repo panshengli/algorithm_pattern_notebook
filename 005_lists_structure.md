@@ -12,15 +12,12 @@
 
 
 ## 📑 index
-* <a href="#​remove-duplicates-from-sorted-list​">​remove-duplicates-from-sorted-list​</a>
-* <a href="#​​remove-duplicates-from-sorted-list-ii​​">​remove-duplicates-from-sorted-list-ii​</a>
-* <a href="#​​​reverse-linked-list​​​">​​reverse-linked-list​</a>
-* <a href="#​reverse-linked-list-ii​​​​">​​​reverse-linked-list-ii​​</a>
-* <a href="#​merge-two-sorted-lists​​​​​">​​​​merge-two-sorted-lists​​​</a>
-* <a href="#​partition-list​​​​​​">​partition-list​​​​</a>
-
-
-
+* <a href="#rdfsl">​1. remove-duplicates-from-sorted-list​</a>
+* <a href="#rdfsli">2. remove-duplicates-from-sorted-list-ii</a>
+* <a href="#rll">​​3. reverse-linked-list​</a>
+* <a href="#rlli">​​​4. reverse-linked-list-ii​​</a>
+* <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists​​​</a>
+* <a href="#partitionList">​6. partition-list​​​​</a>
 
 
 
@@ -30,9 +27,11 @@
 [image1]: .readme/traversal.gif "traversal"
 [image2]: .readme/recursion.gif "recursion"
 
-<div id="​remove-duplicates-from-sorted-list​" onclick="window.location.hash">
 
-#### ​remove-duplicates-from-sorted-list​
+
+<div id="rdfsl" onclick="window.location.hash">
+
+#### 1. ​remove-duplicates-from-sorted-list​
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
 - 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
 - 迭代版本（直接法）
@@ -139,9 +138,9 @@ public:
     ```
 ---
 
-<div id="​​remove-duplicates-from-sorted-list-ii​​" onclick="window.location.hash">
+<div id="rdfsli" onclick="window.location.hash">
 
-#### ​​remove-duplicates-from-sorted-list-ii​
+#### ​​2. remove-duplicates-from-sorted-list-ii​
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
 - 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
 - 方式一： 迭代方法(注意元素去重以及边界条件处理)
@@ -217,9 +216,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
     ```
 ---
 
-<div id="​​​​reverse-linked-list​​​" onclick="window.location.hash">
+<div id="rll" onclick="window.location.hash">
 
-#### ​​​reverse-linked-list​​​
+#### 3. ​​​reverse-linked-list​​​
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反转一个单链表")
 - 反转一个单链表
 - 定义两个指针： preprepre 和 curcurcur ；preprepre 在前 curcurcur 在后
@@ -279,9 +278,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反�
     ```
 ---
 
-<div id="​​​​reverse-linked-list-ii​​​" onclick="window.location.hash">
+<div id="rlli" onclick="window.location.hash">
 
-#### ​​​reverse-linked-list​​​-ii
+#### 4. ​​​reverse-linked-list​​​-ii
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "反转链表 II")
 - 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
 - 方法一：迭代法-头插法
@@ -412,9 +411,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
     ```
 ---
 
-<div id="merge-two-sorted-lists​" onclick="window.location.hash">
+<div id="mergeTwoSortedLists" onclick="window.location.hash">
 
-#### ​merge-two-sorted-lists
+#### 5. ​merge-two-sorted-lists
 linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "合并两个有序链表")
 - 将两个**升序链表**合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的
 - 迭代版本(谁值大指向谁，然后节点指向下一节点)
@@ -496,9 +495,48 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
     ```
 ---
 
-<div id="​partition-list​​​​​" onclick="window.location.hash">
+<div id="partitionList" onclick="window.location.hash">
 
-#### ​​partition-list​​​​
+#### 6. ​​partition-list​​​​
 linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链表")
 - 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
 - **思路：将大于等于x的节点，放到另外一个链表，最后连接这两个链表**
+- 独立写出，需要注意
+  - **写出两个链表后连接时，不要忘了尾端链表指向为空**
+    ```cpp
+    class Solution {
+    public:
+        ListNode* partition(ListNode* head, int x) 
+        {
+            if (head == nullptr)
+            {
+                return head;
+            }    
+            ListNode* small_list = new ListNode();
+            ListNode* large_list = new ListNode();
+            ListNode* small_tmp = small_list;
+            ListNode* large_tmp = large_list;
+            while(head != nullptr)
+            {
+                if(head->val < x)
+                {
+                    small_tmp->next = head;
+                    small_tmp = small_tmp->next;
+                    std::cout<<"small_tmp: "<<small_tmp->val<<std::endl;
+                }
+                else
+                {
+                    large_tmp->next = head;
+                    large_tmp = large_tmp->next;
+                    std::cout<<"large_tmp: "<<large_tmp->val<<std::endl;
+                }
+                head = head->next;
+            }
+            // 注意：一定要添加较大列表尾端指向为nullptr
+            large_tmp->next = nullptr;
+            // 添加较小列表尾端指向较大列表的首部
+            small_tmp->next =large_list->next;
+            return small_list->next;
+        }
+    };
+    ```
