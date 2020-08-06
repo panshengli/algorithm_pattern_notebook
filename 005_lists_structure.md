@@ -12,12 +12,14 @@
 
 
 ## 📑 index
-* <a href="#rdfsl">​1. remove-duplicates-from-sorted-list​</a>
-* <a href="#rdfsli">2. remove-duplicates-from-sorted-list-ii</a>
-* <a href="#rll">​​3. reverse-linked-list​</a>
+* <a href="#removeDuplicatesFromSortedList">​1. remove-duplicates-from-sorted-list​</a>
+* <a href="#remove-duplicates-from-sorted-list-ii">2. remove-duplicates-from-sorted-list-ii</a>
+* <a href="#reverseLinkedList">​​3. reverse-linked-list​</a>
 * <a href="#rlli">​​​4. reverse-linked-list-ii​​</a>
 * <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists​​​</a>
 * <a href="#partitionList">​6. partition-list​​​​</a>
+* <a href="#sortList">7. ​sort-list [很棒的list归并排序示例，5题的强化版]​</a>
+* <a href="#reorderList">8. ​reorder-list​​</a>
 
 
 
@@ -29,7 +31,7 @@
 
 
 
-<div id="rdfsl" onclick="window.location.hash">
+<div id="removeDuplicatesFromSortedList" onclick="window.location.hash">
 
 #### 1. ​remove-duplicates-from-sorted-list​
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
@@ -138,7 +140,7 @@ public:
     ```
 ---
 
-<div id="rdfsli" onclick="window.location.hash">
+<div id="remove-duplicates-from-sorted-list-ii" onclick="window.location.hash">
 
 #### ​​2. remove-duplicates-from-sorted-list-ii​
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
@@ -216,7 +218,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
     ```
 ---
 
-<div id="rll" onclick="window.location.hash">
+<div id="reverseLinkedList" onclick="window.location.hash">
 
 #### 3. ​​​reverse-linked-list​​​
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反转一个单链表")
@@ -522,13 +524,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
                 {
                     small_tmp->next = head;
                     small_tmp = small_tmp->next;
-                    std::cout<<"small_tmp: "<<small_tmp->val<<std::endl;
                 }
                 else
                 {
                     large_tmp->next = head;
                     large_tmp = large_tmp->next;
-                    std::cout<<"large_tmp: "<<large_tmp->val<<std::endl;
                 }
                 head = head->next;
             }
@@ -540,3 +540,153 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
         }
     };
     ```
+---
+
+<div id="sortList" onclick="window.location.hash">
+
+#### 7. ​sort-list
+linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
+- 在**O(nlogn)时间复杂度**和常数级空间复杂度下，对链表进行排序
+- 只有 heapSort, mergeSort, quickSort
+- **时间复杂度想到二分法**，从而联想到归并排序
+- [参考思路：快慢指针+二路归并（C++）](https://leetcode-cn.com/problems/sort-list/solution/kuai-man-zhi-zhen-er-lu-gui-bing-c-by-jiangtianyu0/)
+- 主要思路（根据思路做出）：
+  - 利用**快慢指针**进行列表的**二分(迭代)**分割，调用**有序链表**两两合并
+  - **中点确认**：快指针走两步，慢指针走一步，遍历完时，慢指针指向中点
+  - 确认完中点后，**切开链表**，需要用一个变量**保存中点节点的前驱**
+  - 调用**有序链表**两两合并(**两路归并**),见`6. ​​partition-list`
+- 注意点：
+  - 调用两路归并算法时，不能用迭代方式，因为题目要求空间复杂度为常数级
+- 迭代版本
+```cpp
+
+```
+- 递归版本(**两路归并用递归，如果不要求空间复杂度情况下**)
+- 执行用时：88 ms, 在所有 C++ 提交中击败了37.07% 的用户
+- 内存消耗：31 MB, 在所有 C++ 提交中击败了6.29% 的用户
+    ```cpp
+    class Solution {
+    public:
+        ListNode* sortList(ListNode* head) 
+        {
+            // 注意if在recursion中的判断条件
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            ListNode* pre_slow = new ListNode();
+            ListNode* slow = head;
+            pre_slow->next = slow;
+            ListNode* fast = head;
+            // 注意：要判断fast->next是否为空(合并的list个数为偶数时)
+            while(fast != nullptr && fast->next != nullptr)
+            {
+                pre_slow = slow;
+                slow = slow->next;
+                fast = fast->next->next;
+            }
+            // 将切割后的链表结束指向空
+            pre_slow->next = nullptr;
+            return mergeTwoList(sortList(head),sortList(slow));
+        }
+        ListNode* mergeTwoList(ListNode* l1, ListNode* l2)
+        {
+            if(l1 == nullptr)
+            {
+                return l2;
+            }
+            if(l2 == nullptr)
+            {
+                return l1;
+            }
+            if(l1->val <= l2->val)
+            {
+                l1->next = mergeTwoList(l1->next,l2);
+                return l1;
+            }
+            else
+            {
+                l2->next = mergeTwoList(l1,l2->next);
+                return l2;
+            }
+        }
+    };
+    ```
+- 迭代版本（注意思路，特别时mergeTwoList中，ListNode的定义）
+- 执行用时：100 ms, 在所有 C++ 提交中击败了23.40% 的用户
+- 内存消耗：36.4 MB, 在所有 C++ 提交中击败了5.15% 的用户
+    ```cpp
+    class Solution {
+    public:
+        ListNode* sortList(ListNode* head) 
+        {
+            // 注意if在recursion中的判断条件
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            ListNode* pre_slow = new ListNode();
+            ListNode* slow = head;
+            pre_slow->next = slow;
+            ListNode* fast = head;
+            // 注意：要判断fast->next是否为空(合并的list个数为偶数时)
+            while(fast != nullptr && fast->next != nullptr)
+            {
+                pre_slow = slow;
+                slow = slow->next;
+                fast = fast->next->next;
+            }
+            // 将切割后的链表结束指向空
+            pre_slow->next = nullptr;
+            return mergeTwoList(sortList(head),sortList(slow));
+        }
+        ListNode* mergeTwoList(ListNode* l1, ListNode* l2)
+        {
+            if(l1 == nullptr)
+            {
+                return l2;
+            }
+            if(l2 == nullptr)
+            {
+                return l1;
+            }
+            // 注意思路
+            ListNode* merge_list = new ListNode();
+            ListNode* cur_head = merge_list;
+            // 处理列表排序
+            while(l1 != nullptr && l2 != nullptr)
+            {
+                if(l1->val <= l2->val)
+                {
+                    cur_head->next = l1;
+                    l1 = l1->next;
+                }
+                else
+                {
+                    cur_head->next = l2;
+                    l2 = l2->next;
+                }
+                cur_head = cur_head->next;
+            }
+            if(l1 != nullptr)
+            {
+                cur_head->next = l1;
+            }
+            if(l2 != nullptr)
+            {
+                cur_head->next = l2;
+            }
+            return merge_list->next;
+        }
+    };
+    ```
+---
+
+<div id="reorderList" onclick="window.location.hash">
+
+#### 8. ​reorder-list
+linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表")
+- 示例
+- 给定链表 1->2->3->4, 重新排列为 1->4->2->3.
+- 给定链表 1->2->3->4->5, 重新排列为 1->5->2->4->3.
+- 

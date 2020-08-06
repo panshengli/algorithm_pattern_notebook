@@ -16,7 +16,6 @@
 - 分治法应用
   * <a href="#mergeSort">1. [代码框架]mergeSort</a>
   * <a href="#quickSort">2. [代码框架]quickSort</a>
-  * <a href="#sortList">3. ​sort-list​</a>
 
 
 
@@ -207,9 +206,4 @@
     ```
 ---
 
-<div id="sortList" onclick="window.location.hash">
 
-#### 3. ​sort-list
-linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
-- 在**O(nlogn)时间复杂度**和常数级空间复杂度下，对链表进行排序
-- 只有 heapSort, mergeSort, quickSort
