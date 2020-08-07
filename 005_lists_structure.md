@@ -19,7 +19,7 @@
 * <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists​​​</a>
 * <a href="#partitionList">​6. partition-list​​​​</a>
 * <a href="#sortList">7. ​sort-list [很棒的list归并排序示例，5题的强化版]​</a>
-* <a href="#reorderList">8. ​reorder-list​​</a>
+* <a href="#llc">8. ​​linked-list-cycle​ [3题，5题的强化应用，注意思路]​</a>
 
 
 
@@ -270,7 +270,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反�
             {
                 return head;
             }
-            // 注意：定义一个临时node，坐标链表的开头
+            // 注意：不要忘了此处定义的cur，作为链表的开头
             ListNode* cur = reverseList(head->next);
             head->next->next = head;
             head->next = nullptr;
@@ -620,7 +620,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     public:
         ListNode* sortList(ListNode* head) 
         {
-            // 注意if在recursion中的判断条件
+            // 注意if在recursion中以及在快慢指针的判断条件
             if(head == nullptr || head->next == nullptr)
             {
                 return head;
@@ -689,4 +689,75 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
 - 示例
 - 给定链表 1->2->3->4, 重新排列为 1->4->2->3.
 - 给定链表 1->2->3->4->5, 重新排列为 1->5->2->4->3.
-- 
+- 思路：一、找到中点；二、反转后面链表；三、拼接前后链表
+- 迭代+递归（根据思路自己写出，相应的对应题型有3,4）
+    ```cpp
+    class Solution {
+    public:
+        void reorderList(ListNode* head) 
+        {
+            // 注意：需要加上判断head->next的判断情况，由于快慢指针的原因
+            if(head == nullptr || head->next == nullptr)
+            {
+                return;
+            }
+            // 快慢指针找中点
+            ListNode* slow = head;
+            ListNode* pre_slow = new ListNode();
+            ListNode* fast = head;
+            // 合并指针临时变量
+            ListNode* reorder_list = head;
+            ListNode* cur = new ListNode();
+
+            // 第一步：快慢指针找中点
+            while(fast != nullptr && fast->next != nullptr)
+            {
+                pre_slow = slow;
+                slow = slow->next;
+                fast = fast->next->next;
+            }
+            // 切断首链表
+            pre_slow->next = nullptr;
+            // 第二步：翻转后面列表
+            ListNode* reverse_list = reverseList(slow);
+
+            // 第三步：合并列表
+            while(head != nullptr)
+            {
+                cur->next = head;
+                cur = cur->next;
+                head = head->next;
+                cur->next = reverse_list;
+                cur = cur->next;
+                reverse_list = reverse_list->next;
+            }
+            // 第四步：前面链表的尾指针指向后面链表的后续部分
+            cur->next = reverse_list;
+            head = reorder_list;
+        }
+
+        ListNode* reverseList(ListNode* head)
+        {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            // 注意：返回的变量结果
+            ListNode* cur = reverseList(head->next);
+            head->next->next = head;
+            head->next = nullptr;
+            return cur;
+        }
+    };
+    ```
+---
+
+<div id="llc" onclick="window.location.hash">
+
+#### 8. ​​linked-list-cycle
+linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形链表")
+- 给定一个链表，判断链表中是否有环,pos索引从0开始
+- 如果pos是-1，则在该链表中没有环
+  - 输入：head = [3,2,0,-4], pos = 1
+  - 输出：true
+  - 解释：链表中有一个环，其尾部连接到第二个节点
