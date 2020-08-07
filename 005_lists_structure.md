@@ -19,7 +19,10 @@
 * <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists​​​</a>
 * <a href="#partitionList">​6. partition-list​​​​</a>
 * <a href="#sortList">7. ​sort-list [很棒的list归并排序示例，5题的强化版]​</a>
-* <a href="#llc">8. ​​linked-list-cycle​ [3题，5题的强化应用，注意思路]​</a>
+* <a href="#reorderList">8. ​reorder-list [3题，5题的强化应用，重点是思路]​</a>
+* <a href="#llc">9. ​​linked-list-cycle​ [快慢指针的典型应用]​</a>
+* <a href="#llcii">10. ​​​linked-list-cycle-ii​​​</a>
+
 
 
 
@@ -29,7 +32,7 @@
 [image1]: .readme/traversal.gif "traversal"
 [image2]: .readme/recursion.gif "recursion"
 [image3]: .readme/circularlinkedlist.png "circularlinkedlist"
-
+[image4]: .readme/circularlinkedlistII.png "circularlinkedlistII"
 
 
 
@@ -756,7 +759,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
 
 <div id="llc" onclick="window.location.hash">
 
-#### 8. ​​linked-list-cycle
+#### 9. ​​linked-list-cycle
 linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形链表")
 - 给定一个链表，判断链表中是否有环,
 - pos索引从0开始，如果pos是-1，则在该链表中没有环，如图：
@@ -790,3 +793,13 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
         }
     };
     ```
+---
+
+<div id="llcii" onclick="window.location.hash">
+
+#### 10. ​​​linked-list-cycle-ii​
+linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形链表 II")
+- 给定一个链表，返回链表开始入环的第一个节点
+- 如果链表无环，则返回null
+![][image4]
+
