@@ -761,6 +761,32 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
 - 给定一个链表，判断链表中是否有环,
 - pos索引从0开始，如果pos是-1，则在该链表中没有环，如图：
 ![alt text][image3]
+  - 解释：链表中有一个环，其尾部连接到第二个节点
   - 输入：head = [3,2,0,-4]
   - 输出：true
-  - 解释：链表中有一个环，其尾部连接到第二个节点
+- 快慢指针迭代(思路题)
+    ```cpp
+    class Solution {
+    public:
+        bool hasCycle(ListNode *head) 
+        {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return false;
+            }
+            // 注意：快慢指针如何声明
+            ListNode* fast = head;
+            ListNode* slow = head;
+            while(fast != nullptr && fast->next != nullptr)
+            {
+                fast = fast->next->next;
+                slow = slow->next;
+                if(slow == fast)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+    };
+    ```
