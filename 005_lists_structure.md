@@ -28,6 +28,8 @@
 [//]: # (Image References)
 [image1]: .readme/traversal.gif "traversal"
 [image2]: .readme/recursion.gif "recursion"
+[image3]: .readme/circularlinkedlist.png "circularlinkedlist"
+
 
 
 
@@ -756,8 +758,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
 
 #### 8. ​​linked-list-cycle
 linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形链表")
-- 给定一个链表，判断链表中是否有环,pos索引从0开始
-- 如果pos是-1，则在该链表中没有环
-  - 输入：head = [3,2,0,-4], pos = 1
+- 给定一个链表，判断链表中是否有环,
+- pos索引从0开始，如果pos是-1，则在该链表中没有环，如图：
+![alt text][image3]
+  - 输入：head = [3,2,0,-4]
   - 输出：true
   - 解释：链表中有一个环，其尾部连接到第二个节点
