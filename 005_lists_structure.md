@@ -798,7 +798,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
 <div id="llcii" onclick="window.location.hash">
 
 #### 10. ​​​linked-list-cycle-ii​
-linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形链表 II")
+linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环形链表 II")
 - 给定一个链表，返回链表开始入环的第一个节点
 - 如果链表无环，则返回null
 ![][image4]
