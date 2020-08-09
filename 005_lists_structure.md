@@ -21,7 +21,7 @@
 * <a href="#sortList">7. ​sort-list [很棒的list归并排序示例，5题的强化版]​</a>
 * <a href="#reorderList">8. ​reorder-list [3题，5题的强化应用，重点是思路]​</a>
 * <a href="#llc">9. ​​linked-list-cycle​ [快慢指针的典型应用]​</a>
-* <a href="#llcii">10. ​​​linked-list-cycle-ii​​​</a>
+* <a href="#llcii">10. ​​​linked-list-cycle-ii [思路篇：9的加强应用(**推荐**)]​​​​</a>
 
 
 
@@ -33,7 +33,7 @@
 [image2]: .readme/recursion.gif "recursion"
 [image3]: .readme/circularlinkedlist.png "circularlinkedlist"
 [image4]: .readme/circularlinkedlistII.png "circularlinkedlistII"
-
+[image5]: .readme/circularlinkedlistII_2.png "circularlinkedlistII_2"
 
 
 <div id="removeDuplicatesFromSortedList" onclick="window.location.hash">
@@ -799,7 +799,80 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
 
 #### 10. ​​​linked-list-cycle-ii​
 linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环形链表 II")
-- 给定一个链表，返回链表开始入环的第一个节点
+- 给定一个链表，返回链表开始入环的第一个节点(索引从0开始)
 - 如果链表无环，则返回null
 ![][image4]
+- 迭代版本(快慢指针)[**推荐**]
+  - 思路数学证明：
+    1. 通过数学证明的方式，得出x=z
+    2. 判断是否有环
+    3. 一个指针从头开始，慢指针继续走，两指针相遇，则为入环起点
+    ![][image5]
+    ```cpp
+    class Solution {
+    public:
+        ListNode *detectCycle(ListNode *head) 
+        {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return nullptr;
+            }
+            ListNode* slow = head;
+            ListNode* fast = head;
+            // 为了找到有环的index
+            ListNode* tmp = head;
+            while(fast != nullptr && fast->next != nullptr)
+            {
+                slow = slow->next;
+                fast = fast->next->next;
+                // 判断是否有环
+                if(slow == fast)
+                {
+                    // 一个指针从头开始，慢指针继续走，两指针相遇，则为入环起点
+                    while(tmp != slow)
+                    {
+                        tmp = tmp->next;
+                        slow = slow->next;
+                    }
+                    return tmp;
+                }
+            }
+            return nullptr;
+        }
+    };
+    ```
+
+- 哈希函数版本(同样适用于9题)
+- 思路：
+  - 使用map将节点地址与访问的次数关联
+  - 如果有一个地址访问了超过1一次，说明链表中存在环
+    ```cpp
+    class Solution {
+    public:
+        ListNode *detectCycle(ListNode *head) 
+        {
+            // 注意：此处if的判断条件，不能包含 || head->next == nullptr
+            if(head == nullptr)
+            {
+                return head;
+            }
+            ListNode* cur = head;
+            std::unordered_map<ListNode*,int> u_map;
+            while(cur != nullptr)
+            {
+                // 如果map的索引大于1，则说明入环位置
+                if(u_map[cur]>1)
+                {
+                    return cur;
+                }
+                // 不要忘了，向map里面添加键和值
+                u_map[cur]++;
+                cur = cur->next;
+            }
+            return nullptr;
+        }
+    };
+    ```
+---
+
 
