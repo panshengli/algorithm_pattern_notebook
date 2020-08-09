@@ -14,15 +14,16 @@
 ## 📑 index
 * <a href="#removeDuplicatesFromSortedList">​1. remove-duplicates-from-sorted-list​</a>
 * <a href="#remove-duplicates-from-sorted-list-ii">2. remove-duplicates-from-sorted-list-ii</a>
-* <a href="#reverseLinkedList">​​3. reverse-linked-list​</a>
+* <a href="#reverseLinkedList">​​3. reverse-linked-list​ [*基础框架*，**注重recursion和traversal的写法**]</a>
 * <a href="#rlli">​​​4. reverse-linked-list-ii​​</a>
-* <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists​​​</a>
+* <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists​​​ </a>
 * <a href="#partitionList">​6. partition-list​​​​</a>
-* <a href="#sortList">7. ​sort-list [很棒的list归并排序示例，5题的强化版]​</a>
+* <a href="#sortList">7. ​sort-list [很棒的list**归并排序**示例，5题的强化版]​</a>
 * <a href="#reorderList">8. ​reorder-list [3题，5题的强化应用，重点是思路]​</a>
 * <a href="#llc">9. ​​linked-list-cycle​ [快慢指针的典型应用]​</a>
 * <a href="#llcii">10. ​​​linked-list-cycle-ii [思路篇：9的加强应用(**推荐**)]​​​​</a>
-
+* <a href="#pll">11. ​palindrome-linked-list [3题，5题的强化应用]​​​​​</a>
+* <a href="#clwrp">12. ​copy-list-with-random-pointer​​​​​​</a>
 
 
 
@@ -875,4 +876,131 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环�
     ```
 ---
 
+<div id="pll" onclick="window.location.hash">
 
+#### 11. ​palindrome-linked-list​​​​​
+linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "回文链表")
+- 请判断一个链表是否为回文链表
+- 思路(独立写出)：
+  - 1.快慢指针找到链表中点
+  - 2.翻转后半部分链表
+  - 3.比较前一部分链表和翻转后链表的值
+    ```cpp
+    class Solution {
+    public:
+        bool isPalindrome(ListNode* head) 
+        {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return true;
+            }
+            ListNode* fast = head;
+            ListNode* slow = head;
+            ListNode* pre_slow = new ListNode();
+            // 1. 找链表中点
+            while(fast != nullptr && fast->next != nullptr)
+            {
+                pre_slow = slow;
+                slow = slow->next;
+                fast = fast->next->next;
+            }
+            pre_slow->next = nullptr;
+            // 2. 翻转后半部分链表
+            ListNode* reverse_list = reverseListRecursion(slow);
+            // 3. 比较两个链表是否相等
+            while(head != nullptr)
+            {
+                if(head->val != reverse_list->val)
+                {
+                    return false;
+                }
+                head = head->next;
+                reverse_list = reverse_list->next;
+            }
+            return true;
+        }
+
+        ListNode* reverseListRecursion(ListNode* head)
+        {
+            if(head == nullptr || head->next == nullptr)
+            {
+                return head;
+            }
+            // 注意:递归填入的条件为head->next
+            ListNode* first_head = reverseList(head->next);
+            head->next->next = head;
+            head->next = nullptr;
+            return first_head;
+        }
+
+        ListNode* reverseListTraversion(ListNode* head)
+        {
+            if(head == nullptr)
+            {
+                return head;
+            }
+            // 注意：非遍历方式
+            ListNode* cur = head;
+            ListNode* pre = nullptr;
+            while(cur != nullptr)
+            {
+                // 注意：一定要用临时变量操作前后指针
+                ListNode* tmp_next = cur->next;
+                cur->next = pre;
+                pre = cur;
+                cur = tmp_next;
+            }
+            return pre;
+        }
+    };
+    ```
+---
+- 思路二：将值复制到数组中后用双指针法
+  - 复制链表值到数组列表中
+  - 使用双指针法判断是否为回文
+- **注意：回文串的判断循环**
+- **`for(int i = 0, j=values.size()-1;i<j;i++,j--)`**
+    ```cpp
+    class Solution {
+    public:
+        bool isPalindrome(ListNode* head) 
+        {
+            if(head == nullptr)
+            {
+                return true;
+            }
+            std::vector<int> vector_values;
+            while(head!= nullptr)
+            {
+                vector_values.push_back(head->val);
+                head = head->next;
+            }
+            return isPalindrome(vector_values);
+        }
+
+        bool isPalindrome(std::vector<int> values)
+        {
+            if(values.size()<2)
+            {
+                return true;
+            }
+            // 注意：回文串的判断循环
+            for(int i = 0, j=values.size()-1;i<j;i++,j--)
+            {
+                if(values[i] != values[j])
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+    };
+    ```
+---
+
+<div id="clwrp" onclick="window.location.hash">
+
+#### 12. ​copy-list-with-random-pointer
+linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-pointer/ "复制带随机指针的链表")
+- 给定一个链表，每个节点包含一个额外增加的随机指针
+- 该指针可以指向链表中的任何节点或空节点,要求返回这个链表的深拷贝
