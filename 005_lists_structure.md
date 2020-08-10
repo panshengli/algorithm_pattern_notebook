@@ -23,7 +23,7 @@
 * <a href="#llc">9. ​​linked-list-cycle​ [快慢指针的典型应用]​</a>
 * <a href="#llcii">10. ​​​linked-list-cycle-ii [思路篇：9的加强应用(**推荐**)]​​​​</a>
 * <a href="#pll">11. ​palindrome-linked-list [3题，5题的强化应用]​​​​​</a>
-* <a href="#clwrp">12. ​copy-list-with-random-pointer​​​​​​</a>
+* <a href="#clwrp">12. ​copy-list-with-random-pointer​​​​​​[链表的插入，复制，拆分，**很棒的思路**]</a>
 
 
 
@@ -1047,3 +1047,56 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
   - 3. 将复制链表从原链表分离
   - 第二步中复制random节点，有如下关系，即`A'->random = A->random->next`,如图
     ![][image6]
+    ```cpp
+    class Solution {
+    public:
+        Node* copyRandomList(Node* head) 
+        {
+            if(head == nullptr)
+            {
+                return head;
+            }
+            // 1. 创建组合链表
+            Node* cur = head;
+            while(cur != nullptr)
+            {
+                // 注意：此处链表复制的写法
+                Node* copy = new Node(cur->val);
+                copy->next = cur->next;
+                cur->next = copy;
+                cur = copy->next; 
+            }
+            // 2. 拷贝random节点
+            cur = head;
+            while(cur != nullptr)
+            {
+                if(cur->random != nullptr)
+                {
+                    // 注意：random节点拷贝的对应关系
+                    cur->next->random = cur->random->next;
+                }
+                cur = cur->next->next;
+            }
+            // 拆分链表
+            cur = head;
+            Node* copy_list = head->next;
+            Node* copy_node = copy_list;
+            while(cur != nullptr)
+            {
+                cur->next = copy_node->next;
+                // 注意：一定要判断copy_node->next是否为空
+                if(copy_node->next != nullptr)
+                {
+                    copy_node->next = copy_node->next->next;
+                }
+                // 注意：由于前面已经修改了指向，
+                // 因此此处只需要指向下一个node就可以了
+                cur = cur->next;
+                copy_node = copy_node->next;
+            }
+            return copy_list;
+            
+        }
+    };
+    ```
+---
