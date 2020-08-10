@@ -35,6 +35,7 @@
 [image3]: .readme/circularlinkedlist.png "circularlinkedlist"
 [image4]: .readme/circularlinkedlistII.png "circularlinkedlistII"
 [image5]: .readme/circularlinkedlistII_2.png "circularlinkedlistII_2"
+[image6]: .readme/copy_list.png "copy_list"
 
 
 <div id="removeDuplicatesFromSortedList" onclick="window.location.hash">
@@ -933,7 +934,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
             return first_head;
         }
 
-        ListNode* reverseListTraversion(ListNode* head)
+        ListNode* reverseListTraversal(ListNode* head)
         {
             if(head == nullptr)
             {
@@ -1004,3 +1005,45 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
 linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-pointer/ "复制带随机指针的链表")
 - 给定一个链表，每个节点包含一个额外增加的随机指针
 - 该指针可以指向链表中的任何节点或空节点,要求返回这个链表的深拷贝
+- 思路一：hashMap
+  - 借助哈希保存节点信息，时间复杂度：O(n)，空间复杂度：O(n)
+    ```cpp
+    class Solution {
+    public:
+        Node* copyRandomList(Node* head) 
+        {
+            if(head == nullptr)
+            {
+                return head;
+            }
+            std::unordered_map<Node*,Node*> umap;
+            Node* cur = head;
+            // 1. 将value拷贝到新的链表中
+            while(cur != nullptr)
+            {
+                umap[cur] = new Node(cur->val);
+                // 此时不能将下面两行放在此处，这样会改变其指向，导致copy的链表终止复制
+                // umap[cur]->random = umap[cur->random];
+                // umap[cur]->next = umap[cur->next];
+                cur = cur->next;
+            }
+            // 2. 复制链表next和random指针
+            cur = head;
+            while(cur != nullptr)
+            {
+                // 注意：后面指向copy的list,而不是指向cur->random
+                umap[cur]->random = umap[cur->random];
+                umap[cur]->next = umap[cur->next];
+                cur = cur->next;
+            }
+            return umap[head];
+        }
+    };
+    ```
+- 思路二：原地复制方式(思路篇)
+  - 推荐，虽然比较复杂，但是可以很好的理解链表的操作
+  - 1. 复制链表节点 如A->B->C 变为 A->A'->B->B'->C->C'
+  - 2. 设置节点random值
+  - 3. 将复制链表从原链表分离
+  - 第二步中复制random节点，有如下关系，即`A'->random = A->random->next`,如图
+    ![][image6]
