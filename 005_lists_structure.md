@@ -1064,7 +1064,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
                 Node* copy = new Node(cur->val);
                 copy->next = cur->next;
                 cur->next = copy;
-                cur = copy->next; 
+                cur = copy->next;
             }
             // 2. 拷贝random节点
             cur = head;
@@ -1084,7 +1084,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
             while(cur != nullptr)
             {
                 cur->next = copy_node->next;
-                // 注意：一定要判断copy_node->next是否为空
+                // 注意：一定要判断copy_node->next是否为空,或者cur->next != nullptr
                 if(copy_node->next != nullptr)
                 {
                     copy_node->next = copy_node->next->next;
