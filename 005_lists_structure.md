@@ -1095,7 +1095,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
                 copy_node = copy_node->next;
             }
             return copy_list;
-            
         }
     };
     ```
