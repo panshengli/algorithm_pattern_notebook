@@ -1,4 +1,4 @@
-## Data Structure and Algorithm
+# Data Structure and Algorithm
 
 ## 📑 Content
 
@@ -13,3 +13,20 @@
 #### 005_链表结构
 
 #### 006_栈和队列
+
+
+
+
+
+
+# Change Log
+data structure and algorithm notebook
+
+## 2020.08.12
+- added stack and queue markdown
+
+## 2020.07.18
+- modified md into different classes
+
+## 2020.07.10
+- added rabin_karp.cpp and srcSRC example
