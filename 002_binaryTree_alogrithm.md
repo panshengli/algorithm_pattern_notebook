@@ -191,7 +191,6 @@
                 s1.push(root->right);
             }
         }
-
         while (!s2.empty()) {
             std::cout << s2.top()->value << ",";
             s2.pop();
