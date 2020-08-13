@@ -15,9 +15,7 @@
 - Stack 栈
   * <a href="#minStack">1. min-stack</a>
   * <a href="#erpn">2. evaluate-reverse-polish-notation</a>
-
-
-
+  * <a href="#ds">3. decode-string</a>
 
 
 
@@ -126,4 +124,57 @@ linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-not
 - 说明：
   - 整数除法只保留整数部分。
   - 给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。
+- 思路：
+  - 注意：c++如何将字符转为数字atoi或stoi，思路题
+  - 开始判断是否存在数字符号
+  - 不存在，向栈中push数据
+  - 然后进行符号赋值操作
+  - 最后将表达式计算的结果push栈中
+  - 返回栈顶元素
+    ```cpp
+    class Solution {
+    public:
+        int evalRPN(vector<string>& tokens) 
+        {
+            std::stack<int> numbers;
+            for(int i=0;i<tokens.size();i++)
+            {
+                if(tokens.at(i) == "+" || tokens.at(i) == "-" 
+                    || tokens.at(i) == "*" || tokens.at(i) == "/")
+                {
+                    int res;
+                    int n2 = numbers.top();
+                    std::cout<<"n2: "<<n2<<std::endl;
+                    numbers.pop();
+                    int n1 = numbers.top();
+                    std::cout<<"n1: "<<n1<<std::endl;
+                    numbers.pop();
 
+                    if(tokens.at(i) == "+")
+                        res = n1+n2;
+                    if(tokens.at(i) == "-")
+                        res = n1-n2;
+                    if(tokens.at(i) == "*")
+                        res = n1*n2;
+                    if(tokens.at(i) == "/")
+                        res = n1/n2;
+                    // 不要忘记将计算的结果push到栈中
+                    numbers.push(res);
+                }
+                else
+                {
+                    // 重点：将字符串转换为数字
+                    numbers.push(stoi(tokens.at(i)));
+                }
+            }
+        return numbers.top();
+        }
+    };
+    ```
+---
+
+<div id="ds" onclick="window.location.hash">
+
+#### 3. decode-string
+linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串解码")
+- 给定一个经过编码的字符串，返回它解码后的字符串
