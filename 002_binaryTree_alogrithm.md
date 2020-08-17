@@ -2,7 +2,7 @@
 - struct BinaryTree
     ```cpp
     // Definition for a binary tree node.
-    struct TreeNode 
+    struct TreeNode
     {
         int val;
         TreeNode *left;
@@ -30,7 +30,10 @@
   * <a href="#validate-binary-search-tree">10. validate-binary-search-tree(#98)</a>
   * <a href="#insert-into-a-binary-search-tree">11. insert-into-a-binary-search-tree(#701)</a>
 
-* <a href="#binaryTree">7. binary-tree-inorder-traversal(#94)[使用1.stack方式遍历]</a>
+* <a href="#binaryTree">12. binary-tree-inorder-traversal(#94)[使用1.stack方式遍历]</a>
+
+
+
 
 
 
@@ -38,6 +41,9 @@
 [image1]: .readme/dfs.png "dfs"
 
 ---
+
+
+
 
 <div id="binaryTree" onclick="window.location.hash">
 
@@ -769,3 +775,4 @@ public:
         }
     };
     ```
+---
