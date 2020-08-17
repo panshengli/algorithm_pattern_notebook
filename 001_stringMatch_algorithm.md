@@ -1,12 +1,12 @@
 ## StringMatch Algorithm
 
 ## 📑 index
-* <a href="#strStr">strStr</a>
+* <a href="#strStr">1. strStr(#28)</a>
 
 
 <div id="strStr" onclick="window.location.hash">
 
-#### strStr
+#### 1. strStr(#28)
 linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符串查找")
 
 1. **Rabin-Karp Algorithm** instead of kmp

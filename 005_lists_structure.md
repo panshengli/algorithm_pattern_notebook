@@ -12,18 +12,18 @@
 
 
 ## 📑 index
-* <a href="#removeDuplicatesFromSortedList">​1. remove-duplicates-from-sorted-list​</a>
-* <a href="#remove-duplicates-from-sorted-list-ii">2. remove-duplicates-from-sorted-list-ii</a>
-* <a href="#reverseLinkedList">​​3. reverse-linked-list​ [*基础框架*，**注重recursion和traversal的写法**]</a>
-* <a href="#rlli">​​​4. reverse-linked-list-ii​​</a>
-* <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists​​​ </a>
-* <a href="#partitionList">​6. partition-list​​​​</a>
-* <a href="#sortList">7. ​sort-list [很棒的list**归并排序**示例，5题的强化版]​</a>
-* <a href="#reorderList">8. ​reorder-list [3题，5题的强化应用，重点是思路]​</a>
-* <a href="#llc">9. ​​linked-list-cycle​ [快慢指针的典型应用]​</a>
-* <a href="#llcii">10. ​​​linked-list-cycle-ii [思路篇：9的加强应用(**推荐**)]​​​​</a>
-* <a href="#pll">11. ​palindrome-linked-list [3题，5题的强化应用]​​​​​</a>
-* <a href="#clwrp">12. ​copy-list-with-random-pointer​​​​​​[链表的插入，复制，拆分，**很棒的思路**]</a>
+* <a href="#removeDuplicatesFromSortedList">​1. remove-duplicates-from-sorted-list(#83)​</a>
+* <a href="#remove-duplicates-from-sorted-list-ii">2. remove-duplicates-from-sorted-list-ii(#82)</a>
+* <a href="#reverseLinkedList">​​3. reverse-linked-list(#206)[*基础框架*，**注重recursion和traversal的写法**]</a>
+* <a href="#rlli">​​​4. reverse-linked-list-ii​​(#92)</a>
+* <a href="#mergeTwoSortedLists">​​​​5. merge-two-sorted-lists(#21)​​​ </a>
+* <a href="#partitionList">​6. partition-list​​​​((#86)</a>
+* <a href="#sortList">7. ​sort-list(#148)[很棒的list**归并排序**示例，5题的强化版]​</a>
+* <a href="#reorderList">8. ​reorder-list(#143)[3题，5题的强化应用，重点是思路]​</a>
+* <a href="#llc">9. ​​linked-list-cycle​(#141)[快慢指针的典型应用]​</a>
+* <a href="#llcii">10. ​​​linked-list-cycle-ii(#142)[思路篇：9的加强应用(**推荐**)]​​​​</a>
+* <a href="#pll">11. ​palindrome-linked-list(#234)[3题，5题的强化应用]​​​​​</a>
+* <a href="#clwrp">12. ​copy-list-with-random-pointer​​​​​​(#138)[链表的插入，复制，拆分，**很棒的思路**]</a>
 
 
 
@@ -40,7 +40,7 @@
 
 <div id="removeDuplicatesFromSortedList" onclick="window.location.hash">
 
-#### 1. ​remove-duplicates-from-sorted-list​
+#### 1. ​remove-duplicates-from-sorted-list​(#83)
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
 - 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
 - 迭代版本（直接法）
@@ -149,7 +149,7 @@ public:
 
 <div id="remove-duplicates-from-sorted-list-ii" onclick="window.location.hash">
 
-#### ​​2. remove-duplicates-from-sorted-list-ii​
+#### ​​2. remove-duplicates-from-sorted-list-ii​(#82)
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
 - 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
 - 方式一： 迭代方法(注意元素去重以及边界条件处理)
@@ -227,7 +227,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
 
 <div id="reverseLinkedList" onclick="window.location.hash">
 
-#### 3. ​​​reverse-linked-list​​​
+#### 3. ​​​reverse-linked-list​​​(#206)
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反转一个单链表")
 - 反转一个单链表
 - 定义两个指针： preprepre 和 curcurcur ；preprepre 在前 curcurcur 在后
@@ -289,7 +289,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反�
 
 <div id="rlli" onclick="window.location.hash">
 
-#### 4. ​​​reverse-linked-list​​​-ii
+#### 4. ​​​reverse-linked-list​​​-ii(#92)
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "反转链表 II")
 - 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
 - 方法一：迭代法-头插法
@@ -422,7 +422,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
 
 <div id="mergeTwoSortedLists" onclick="window.location.hash">
 
-#### 5. ​merge-two-sorted-lists
+#### 5. ​merge-two-sorted-lists(#21)
 linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "合并两个有序链表")
 - 将两个**升序链表**合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的
 - 迭代版本(谁值大指向谁，然后节点指向下一节点)
@@ -506,7 +506,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
 
 <div id="partitionList" onclick="window.location.hash">
 
-#### 6. ​​partition-list​​​​
+#### 6. ​​partition-list​​​​(#86)
 linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链表")
 - 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
 - **思路：将大于等于x的节点，放到另外一个链表，最后连接这两个链表**
@@ -551,7 +551,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
 
 <div id="sortList" onclick="window.location.hash">
 
-#### 7. ​sort-list
+#### 7. ​sort-list(#148)
 linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
 - 在**O(nlogn)时间复杂度**和常数级空间复杂度下，对链表进行排序
 - 只有 heapSort, mergeSort, quickSort
@@ -691,7 +691,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
 
 <div id="reorderList" onclick="window.location.hash">
 
-#### 8. ​reorder-list
+#### 8. ​reorder-list(#143)
 linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表")
 - 示例
 - 给定链表 1->2->3->4, 重新排列为 1->4->2->3.
@@ -761,7 +761,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
 
 <div id="llc" onclick="window.location.hash">
 
-#### 9. ​​linked-list-cycle
+#### 9. ​​linked-list-cycle(#141)
 linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形链表")
 - 给定一个链表，判断链表中是否有环,
 - pos索引从0开始，如果pos是-1，则在该链表中没有环，如图：
@@ -799,7 +799,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
 
 <div id="llcii" onclick="window.location.hash">
 
-#### 10. ​​​linked-list-cycle-ii​
+#### 10. ​​​linked-list-cycle-ii​(#142)
 linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环形链表 II")
 - 给定一个链表，返回链表开始入环的第一个节点(索引从0开始)
 - 如果链表无环，则返回null
@@ -879,7 +879,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环�
 
 <div id="pll" onclick="window.location.hash">
 
-#### 11. ​palindrome-linked-list​​​​​
+#### 11. ​palindrome-linked-list​​​​​(#234)
 linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "回文链表")
 - 请判断一个链表是否为回文链表
 - 思路(独立写出)：
@@ -1001,7 +1001,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
 
 <div id="clwrp" onclick="window.location.hash">
 
-#### 12. ​copy-list-with-random-pointer
+#### 12. ​copy-list-with-random-pointer(#138)
 linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-pointer/ "复制带随机指针的链表")
 - 给定一个链表，每个节点包含一个额外增加的随机指针
 - 该指针可以指向链表中的任何节点或空节点,要求返回这个链表的深拷贝

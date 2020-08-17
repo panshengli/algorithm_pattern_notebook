@@ -13,9 +13,9 @@
 
 ## 📑 index
 - Stack 栈
-  * <a href="#minStack">1. min-stack</a>
-  * <a href="#erpn">2. evaluate-reverse-polish-notation</a>
-  * <a href="#ds">3. decode-string</a>
+  * <a href="#minStack">1. min-stack(#155)</a>
+  * <a href="#erpn">2. evaluate-reverse-polish-notation(#150)</a>
+  * <a href="#ds">3. decode-string(#394)</a>
 
 
 
@@ -25,7 +25,7 @@
 
 <div id="minStack" onclick="window.location.hash">
 
-#### 1. min-stack
+#### 1. min-stack(#155)
 linkage: [leetcode](https://leetcode-cn.com/problems/min-stack/ "最小栈")
 - 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈
   - push(x) —— 将元素 x 推入栈中
@@ -118,14 +118,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/min-stack/ "最小栈")
 
 <div id="erpn" onclick="window.location.hash">
 
-#### 2. evaluate-reverse-polish-notation
+#### 2. evaluate-reverse-polish-notation(#150)
 linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/ "逆波兰表达式求值")
 - 根据 逆波兰表示法，求表达式的值
 - 说明：
   - 整数除法只保留整数部分。
   - 给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。
 - 思路：
-  - 注意：c++如何将字符转为数字atoi或stoi，思路题
+  - 注意：c++如何将字符转为数字stoi，思路题
   - 开始判断是否存在数字符号
   - 不存在，向栈中push数据
   - 然后进行符号赋值操作
@@ -144,10 +144,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-not
                 {
                     int res;
                     int n2 = numbers.top();
-                    std::cout<<"n2: "<<n2<<std::endl;
                     numbers.pop();
                     int n1 = numbers.top();
-                    std::cout<<"n1: "<<n1<<std::endl;
                     numbers.pop();
 
                     if(tokens.at(i) == "+")
@@ -175,6 +173,57 @@ linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-not
 
 <div id="ds" onclick="window.location.hash">
 
-#### 3. decode-string
+#### 3. decode-string(#394)
 linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串解码")
 - 给定一个经过编码的字符串，返回它解码后的字符串
+- 思路题：利用stack思想
+  - 1. 申明关于nums和strs的stack;
+  - 2. 将数字push到nums，字母push到strs;
+  - 3. 遇到'['入栈，push(num)和push(str),同时重置num和str;
+  - 4. 遇到']'出栈，将重复字母push到栈顶，(重点)若是'['，sttr会被压入strs栈，作为上一层的运算
+    ```cpp
+    class Solution {
+    public:
+        string decodeString(string s) 
+        {
+            int num = 0;
+            string str = "";
+            std::stack<int> nums;
+            std::stack<string> strs;
+            int s_len = s.length();
+            for(int i = 0; i<s_len;i++)
+            {
+                if(s[i]<='9'&&s[i]>='0')
+                {
+                    num = 10 * num + (s[i]-'0');
+                }
+                else if((s[i]>='a'&&s[i]<='z') || (s[i]>='A'&&s[i]<='Z'))
+                {
+                    str = str + s[i];
+                }
+                else if(s[i] == '[')
+                {
+                    nums.push(num);
+                    num = 0;
+                    strs.push(str);
+                    str = "";
+                }
+                else
+                {
+                    int repeat = nums.top();
+                    nums.pop();
+                    for(int i = 0; i<repeat;i++)
+                    {
+                        strs.top() += str;
+                    }
+                    // 取出重复元素
+                    str = strs.top();
+                    //之后若还是字母，就会直接加到res之后，因为它们是同一级的运算
+                    //若是左括号，res会被压入strs栈，作为上一层的运算
+                    strs.pop();
+                }
+            }
+            return str;
+        }
+    };
+    ```

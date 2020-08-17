@@ -18,17 +18,17 @@
 - 二叉树遍历
   * <a href="#binaryTree">1. [代码框架] binaryTree</a>
   * <a href="#BFS">2. [代码框架] BFS</a>
-  * <a href="#maxDepthBinaryTree">3. maxDepthBinaryTree</a>
-  * <a href="#balancedTree">4. balancedTree</a>
-  * <a href="#binary-tree-maximum-path-sum">5. binary-tree-maximum-path-sum</a>
-  * <a href="#lowest-common-ancestor-of-a-binary-tree">6. lowest-common-ancestor-of-a-binary-tree</a>
+  * <a href="#maxDepthBinaryTree">3. maxDepthBinaryTree(#104)</a>
+  * <a href="#balancedTree">4. balancedTree(#110)</a>
+  * <a href="#binary-tree-maximum-path-sum">5. binary-tree-maximum-path-sum(#124)</a>
+  * <a href="#lowest-common-ancestor-of-a-binary-tree">6. lowest-common-ancestor-of-a-binary-tree(#236)</a>
 - BFS 层次应用
-  * <a href="#binary-tree-level-order-traversal">7. binary-tree-level-order-traversal[与3类似]</a>
-  * <a href="#binary-tree-level-order-traversal-ii">8. binary-tree-level-order-traversal-ii[与7类似]</a>
-  * <a href="#binary-tree-zigzag-level-order-traversal">9. binary-tree-zigzag-level-order-traversal[与8类似]</a>
+  * <a href="#binary-tree-level-order-traversal">7. binary-tree-level-order-traversal(#102)[与3类似]</a>
+  * <a href="#binary-tree-level-order-traversal-ii">8. binary-tree-level-order-traversal-ii(#107)[与7类似]</a>
+  * <a href="#binary-tree-zigzag-level-order-traversal">9. binary-tree-zigzag-level-order-traversal(#103)[与8类似]</a>
 - 二叉搜索树应用
-  * <a href="#validate-binary-search-tree">10. validate-binary-search-tree</a>
-  * <a href="#insert-into-a-binary-search-tree">11. insert-into-a-binary-search-tree</a>
+  * <a href="#validate-binary-search-tree">10. validate-binary-search-tree(#98)</a>
+  * <a href="#insert-into-a-binary-search-tree">11. insert-into-a-binary-search-tree(#701)</a>
 
 
 
@@ -241,7 +241,7 @@
 
 <div id="maxDepthBinaryTree" onclick="window.location.hash">
 
-#### 3. maxDepthBinaryTree
+#### 3. maxDepthBinaryTree(#104)
 linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/ "二叉树的最大深度")
 - **递归方式**
   - 三个条件：递归定义，递归出口，递归拆解
@@ -330,7 +330,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
 
 <div id="balancedTree" onclick="window.location.hash">
 
-#### 4. balancedTree
+#### 4. balancedTree(#110)
 linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高度平衡的二叉树")
 - 一棵高度平衡二叉树定义为：  一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1。
     ```cpp
@@ -361,7 +361,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
 
 <div id="binary-tree-maximum-path-sum" onclick="window.location.hash">
 
-#### 5. binary-tree-maximum-path-sum
+#### 5. binary-tree-maximum-path-sum(#124)
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/ "二叉树中的最大路径和")
 - 给定一个非空二叉树，返回其最大路径和
 - 理解如何递归很关键
@@ -398,7 +398,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
 
 <div id="lowest-common-ancestor-of-a-binary-tree" onclick="window.location.hash">
 
-#### 6. lowest-common-ancestor-of-a-binary-tree
+#### 6. lowest-common-ancestor-of-a-binary-tree(#236)
 linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ "二叉树的最近公共祖先")
 - 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
 - **ADT**
@@ -410,7 +410,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
     ```cpp
     class Solution {
     public:
-        TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) 
+        TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
         {
             if(root == NULL)
             {
@@ -446,7 +446,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 
 <div id="binary-tree-level-order-traversal" onclick="window.location.hash">
 
-#### 7. binary-tree-level-order-traversal
+#### 7. binary-tree-level-order-traversal(#102)
 - 给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 
 - 即逐层地，从左到右访问所有节点 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/submissions/ "二叉树的层序遍历")
 - **注意c++中queue()[push,pop]和deque()[push_back,pop_front]的使用**
@@ -526,7 +526,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 
 <div id="binary-tree-level-order-traversal-ii" onclick="window.location.hash">
 
-#### 8. binary-tree-level-order-traversal-ii
+#### 8. binary-tree-level-order-traversal-ii(#107)
 - 给定一个二叉树，返回其节点值自底向上的层次遍历。
 - 即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历
 - linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii/ "二叉树的层次遍历 II")
@@ -547,7 +547,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 
 <div id="binary-tree-zigzag-level-order-traversal" onclick="window.location.hash">
 
-#### 9. binary-tree-zigzag-level-order-traversal
+#### 9. binary-tree-zigzag-level-order-traversal(#103)
 - 给定一个二叉树，返回其节点值的锯齿形层次遍历。
 - linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/ "二叉树的锯齿形层次遍历")
 - **注意BFS做法:**
@@ -564,7 +564,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 
 <div id="validate-binary-search-tree" onclick="window.location.hash">
 
-#### 10. validate-binary-search-tree
+#### 10. validate-binary-search-tree(#98)
 - 给定一个二叉树，判断其是否是一个有效的二叉搜索树
 - linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree/ "验证二叉搜索树")
 - 思路一：**利用Recursion方法**
@@ -685,7 +685,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 
 <div id="insert-into-a-binary-search-tree" onclick="window.location.hash">
 
-#### 11. insert-into-a-binary-search-tree
+#### 11. insert-into-a-binary-search-tree(#701)
 - 给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。 
 - 返回插入后二叉搜索树的根节点。 保证原始二叉搜索树中不插入存在的值。
 - 只要符合二叉搜索树即可，不需要维护子树的高度差。
