@@ -30,6 +30,8 @@
   * <a href="#validate-binary-search-tree">10. validate-binary-search-tree(#98)</a>
   * <a href="#insert-into-a-binary-search-tree">11. insert-into-a-binary-search-tree(#701)</a>
 
+* <a href="#binaryTree">7. binary-tree-inorder-traversal(#94)[使用1.stack方式遍历]</a>
+
 
 
 [//]: # (Image References)
@@ -41,7 +43,7 @@
 
 #### 1. binaryTree
 1. 三种递归遍历 
-    Refer by [更简单的非递归遍历二叉树的方法](https://www.jianshu.com/p/49c8cfd07410)
+    Refer by [更简单的非递归遍历二叉树的方法](https://blog.csdn.net/u012102306/article/details/52841163)
     ```cpp
     void order(TreeNode *root, vector<int> &path)
     {
@@ -63,13 +65,14 @@
     }
     ```
 2. **更简单的非递归遍历二叉树**
-- 有重合元素的局部有序一定能导致整体有序
+- 有重合元素的**局部有序**一定能导致**整体有序**
 - 将栈顶元素取出，使以此元素为“根”结点的局部有序入栈，但若此前已通过该结点将其局部入栈，则直接出栈输出即可。
     ```cpp
     // 非递归遍历
     void orderTraversal(TreeNode *root, vector<int> &path)
     {
         stack< pair<TreeNode *, bool> > s;
+        // 注意： make_pair不能使用尖括号"<>"
         s.push(make_pair(root, false));
         bool visited;
         while(!s.empty())
@@ -77,6 +80,7 @@
             root = s.top().first;
             visited = s.top().second;
             s.pop();
+            // 注意： 不要忘记root为空的处理
             if(root == NULL)
                 continue;
             // 若此前已通过该结点将其局部入栈，则直接出栈输出即可
@@ -98,6 +102,7 @@
                 s.push(make_pair(root, true));
                 s.push(make_pair(root->right, false));
                 s.push(make_pair(root->left, false));
+            }
         }
     }
     ```
