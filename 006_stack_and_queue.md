@@ -16,7 +16,8 @@
   * <a href="#minStack">1. min-stack(#155)</a>
   * <a href="#erpn">2. evaluate-reverse-polish-notation(#150)</a>
   * <a href="#ds">3. decode-string(#394)</a>
-  * <a href="#cg">4. clone-graph(#133)</a>
+  * <a href="#cg">4. clone-graph(#133)[遍历图常用的模板，dfs&bfs]</a>
+  * <a href="#noi">5. number-of-islands(#200)</a>
 
 
 
@@ -239,4 +240,76 @@ linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串�
 #### 4. clone-graph(#133)
 linkage: [leetcode](https://leetcode-cn.com/problems/clone-graph/ "克隆图")
 - 给你无向连通图中一个节点的引用，请你返回该图的深拷贝(克隆)
-- 
+- 因为图存在环，所以要标记访问过的结点，避免重复形成死循环
+- **重点掌握，后面图遍历都和这个有关系**
+- 思路一：dfs
+```cpp
+class Solution {
+public:
+    Node* cloneGraph(Node* node) 
+    {
+        if(node == nullptr)
+        {
+            return node;
+        }
+        // 节点存在，直接返回
+        if(visited_.find(node) != visited_.end())
+        {
+            return visited_[node];
+        }
+        Node* copyNode = new Node(node->val);
+        visited_[node] = copyNode;
+        for(auto &i:node->neighbors)
+        {
+            // 对neighbor进行复制操作
+            copyNode->neighbors.push_back(cloneGraph(i));
+        }
+        return copyNode;
+    }
+private:
+    std::unordered_map<Node*, Node*> visited_;
+};
+```
+- 思路二：bfs(queue)
+    ```cpp
+    class Solution {
+    public:
+        Node* cloneGraph(Node* node) 
+        {
+            if(node == nullptr)
+            {
+                return node;
+            }
+            std::queue<Node*> q;
+            Node* cloneNode = new Node(node->val);
+            visited_[node] = cloneNode;
+            //队列中保存的是还没有访问过的节点
+            q.push(node);
+            while(!q.empty())
+            {
+                Node* tmp = q.front();
+                q.pop();
+                for(auto &i:tmp->neighbors)
+                {
+                    // 是否遍历过，没遍历则push
+                    if(visited_.find(i) == visited_.end())
+                    {
+                        visited_[i] = new Node(i->val);
+                        q.push(i);
+                    }
+                    visited_[tmp] ->neighbors.push_back(visited_[i]);
+                }
+            }
+            return cloneNode;
+        }
+    private:
+        std::unordered_map<Node*, Node*> visited_;
+    };
+    ```
+---
+
+<div id="noi" onclick="window.location.hash">
+
+#### 5. number-of-islands(#200)
+linkage: [leetcode](https://leetcode-cn.com/problems/number-of-islands/ "岛屿数量")
+- 给你一个由'1'（陆地）和'0'（水）组成的的二维网格，请你计算网格中岛屿的数量

@@ -1006,11 +1006,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
 - 给定一个链表，每个节点包含一个额外增加的随机指针
 - 该指针可以指向链表中的任何节点或空节点,要求返回这个链表的深拷贝
 - 思路一：hashMap
-  - 借助哈希保存节点信息，时间复杂度：O(n)，空间复杂度：O(n)
+  - 常用模板，借助哈希保存节点信息，时间复杂度：O(n)，空间复杂度：O(n)
     ```cpp
     class Solution {
     public:
-        Node* copyRandomList(Node* head) 
+        Node* copyRandomList(Node* head)
         {
             if(head == nullptr)
             {
