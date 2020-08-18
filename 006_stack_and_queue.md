@@ -140,7 +140,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-not
     ```cpp
     class Solution {
     public:
-        int evalRPN(vector<string>& tokens) 
+        int evalRPN(vector<string>& tokens)
         {
             std::stack<int> numbers;
             for(int i=0;i<tokens.size();i++)
@@ -242,68 +242,83 @@ linkage: [leetcode](https://leetcode-cn.com/problems/clone-graph/ "克隆图")
 - 给你无向连通图中一个节点的引用，请你返回该图的深拷贝(克隆)
 - 因为图存在环，所以要标记访问过的结点，避免重复形成死循环
 - **重点掌握，后面图遍历都和这个有关系**
-- 思路一：dfs
+- 思路一：dfs(递归方式)
+  - 1. 处理遍历后的结果，防止陷入死循环
+  - 2. 没遍历过进行赋值处理
+  - 3. 处理neighbors节点，注意neighbors节点的结构
 ```cpp
 class Solution {
 public:
-    Node* cloneGraph(Node* node) 
+    Node* cloneGraph(Node* node)
     {
         if(node == nullptr)
         {
             return node;
         }
-        // 节点存在，直接返回
-        if(visited_.find(node) != visited_.end())
+        // 防止陷入死循环，遍历过直接返回
+        if(nodes_map_.find(node) != nodes_map_.end())
         {
-            return visited_[node];
+            return nodes_map_[node];
         }
-        Node* copyNode = new Node(node->val);
-        visited_[node] = copyNode;
-        for(auto &i:node->neighbors)
+        // 不相等进行赋值
+        nodes_map_[node] = new Node(node->val);
+        // 开始处理neighbors节点
+        for(auto &i : node->neighbors)
         {
-            // 对neighbor进行复制操作
-            copyNode->neighbors.push_back(cloneGraph(i));
+            // 开始处理neighbors节点
+            nodes_map_[node]->neighbors.push_back(cloneGraph(i));
         }
-        return copyNode;
+        return nodes_map_[node];
     }
+
 private:
-    std::unordered_map<Node*, Node*> visited_;
+    std::unordered_map<Node*, Node*> nodes_map_;
 };
 ```
 - 思路二：bfs(queue)
+  - 1. 声明queue，并对其进行入队处理
+  - 2. 将开始node中的值拷贝到map中
+  - 3. 申明一个临时node，用于进行当前队列值操作
+  - 4. 对neighbors进行处理，同时也对没遍历的节点进行赋值操作
+  - 5. 注意要将新的节点压入队中
+  - 6. 最后处理neighbors中的值(注意代码)
     ```cpp
     class Solution {
     public:
-        Node* cloneGraph(Node* node) 
+        Node* cloneGraph(Node* node)
         {
             if(node == nullptr)
             {
                 return node;
             }
+            // 声明一个queue,并对其进行入队处理
             std::queue<Node*> q;
-            Node* cloneNode = new Node(node->val);
-            visited_[node] = cloneNode;
-            //队列中保存的是还没有访问过的节点
             q.push(node);
+            // 重点：将开始node的值copy到新的节点中
+            nodes_map_[node] = new Node(node->val);
             while(!q.empty())
             {
+                // 声明一个临时变量
                 Node* tmp = q.front();
                 q.pop();
+                // 重点：对neighbors进行处理，特别注意嵌套关系
                 for(auto &i:tmp->neighbors)
                 {
-                    // 是否遍历过，没遍历则push
-                    if(visited_.find(i) == visited_.end())
+                    // 没遍历进行节点赋值操作
+                    if(nodes_map_.find(i) == nodes_map_.end())
                     {
-                        visited_[i] = new Node(i->val);
+                        nodes_map_[i] = new Node(i->val);
+                        // 重点：将新的node压到队中
                         q.push(i);
                     }
-                    visited_[tmp] ->neighbors.push_back(visited_[i]);
+                    // 重点：注意放入vector中的是nodes_map_[i]，非i
+                    nodes_map_[tmp]->neighbors.push_back(nodes_map_[i]);
                 }
             }
-            return cloneNode;
+            return  nodes_map_[node];
         }
     private:
-        std::unordered_map<Node*, Node*> visited_;
+        std::unordered_map<Node*,Node*> nodes_map_;
     };
     ```
 ---
@@ -312,4 +327,4 @@ private:
 
 #### 5. number-of-islands(#200)
 linkage: [leetcode](https://leetcode-cn.com/problems/number-of-islands/ "岛屿数量")
-- 给你一个由'1'（陆地）和'0'（水）组成的的二维网格，请你计算网格中岛屿的数量
+- 给你一个由'1'（陆地）和'0'（水）组成的的二维网格，请你计算网格中岛
