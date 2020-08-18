@@ -328,3 +328,52 @@ private:
 #### 5. number-of-islands(#200)
 linkage: [leetcode](https://leetcode-cn.com/problems/number-of-islands/ "岛屿数量")
 - 给你一个由'1'（陆地）和'0'（水）组成的的二维网格，请你计算网格中岛
+- 思路一：dfs
+
+```cpp
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid) 
+    {
+        outer_size_ = grid.size();
+        inner_size_ = grid[0].size();
+        if(inner_size_ == 0 || outer_size_ == 0)
+        {
+            count_ = 0;
+        }
+        for(int i = 0; i<outer_size_;i++)
+        {
+            for(int j =0;j<inner_size_;j++)
+            {
+                if(grid[i][j] == '1')
+                {
+                    count_++;
+                    dfs(grid, i, j);
+                }
+            }
+        }
+        return count_;
+    }
+
+    void dfs(vector<vector<char>>& grid, int i, int j)
+    {
+        if(i<0 || i>=outer_size_ || j<0 || j>=inner_size_)
+        {
+            return;
+        }
+        if(grid[i][j] == '0')
+        {
+            return;
+        }
+        dfs(grid,i-1,j);
+        dfs(grid,i+1,j);
+        dfs(grid,i,j-1);
+        dfs(grid,i,j+1);
+    }
+
+private:
+    int inner_size_;
+    int outer_size_;
+    int count_;
+};
+```
