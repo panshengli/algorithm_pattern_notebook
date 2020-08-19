@@ -329,51 +329,56 @@ private:
 linkage: [leetcode](https://leetcode-cn.com/problems/number-of-islands/ "岛屿数量")
 - 给你一个由'1'（陆地）和'0'（水）组成的的二维网格，请你计算网格中岛
 - 思路一：dfs
+  - 1. 遍历当前vector，当遍历字符'1'时，count加1
+  - 2. 进入dfs递归操作，注意递归返回的条件
+  - 3. 重点：递归处理时将遍历后的grid[i][j]置为'0'
+  - 4. 进行四个方位递归
 
-```cpp
-class Solution {
-public:
-    int numIslands(vector<vector<char>>& grid) 
-    {
-        outer_size_ = grid.size();
-        inner_size_ = grid[0].size();
-        if(inner_size_ == 0 || outer_size_ == 0)
+    ```cpp
+    class Solution {
+    public:
+        int numIslands(vector<vector<char>>& grid)
         {
-            count_ = 0;
-        }
-        for(int i = 0; i<outer_size_;i++)
-        {
-            for(int j =0;j<inner_size_;j++)
+            if(grid.size() == 0)
+                return 0;
+            outer_size_ = grid.size();
+            inner_size_ = grid[0].size();
+            for(int i = 0; i<outer_size_;i++)
             {
-                if(grid[i][j] == '1')
+                for(int j =0;j<inner_size_;j++)
                 {
-                    count_++;
-                    dfs(grid, i, j);
+                    if(grid[i][j] == '1')
+                    {
+                        count_++;
+                        dfs(grid, i, j);
+                    }
                 }
             }
+            return count_;
         }
-        return count_;
-    }
 
-    void dfs(vector<vector<char>>& grid, int i, int j)
-    {
-        if(i<0 || i>=outer_size_ || j<0 || j>=inner_size_)
+        void dfs(vector<vector<char>>& grid, int i, int j)
         {
-            return;
+            if(i<0 || i>=outer_size_ || j<0 || j>=inner_size_)
+                return;
+            if(grid[i][j] == '0')
+                return;
+            // 注意：不要忘了将遍历过的grid[i][j]赋值为'0'
+            grid[i][j] = '0';
+            dfs(grid,i-1,j);
+            dfs(grid,i+1,j);
+            dfs(grid,i,j-1);
+            dfs(grid,i,j+1);
         }
-        if(grid[i][j] == '0')
-        {
-            return;
-        }
-        dfs(grid,i-1,j);
-        dfs(grid,i+1,j);
-        dfs(grid,i,j-1);
-        dfs(grid,i,j+1);
-    }
 
-private:
-    int inner_size_;
-    int outer_size_;
-    int count_;
-};
+    private:
+        int inner_size_;
+        int outer_size_;
+        int count_;
+    };
+    ```
+- 思路二：bfs
+
+```cpp
+
 ```
