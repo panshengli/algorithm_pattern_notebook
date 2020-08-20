@@ -18,6 +18,7 @@
   * <a href="#ds">3. decode-string(#394)</a>
   * <a href="#cg">4. clone-graph(#133)[遍历图常用的模板，dfs&bfs]</a>
   * <a href="#noi">5. number-of-islands(#200)</a>
+  * <a href="#lrih">6. largest-rectangle-in-histogram(#84)</a>
 
 
 
@@ -25,6 +26,8 @@
 
 
 
+
+---
 [//]: # (Image References)
 [image1]: .readme/stack.gif "stack"
 
@@ -333,52 +336,80 @@ linkage: [leetcode](https://leetcode-cn.com/problems/number-of-islands/ "岛屿�
   - 2. 进入dfs递归操作，注意递归返回的条件
   - 3. 重点：递归处理时将遍历后的grid[i][j]置为'0'
   - 4. 进行四个方位递归
-
-    ```cpp
-    class Solution {
-    public:
-        int numIslands(vector<vector<char>>& grid)
+```cpp
+class Solution {
+public:
+    int numIslands(vector<vector<char>>& grid)
+    {
+        if(grid.size() == 0)
+            return 0;
+        outer_size_ = grid.size();
+        inner_size_ = grid[0].size();
+        for(int i = 0; i<outer_size_;i++)
         {
-            if(grid.size() == 0)
-                return 0;
-            outer_size_ = grid.size();
-            inner_size_ = grid[0].size();
-            for(int i = 0; i<outer_size_;i++)
+            for(int j =0;j<inner_size_;j++)
             {
-                for(int j =0;j<inner_size_;j++)
+                if(grid[i][j] == '1')
                 {
-                    if(grid[i][j] == '1')
-                    {
-                        count_++;
-                        dfs(grid, i, j);
-                    }
+                    count_++;
+                    dfs(grid, i, j);
                 }
             }
-            return count_;
         }
+        return count_;
+    }
 
-        void dfs(vector<vector<char>>& grid, int i, int j)
-        {
-            if(i<0 || i>=outer_size_ || j<0 || j>=inner_size_)
-                return;
-            if(grid[i][j] == '0')
-                return;
-            // 注意：不要忘了将遍历过的grid[i][j]赋值为'0'
-            grid[i][j] = '0';
-            dfs(grid,i-1,j);
-            dfs(grid,i+1,j);
-            dfs(grid,i,j-1);
-            dfs(grid,i,j+1);
-        }
+    void dfs(vector<vector<char>>& grid, int i, int j)
+    {
+        if(i<0 || i>=outer_size_ || j<0 || j>=inner_size_)
+            return;
+        if(grid[i][j] == '0')
+            return;
+        // 注意：不要忘了将遍历过的grid[i][j]赋值为'0'
+        grid[i][j] = '0';
+        dfs(grid,i-1,j);
+        dfs(grid,i+1,j);
+        dfs(grid,i,j-1);
+        dfs(grid,i,j+1);
+    }
 
-    private:
-        int inner_size_;
-        int outer_size_;
-        int count_;
-    };
-    ```
-- 思路二：bfs
-
-```cpp
-
+private:
+    int inner_size_;
+    int outer_size_;
+    int count_;
+};
 ```
+- 思路二：bfs
+  - 前一部分代码与dfs方法一样
+  - 注意：bfs的索引方式，利用pair<int,int>
+  - 找到条件时，不要忘了将遍历过的grid[i][j]赋值为'0'
+```cpp
+void bfs(vector<vector<char>>& grid, int i, int j)
+    {
+        // 注意：进行bfs搜索时，注意index处理的方式
+        std::queue<std::pair<int,int>> neighbor_index;
+        neighbor_index.push(std::make_pair(i,j));
+        while(!neighbor_index.empty())
+        {
+            std::pair<int,int> cur_index = neighbor_index.front();
+            int lhs = cur_index.first;
+            int rhs = cur_index.second;
+            neighbor_index.pop();
+            if(lhs>=0 && lhs<outer_size_ && rhs>=0 && rhs<inner_size_ && grid[lhs][rhs] == '1')
+            {
+                grid[lhs][rhs] = '0';
+                neighbor_index.push(std::make_pair(lhs-1,rhs));
+                neighbor_index.push(std::make_pair(lhs+1,rhs));
+                neighbor_index.push(std::make_pair(lhs,rhs+1));
+                neighbor_index.push(std::make_pair(lhs,rhs-1));
+            }
+        }
+    }
+```
+---
+
+<div id="lrih" onclick="window.location.hash">
+
+#### 6. largest-rectangle-in-histogram(#84)
+linkage: [leetcode](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/ "柱状图中最大的矩形")
+- n 个柱子，求能勾勒出来的矩形的最大面积
