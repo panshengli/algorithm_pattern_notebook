@@ -20,6 +20,10 @@
   * <a href="#noi">5. number-of-islands(#200)</a>
   * <a href="#lrih">6. largest-rectangle-in-histogram(#84)</a>
 
+- Queue 队
+  * <a href="#iqus">1. implement-queue-using-stacks(#232)</a>
+
+
 
 
 
@@ -62,17 +66,18 @@ linkage: [leetcode](https://leetcode-cn.com/problems/min-stack/ "最小栈")
       int top() {
           return num_.at(num_.size()-1);
       }
-      int getMin() {
-          int count = num_.size();
-          int get_min = INT_MAX;
-          for(int i=0;i<count;i++)
-          {
-              if(get_min>num_.at(i))
-              {
-                  get_min = num_.at(i);
-              }
-          }
-          return get_min;
+      int getMin() 
+      {
+            int count = num_.size();
+            int get_min = INT_MAX;
+            for(int i=0;i<count;i++)
+            {
+                if(get_min>num_.at(i))
+                {
+                    get_min = num_.at(i);
+                }
+            }
+            return get_min;
       }
   private:
       std::vector<int> num_;
@@ -449,18 +454,18 @@ linkage: [leetcode](https://leetcode-cn.com/problems/largest-rectangle-in-histog
   - 单调递增栈
     - 新元素比栈顶元素大，入栈
     - 新元素较小，一直把栈内元素弹出来，直到栈顶比新元素小
-        ```cpp
-        // 代码模板
-        stack<int> st;
-        for(int i = 0; i < nums.size(); i++)
+    ```cpp
+    // 代码模板
+    stack<int> st;
+    for(int i = 0; i < nums.size(); i++)
+    {
+        while(!st.empty() && st.top() > nums[i])
         {
-            while(!st.empty() && st.top() > nums[i])
-            {
-                st.pop();
-            }
-            st.push(nums[i]);
+            st.pop();
         }
-        ```
+        st.push(nums[i]);
+    }
+    ```
 
     ```cpp
     class Solution {
@@ -498,3 +503,36 @@ linkage: [leetcode](https://leetcode-cn.com/problems/largest-rectangle-in-histog
     ```
 ---
 
+<div id="iqus" onclick="window.location.hash">
+
+#### 1. implement-queue-using-stacks(#232)
+linkage: [leetcode](https://leetcode-cn.com/problems/implement-queue-using-stacks/ "用栈实现队列")
+- 使用栈实现队列的下列操作
+  - push(), pop(), peek()和empty()
+- 思路题：
+  - 主要在于pop()的写法
+  - 利用**两个临时stack进行存储，一个用于出栈，一个入栈**
+    ```cpp
+    int pop()
+    {
+        int top;
+        std::stack<int> out;
+        while(!s_.empty())
+        {
+            top = s_.top();
+            s_.pop();
+            out.push(top);
+        }
+        if(!out.empty())
+        {
+            out.pop();
+        }
+        while(!out.empty())
+        {
+            int top1 = out.top();
+            out.pop();
+            s_.push(top1);
+        }
+        return top;
+    }
+    ```
