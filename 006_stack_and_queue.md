@@ -413,3 +413,88 @@ void bfs(vector<vector<char>>& grid, int i, int j)
 #### 6. largest-rectangle-in-histogram(#84)
 linkage: [leetcode](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/ "柱状图中最大的矩形")
 - n 个柱子，求能勾勒出来的矩形的最大面积
+- 思路一：暴力求解
+  - 左右端点法(不推荐，了解思路)
+  - 1. 尝试所有可能矩形
+  - 2. 矩形的面积等于(右端点-左端点+1)*最小的高度
+  - 3. 该解法超出时间限制，如果加上打印，超出输出限制
+    ```cpp
+    class Solution {
+    public:
+        int largestRectangleArea(vector<int>& heights)
+        {
+            if(heights.size() == 0) return 0;
+            int max_area= 0;
+            for(int lhs = 0;lhs<heights.size();lhs++)
+            {
+                int min_value = heights[lhs];
+                int length = 0;
+                for(int rhs = lhs;rhs<heights.size();rhs++)
+                {
+                    length = rhs-lhs + 1;
+                    min_value = std::min(min_value,heights[rhs]);
+                    max_area = std::max(max_area,min_value*length);
+                }
+            }
+            return max_area;
+        }
+    };
+    ```
+  - 中心扩展法(不推荐，了解思路)
+  - 1. 确定一根柱子后向他的前后两个方向扫描
+  - 2. 以当前柱子高度为矩形的高所围成的最大矩形
+  - 写法略
+
+- 思路二：stack
+  - 单调递增栈
+    - 新元素比栈顶元素大，入栈
+    - 新元素较小，一直把栈内元素弹出来，直到栈顶比新元素小
+        ```cpp
+        // 代码模板
+        stack<int> st;
+        for(int i = 0; i < nums.size(); i++)
+        {
+            while(!st.empty() && st.top() > nums[i])
+            {
+                st.pop();
+            }
+            st.push(nums[i]);
+        }
+        ```
+
+    ```cpp
+    class Solution {
+    public:
+        int largestRectangleArea(vector<int>& heights) 
+        {
+            if(heights.size() == 0)
+            {
+                return 0;
+            }
+            // 构造前后哨兵为了处理边界栈为空的情况，注意vector插入的方式
+            heights.insert(heights.begin(), 0);
+            heights.push_back(0);
+
+            int max_area = 0;
+            std::stack<int> s;
+            // 开始遍历vector
+            for(int i = 0; i < heights.size();i++)
+            {
+                // 列表数值小于上一个值出栈处理,注意为&&条件
+                while(!s.empty() && heights[s.top()] > heights[i])
+                {
+                    int cur = s.top();
+                    s.pop();
+                    // 注意(重要)：长度的在stack出栈后取出,不可写i-cur,因为非连续
+                    int length = i-s.top()-1;
+                    max_area = std::max(max_area,heights[cur]*length);
+                }
+                // 当前值为递增时，入栈处理
+                s.push(i);
+            }
+            return max_area;
+        }
+    };
+    ```
+---
+
