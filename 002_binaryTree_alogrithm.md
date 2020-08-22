@@ -458,7 +458,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 <div id="binary-tree-level-order-traversal" onclick="window.location.hash">
 
 #### 7. binary-tree-level-order-traversal(#102)
-- 给你一个二叉树，请你返回其按 层序遍历 得到的节点值。 
+- 给你一个二叉树，请你返回其按层序遍历得到的节点值。 
 - 即逐层地，从左到右访问所有节点 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/submissions/ "二叉树的层序遍历")
 - **注意c++中queue()[push,pop]和deque()[push_back,pop_front]的使用**
 - DFS 与 BFS区别
@@ -503,31 +503,27 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
     public:
         vector<vector<int>> levelOrder(TreeNode* root) 
         {
-            std::vector<std::vector<int>> level_lists;
-            if(root == nullptr)
+            vector<vector<int>> level_lists;
+            if(root == NULL)
             {
                 return level_lists;
             }
-            std::vector<int> level_value;
-            // 注意如果使用deque 则为push_back()
-            // 如果使用queue 则为push()
-            std::deque<TreeNode*> q;
-            q.push_back(root);
+            std::queue<TreeNode*> q;
+            q.push(root);
             while(!q.empty())
             {
+                vector<int> level_list;
                 int num = q.size();
-                for(int i = 0;i<num;i++)
+                for(int i=0;i<num;i++)
                 {
-                    TreeNode* p = q.front();
-                    level_value.push_back(p->val);
-                    // 如果使用deque,则为pop_front()
-                    // 使用queue 则为pop()
-                    q.pop_front();
-                    if (p->left) q.push_back(p->left);
-                    if (p->right) q.push_back(p->right);
+                    TreeNode* cur = q.front();
+                    level_list.push_back(cur->val);
+                    q.pop();
+                    // 注意每一层的处理
+                    if(cur->left != NULL) q.push(cur->left);
+                    if(cur->right != NULL) q.push(cur->right);
                 }
-                level_lists.emplace_back(level_value);
-                level_value.clear();
+                level_lists.push_back(level_list);
             }
             return level_lists;
         }
