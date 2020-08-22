@@ -22,7 +22,7 @@
 
 - Queue 队
   * <a href="#iqus">1. implement-queue-using-stacks(#232)</a>
-
+  * <a href="#01-matrix">2. 01-matrix(#542)</a>
 
 
 
@@ -536,3 +536,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-queue-using-stack
         return top;
     }
     ```
+---
+
+<div id="01-matrix" onclick="window.location.hash">
+
+#### 2. 01-matrix(#542)
+linkage: [leetcode](https://leetcode-cn.com/problems/01-matrix/ "01矩阵")
