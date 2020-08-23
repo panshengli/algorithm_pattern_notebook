@@ -28,7 +28,7 @@ a ^ a ^ b = b
 * <a href="#no1b">4. number-of-1-bits(#191)</a>
 * <a href="#cb">5. counting-bits(#338)</a>
 * <a href="#rb">6. reverse-bits(#190)</a>
-
+* <a href="#baonr">7. bitwise-and-of-numbers-range(#201)</a>
 
 
 
@@ -219,3 +219,31 @@ linkage: [leetcode](https://leetcode-cn.com/problems/counting-bits/ "比特位�
 #### 6. reverse-bits(#190)
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-bits/ "颠倒二进制位")
 - 颠倒给定的 32 位无符号整数的二进制位
+- 思路：逐位生成
+    ```cpp
+    class Solution {
+    public:
+        uint32_t reverseBits(uint32_t n) 
+        {
+            uint32_t results = 0;
+            uint32_t bit = 31;
+            while(n)
+            {
+                // 注意符号优先级关系，将(n&1)<<bit
+                results += ((n&1)<<bit);
+                bit--;
+                n>>=1;
+            }
+            return results;
+        }
+    };
+    ```
+---
+
+<div id="baonr" onclick="window.location.hash">
+
+#### 7. bitwise-and-of-numbers-range(#201)
+linkage: [leetcode](https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/ "数字范围按位与")
+- 给定范围[m,n]，其中0<=m<=n<=2147483647，返回此范围内所有数字的按位与(包含m,n两端点)
+- 用传统方法遍历&，会导致超出时间限制
+- 
