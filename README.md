@@ -14,6 +14,8 @@
 
 #### 006_栈和队列
 
+#### 007_二进制
+
 
 
 
@@ -21,6 +23,9 @@
 
 # Change Log
 data structure and algorithm notebook
+
+## 2020.08.23
+- added binary markdown
 
 ## 2020.08.12
 - added stack and queue markdown
