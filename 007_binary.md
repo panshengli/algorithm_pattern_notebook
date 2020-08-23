@@ -25,6 +25,8 @@ a ^ a ^ b = b
 * <a href="#sn">1. single-number(#136)[字典遍历的典型应用]</a>
 * <a href="#snii">2. single-number-ii(#137)</a>
 * <a href="#sniii">3. single-number-iii(#260)</a>
+* <a href="#no1b">4. number-of-1-bits(#191)</a>
+* <a href="#cb">5. counting-bits(#338)</a>
 
 
 
@@ -112,4 +114,52 @@ linkage: [leetcode](https://leetcode-cn.com/problems/single-number-iii/ "只出�
 - 其他方法略
 ---
 
+<div id="no1b" onclick="window.location.hash">
 
+#### 4. number-of-1-bits(#191)
+linkage: [leetcode](https://leetcode-cn.com/problems/number-of-1-bits/ "位1的个数")
+- 编写一个函数，输入是一个无符号整数，返回其二进制表达式中数字位数为‘1’的个数(也被称为汉明重量)
+```cpp
+class Solution {
+public:
+    int hammingWeight(uint32_t n) {
+        return hammingWeight_2(n);
+    }
+    //解法1: C++二进制容器
+    int hammingWeight_1(uint32_t n) {
+        std::bitset<32> b(n);
+        return b.count();
+    }
+    
+    //解法2: 除2取余法
+    int hammingWeight_2(uint32_t n) {
+        int count = 0;
+        while(n)
+        {
+            if(n%2 == 1)
+                count++;
+            n/=2;
+        }
+        return count;
+    }
+
+    // 解法3: 直接判读最低为是否为1即可[效率最高]
+    int hammingWeight_3(uint32_t n) {
+        int count = 0;
+        while(n)
+        {
+            // 比如111与1相与得到001，所以直接判断最低位是不是1就好了
+            count += n&1;
+            n>>=1;
+        }
+        return count;
+    }
+};
+```
+---
+
+<div id="cb" onclick="window.location.hash">
+
+#### 5. counting-bits(#338)
+linkage: [leetcode](https://leetcode-cn.com/problems/counting-bits/ "比特位计数")
+- 非负整数 num。对于 0≤i≤ num范围中的每个数字i，计算其二进制数中的1的数目并将它们作为数组返回
