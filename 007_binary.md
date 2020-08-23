@@ -163,3 +163,52 @@ public:
 #### 5. counting-bits(#338)
 linkage: [leetcode](https://leetcode-cn.com/problems/counting-bits/ "比特位计数")
 - 非负整数 num。对于 0≤i≤ num范围中的每个数字i，计算其二进制数中的1的数目并将它们作为数组返回
+- 思路一：利用题4的后两种解法
+  - 利用解法2，超出内存限制
+  - 利用解法3，超出时间限制
+- 思路二：直接利用stl
+  - 利用题4解法1
+    ```cpp
+    class Solution {
+    public:
+        vector<int> countBits(int num) 
+        {
+            vector<int> count_bits;
+            for(int i = 0; i <= num;i++)
+            {
+                std::bitset<32> b(i);
+                count_bits.push_back(b.count());
+            }
+            return count_bits;
+        }
+    };
+    ```
+- 思路三：奇偶数判别(**推荐**)
+  - 所有的数字，只有两类：
+  - 奇数：二进制中，奇数一定比前面那个偶数多一个1
+  - 偶数：二进制，偶数中1的个数和除以2的那个数一样多
+    ```cpp
+    class Solution {
+    public:
+        vector<int> countBits(int num) 
+        {
+            // 初始化vector
+            vector<int> result(num+1,0);
+            for(int i = 1; i <= num; i++)
+            {
+                if(i % 2 == 1)
+                {
+                    result[i] = result[i-1] + 1;
+                }
+                else
+                {
+                    result[i] = result[i/2];
+                }
+            }
+            return result;
+        }
+    };
+    ```
+---
+
+
