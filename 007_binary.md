@@ -27,6 +27,9 @@ a ^ a ^ b = b
 * <a href="#sniii">3. single-number-iii(#260)</a>
 * <a href="#no1b">4. number-of-1-bits(#191)</a>
 * <a href="#cb">5. counting-bits(#338)</a>
+* <a href="#rb">6. reverse-bits(#190)</a>
+
+
 
 
 
@@ -211,4 +214,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/counting-bits/ "比特位�
     ```
 ---
 
+<div id="rb" onclick="window.location.hash">
 
+#### 6. reverse-bits(#190)
+linkage: [leetcode](https://leetcode-cn.com/problems/reverse-bits/ "颠倒二进制位")
+- 颠倒给定的 32 位无符号整数的二进制位
