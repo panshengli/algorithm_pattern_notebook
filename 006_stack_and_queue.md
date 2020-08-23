@@ -542,3 +542,63 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-queue-using-stack
 
 #### 2. 01-matrix(#542)
 linkage: [leetcode](https://leetcode-cn.com/problems/01-matrix/ "01矩阵")
+- 给定一个由 0 和 1 组成的矩阵，找出每个元素到最近的 0 的距离
+- 思路：bfs方法
+  - 1. vector所有元素赋值为INT_MAX, `vector<vector<int>> result(outer,vector<int>(inner, INT_MAX));`
+  - 2. 遍历vector将0元素赋值为0，同时将其索引进行入队处理
+  - 3. 申明一个around变量，用于存储上下左右索引
+  - 4. 对queue进行出队处理，同时进行周围around判断
+  - 5. 当前位置大于之前遍历的位置，对当前位置+1处理
+  - 6. 最后返回result
+    ```cpp
+    class Solution {
+    public:
+        vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) 
+        {
+            if(matrix.size() == 0)
+            {
+                return matrix;
+            }
+            int outer = matrix.size();
+            int inner = matrix[0].size();
+            std::queue<std::pair<int, int>> que;
+            // 注意：result的初始化
+            vector<vector<int>> result(outer,vector<int>(inner, INT_MAX));
+            for(int i=0; i<outer;i++)
+            {
+                for(int j=0;j<inner;j++)
+                {
+                    if(matrix[i][j] == 0)
+                    {
+                        result[i][j] = 0;
+                        que.push(std::make_pair(i,j));
+                    }
+                }
+            }
+            
+            std::vector<std::pair<int,int>> around = {{1,0},{-1,0},{0,-1},{0,1}};
+
+            while(!que.empty())
+            {
+                std::pair<int,int> index = que.front();
+                que.pop();
+                for(int i = 0; i< around.size();i++)
+                {
+                    int x = index.first + around[i].first;
+                    int y = index.second + around[i].second;
+                    // 注意x与outer的对应关系，不要写反，否则导致数组越界
+                    if(x>=0 &&x<outer && y>=0&&y<inner)
+                    {
+                        // 注意边界的赋值
+                        if(result[x][y]> result[index.first][index.second])
+                        {
+                            result[x][y] = result[index.first][index.second]+1;
+                            que.push(std::make_pair(x,y));
+                        }
+                    }
+                }
+            }
+            return result;
+        }
+    };
+    ```
