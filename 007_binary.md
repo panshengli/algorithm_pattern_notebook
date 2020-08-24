@@ -246,4 +246,25 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-bits/ "颠倒二进
 linkage: [leetcode](https://leetcode-cn.com/problems/bitwise-and-of-numbers-range/ "数字范围按位与")
 - 给定范围[m,n]，其中0<=m<=n<=2147483647，返回此范围内所有数字的按位与(包含m,n两端点)
 - 用传统方法遍历&，会导致超出时间限制
-- 
+- 思路：找公共前缀
+  - 1. 找到公共前缀的方法是位移
+  - 2. 不断向右移动直到数字变成相等，得到的就是公共前缀
+  - 3. 记录移过多少位，最后返回添上0的数字
+    ```cpp
+    class Solution {
+    public:
+        int rangeBitwiseAnd(int m, int n) 
+        {
+            // 找公共前缀
+            int shift = 0;
+            while(m < n)
+            {
+                m >>= 1;
+                n >>= 1;
+                shift ++;
+            }
+            return m<<shift;
+        }
+    };
+    ```
+---
