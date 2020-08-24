@@ -16,6 +16,8 @@
 
 #### 007_二进制
 
+#### 008_二分搜索
+
 
 
 
@@ -24,8 +26,11 @@
 # Change Log
 data structure and algorithm notebook
 
+## 2020.08.24
+- added binary search markdown
+
 ## 2020.08.23
-- added binary markdown
+- added bit operator markdown
 
 ## 2020.08.12
 - added stack and queue markdown
