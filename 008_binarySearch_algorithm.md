@@ -27,7 +27,7 @@
 ## 📑 index
 * <a href="#bs">1. binary-search(#704)[典型示例]</a>
 * <a href="#sfr">2. ​search-for-range​(#61_lintcode)</a>
-
+* <a href="#sip">3. ​search-insert-position​(#35)</a>
 
 
 
@@ -156,3 +156,69 @@ linkage: [leetcode](https://www.lintcode.com/problem/search-for-a-range/descript
 ")
 - n个整数**排序数组**，找出target起始和结束位置
 - 如不在，返回[-1, -1]
+- 思路：迭代版
+  - 利用题1迭代版本的模板1
+  - 首先找到target是否存在
+  - 存在，进行前后遍历
+  - 重点处理数组是否越界问题
+```cpp
+class Solution {
+public:
+    /**
+     * @param A: an integer sorted array
+     * @param target: an integer to be inserted
+     * @return: a list of length 2, [index1, index2]
+     */
+    vector<int> searchRange(vector<int> &A, int target)
+    {
+        std::vector<int> len_index;
+        // write your code here
+        if(A.size() == 0)
+            return vector<int>(2,-1);
+        int start = 0;
+        int end = A.size()-1;
+        while(start <= end)
+        {
+            int mid = start + ((end-start)>>1);
+            if(A.at(mid) == target)
+            {
+                // 重点位置
+                int pre = mid;
+                int next = mid;
+                // 防止数组越界
+                if(A.size()>1)
+                {
+                    while(next+1<=A.size()-1 && A[next+1]==target)
+                    {
+                        next++;
+                    }
+                    while( A[pre-1]==target&&pre-1>=0)
+                    {
+                        pre--;
+                    }
+                }
+                len_index.push_back(pre);
+                len_index.push_back(next);
+                return len_index;
+            }
+            else if(A.at(mid) > target)
+            {
+                end = mid - 1;
+            }
+            else if(A.at(mid) < target)
+            {
+                start = mid + 1;
+            }
+        }
+        return vector<int>(2,-1);
+    }
+};
+```
+---
+
+<div id="sip" onclick="window.location.hash">
+
+#### 3. ​search-insert-position​(#35)
+linkage: [leetcode](https://leetcode-cn.com/problems/search-insert-position/ "搜索插入位置")
+- 排序数组和一个目标值，找到目标值，返回索引
+- 如果不存在，返回按顺序插入的位置
