@@ -28,6 +28,7 @@
 * <a href="#bs">1. binary-search(#704)[典型示例]</a>
 * <a href="#sfr">2. ​search-for-range​(#61_lintcode)</a>
 * <a href="#sip">3. ​search-insert-position​(#35)</a>
+* <a href="#sa2m">4. search-a-2d-matrix​​(#74)</a>
 
 
 
@@ -222,3 +223,44 @@ public:
 linkage: [leetcode](https://leetcode-cn.com/problems/search-insert-position/ "搜索插入位置")
 - 排序数组和一个目标值，找到目标值，返回索引
 - 如果不存在，返回按顺序插入的位置
+- 思路：迭代版本
+  - 参考题1模板1，注意最后返回值的处理
+    ```cpp
+    class Solution {
+    public:
+        int searchInsert(vector<int>& nums, int target)
+        {
+            if(nums.size() == 0)
+                return 0;
+            int start = 0;
+            int end = nums.size()-1;
+            while(start<=end)
+            {
+                int mid = start + ((end-start)>>1);
+                if(nums[mid] == target)
+                {
+                    return mid;
+                }
+                else if(nums[mid] < target)
+                {
+                    start = mid + 1;
+                }
+                else if(nums[mid] > target)
+                {
+                    end = mid - 1;
+                }
+            }
+            // 注意返回start或者end+1
+            return start;
+        }
+    };
+    ```
+---
+
+<div id="sa2m" onclick="window.location.hash">
+
+#### 4. search-a-2d-matrix​​(#74)
+linkage: [leetcode](https://leetcode-cn.com/problems/search-a-2d-matrix/ "搜索二维矩阵")
+- 判断mxn矩阵,是否存在一个目标值
+  - 每行中的整数从左到右按升序排列
+  - 每行的第一个整数大于前一行的最后一个整数
