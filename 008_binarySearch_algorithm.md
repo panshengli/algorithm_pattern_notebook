@@ -29,6 +29,7 @@
 * <a href="#sfr">2. ​search-for-range​(#61_lintcode)</a>
 * <a href="#sip">3. ​search-insert-position​(#35)</a>
 * <a href="#sa2m">4. search-a-2d-matrix​​(#74)</a>
+* <a href="#fbv">5. ​first-bad-version​​​(#278)</a>
 
 
 
@@ -264,3 +265,46 @@ linkage: [leetcode](https://leetcode-cn.com/problems/search-a-2d-matrix/ "搜索
 - 判断mxn矩阵,是否存在一个目标值
   - 每行中的整数从左到右按升序排列
   - 每行的第一个整数大于前一行的最后一个整数
+- 思路：迭代法(利用模板#1)
+```cpp
+class Solution {
+public:
+    bool searchMatrix(vector<vector<int>>& matrix, int target) 
+    {
+        if(matrix.size() == 0 || matrix[0].size() == 0)
+        {
+            return false;
+        }
+        int m = matrix.size();
+        int n = matrix[0].size();
+        int start = 0;
+        int end = m*n - 1;
+        while(start <= end)
+        {
+            int mid = start + (end-start) / 2;
+            if(matrix[mid/n][mid%n] == target)
+            {
+                return true;
+            }
+            // 重点：理解矩阵中行和列的取法
+            else if(matrix[mid/n][mid%n] > target)
+            {
+                end = mid - 1;
+            }
+            else if(matrix[mid/n][mid%n] < target)
+            {
+                start = mid + 1;
+            }
+        }
+        return false;
+    }
+};
+```
+---
+
+<div id="fbv" onclick="window.location.hash">
+
+#### 5. ​first-bad-version​​​(#278)
+linkage: [leetcode](https://leetcode-cn.com/problems/first-bad-version/ "第一个错误的版本")
+- 每个版本都是基于之前的版本开发的,找出第一个错误版本
+- 思路一：
