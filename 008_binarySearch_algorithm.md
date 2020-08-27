@@ -25,11 +25,15 @@
 ---
 
 ## 📑 index
-* <a href="#bs">1. binary-search(#704)[典型示例]</a>
+* <a href="#bs">1. binary-search(#704)[**典型示例，注意不同模板和递归的写法**]</a>
 * <a href="#sfr">2. ​search-for-range​(#61_lintcode)</a>
 * <a href="#sip">3. ​search-insert-position​(#35)</a>
-* <a href="#sa2m">4. search-a-2d-matrix​​(#74)</a>
+* <a href="#sa2m">4. search-a-2d-matrix​​(#74)[重点查看矩阵的遍历]</a>
 * <a href="#fbv">5. ​first-bad-version​​​(#278)</a>
+* <a href="#fmirsa">6. find-minimum-in-rotated-sorted-array​​​​(#153)</a>
+
+
+
 
 
 
@@ -39,6 +43,7 @@
 
 
 ---
+
 <div id="bs" onclick="window.location.hash">
 
 #### 1. binary-search(#704)
@@ -307,4 +312,38 @@ public:
 #### 5. ​first-bad-version​​​(#278)
 linkage: [leetcode](https://leetcode-cn.com/problems/first-bad-version/ "第一个错误的版本")
 - 每个版本都是基于之前的版本开发的,找出第一个错误版本
-- 思路一：
+- 思路一：迭代法(基于模板#1)
+    ```cpp
+    class Solution {
+    public:
+        int firstBadVersion(int n) 
+        {
+            if(n == 0)
+            {
+                return 0;
+            }
+            int start = 0;
+            int end = n-1;
+            while(start <= end)
+            {
+                int mid = start + (end - start)/2;
+                if(isBadVersion(mid) == false)
+                {
+                    start = mid + 1;
+                }
+                else
+                {
+                    end = mid-1;
+                }
+            }
+            return start;
+        }
+    };
+    ```
+---
+
+<div id="fmirsa" onclick="window.location.hash">
+
+#### 6. find-minimum-in-rotated-sorted-array​​​​(#153)
+linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/ "寻找旋转排序数组中的最小值")
+- 升序排序的数组,在未知某点旋转,找出最小元素
