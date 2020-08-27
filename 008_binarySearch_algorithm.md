@@ -8,10 +8,11 @@
 ##### 二分搜索模板
 - 给一个**有序数组**和目标值，找第一次/最后一次/任何一次出现的索引，如果没有出现返回-1
 - **模板四要素**
-    - 1、初始化：start=0、end=len-1
+    - 1、[左闭右开]初始化：start=0、end=len
     - 2、**循环退出条件：start + 1 < end**
-    - 3、比较中点和目标值：A[mid] ==、 <、> target
-    - 4、**判断最后两个元素是否符合**：A[start]、A[end] ? target
+    - 3、比较中点和目标值：A[mid] <=、 > target
+    - 4、注意处理边界条件A[start]、A[end]和target
+    - 4、注意返回条件
 - 时间复杂度 O(logn)，使用场景一般是**有序数组**的查找
 - 三种模板,**注意判断循环退出条件**
 ![binary_search_template][image1]
@@ -31,8 +32,7 @@
 * <a href="#sa2m">4. search-a-2d-matrix​​(#74)[重点查看矩阵的遍历]</a>
 * <a href="#fbv">5. ​first-bad-version​​​(#278)</a>
 * <a href="#fmirsa">6. find-minimum-in-rotated-sorted-array​​​​(#153)</a>
-
-
+* <a href="#fmirsaii">7. find-minimum-in-rotated-sorted-array​​​​-ii(#154)</a>
 
 
 
@@ -59,23 +59,29 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
         {
             if(nums.size() == 0)
                 return -1;
+            // [左开右闭]初始化
             int start = 0;
-            int end = nums.size()-1;
-            // 一定要注意循环条件
-            while(start <= end)
+            int end = nums.size();
+            // 循环条件退出
+            while(start + 1 < end)
             {
                 int mid = start+(end-start)/2;
-                if(nums.at(mid) < target)
-                    start = mid+1;
-                else if(nums.at(mid) > target)
-                    end = mid-1;
-                else 
+                if(nums.at(mid) == target)
                     return mid;
-            }      
+                else if(nums.at(mid) > target)
+                    end = mid;
+                else if(nums.at(mid) < target)
+                    // 也可以写start = mid
+                    start = mid;
+            }
+            // 注意处理边界条件
+            if(nums[start] == target)
+                return start;
             return -1;
         }
     };
     ```
+
     ```cpp
     // 模板三：大部分场景模板#3 都能解决问题，而且还能找第一次/最后一次出现的位置，应用更加广泛
     class Solution {
@@ -83,24 +89,22 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
         int search(vector<int>& nums, int target) 
         {
             if(nums.size() == 0)
-            {
                 return -1;
-            }
+            // [左开右闭]初始化
             int start = 0;
-            int end = nums.size()-1;
-            while(start+1 < end)
+            int end = nums.size();
+            // 循环条件退出
+            while(start + 1 < end)
             {
-                int mid = (start+end+1)/2;
-                if(nums.at(mid) <= target)
-                    start = mid;
-                else
+                int mid = start+(end-start)/2;
+                if(nums.at(mid) == target)
+                    return mid;
+                else if(nums.at(mid) > target)
                     end = mid;
+                else if(nums.at(mid) < target)
+                    // 也可以写start = mid
+                    start = mid;
             }
-            // 判断返回值是否为target
-            if(nums[start] == target)
-                return start;
-            if(nums[end] == target)
-                return end;
             return -1;
         }
     };
@@ -347,3 +351,73 @@ linkage: [leetcode](https://leetcode-cn.com/problems/first-bad-version/ "第一�
 #### 6. find-minimum-in-rotated-sorted-array​​​​(#153)
 linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/ "寻找旋转排序数组中的最小值")
 - 升序排序的数组,在未知某点旋转,找出最小元素
+- 思路一：左闭右闭区间
+    ```cpp
+    class Solution {
+    public:
+        int findMin(vector<int>& nums)
+        {
+            int start = 0;
+            int end = nums.size()-1;
+            while(start<=end)
+            {
+                // 重点：如果[left,right]递增，直接返回
+                if(nums[start] <= nums[end])
+                {
+                    return nums[start];
+                }
+                int mid = start + ((end-start)>>1);
+                // [left,mid]连续递增，则在[mid+1,right]查找
+                if(nums[start] <= nums[mid])
+                {
+                    start = mid + 1;
+                }
+                // [left,mid]不连续，在[left,mid]查找
+                else
+                {
+                    end = mid;
+                }
+            }
+            return nums[start];
+        }
+    };
+    ```
+- 思路二：左开右闭区间(**推荐**)
+  - 注意最后边界条件的处理
+```cpp
+class Solution {
+public:
+    int findMin(vector<int>& nums) 
+    {
+        int start = 0;
+        int end = nums.size()-1;
+        while(start+1 < end)
+        {
+            if(nums[start] <= nums[end])
+            {
+                return nums[start];
+            }
+            int mid = start + ((end-start)>>1);
+            if(nums[start]<=nums[mid])
+            {
+                start = mid;
+            }
+            else
+            {
+                end = mid;
+            }
+        }
+        if(nums[start] < nums[end])
+            return nums[start];
+        return nums[end];
+    }
+};
+```
+---
+
+<div id="fmirsaii" onclick="window.location.hash">
+
+#### 7. find-minimum-in-rotated-sorted-array​​​​(#154)
+linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/ "寻找旋转排序数组中的最小值ii")
+- 升序排序重复的数组,在未知某点旋转,找出最小元素
+- 思路一：
