@@ -3,17 +3,16 @@
 
 [//]: # (Image References)
 [image1]: .readme/binary_search_template.png "binary_search_template"
+[image2]: .readme/binary_search_find_repeat_nums.png "binary_search_find_repeat_nums"
 
 
 ##### 二分搜索模板
 - 给一个**有序数组**和目标值，找第一次/最后一次/任何一次出现的索引，如果没有出现返回-1
 - **模板四要素**
-    - 1、[左闭右开]初始化：start=0、end=len
-    - 2、**循环退出条件：start + 1 < end**
-    - 3、比较中点和目标值：A[mid] <=、 > target
-    - 4、注意处理边界条件A[start]、A[end]和target
-    - 4、注意返回条件
-- 时间复杂度 O(logn)，使用场景一般是**有序数组**的查找
+  - 1、**初始化**：start=0、end=len-1
+  - 2、**循环退出条件**：start + 1 < end
+  - 3、比较**中点和目标值**：A[mid] ==、 <、> target
+  - 4、**临界条件判断**：A[start]、A[end] ? target
 - 三种模板,**注意判断循环退出条件**
 ![binary_search_template][image1]
 - 这 3 个模板的不同之处在于：
@@ -32,8 +31,8 @@
 * <a href="#sa2m">4. search-a-2d-matrix​​(#74)[重点查看矩阵的遍历]</a>
 * <a href="#fbv">5. ​first-bad-version​​​(#278)</a>
 * <a href="#fmirsa">6. find-minimum-in-rotated-sorted-array​​​​(#153)</a>
-* <a href="#fmirsaii">7. find-minimum-in-rotated-sorted-array​​​​-ii(#154)</a>
-
+* <a href="#fmirsaii">7. find-minimum-in-rotated-sorted-array​​​​-ii(#154)[很好的思路]</a>
+* <a href="#sirsa">8. ​search-in-rotated-sorted-array​(#33)</a>
 
 
 
@@ -420,4 +419,45 @@ public:
 #### 7. find-minimum-in-rotated-sorted-array​​​​(#154)
 linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/ "寻找旋转排序数组中的最小值ii")
 - 升序排序重复的数组,在未知某点旋转,找出最小元素
-- 思路一：
+- 思路一：模板三
+  - 注意mid和最右值end比较，如图
+  - 最小值右边的点一定小于等于end点，最小值左边的点一定大于等于end点
+![][image2]
+    ```cpp
+    class Solution {
+    public:
+        int findMin(vector<int>& nums) 
+        {
+            int start = 0;
+            int end = nums.size()-1;
+            while(start+1 < end)
+            {
+                int mid = start + ((end - start)>>1);
+                // 如果mid小于最大值，那么最小值一定在mid的左边
+                if(nums[mid] < nums[end])
+                {
+                    end = mid;
+                }
+                // 如果mid大于最大值，那么最小值一定在mid的右边
+                else if(nums[mid] > nums[end])
+                {
+                    start = mid;
+                }
+                // 如果相等，不知在哪边，所以最右值向前移动
+                else
+                {
+                    end--;
+                } 
+            }
+            // 处理临界情况
+            return nums[start]<=nums[end] ? nums[start] : nums[end];
+        }
+    };
+    ```
+---
+
+<div id="sirsa" onclick="window.location.hash">
+
+#### 8. ​search-in-rotated-sorted-array​(#33)
+linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/ "搜索旋转排序数组")
+- 旋转的升序排序数组，搜索目标值，如果存在目标值，返回索引，否则-1
