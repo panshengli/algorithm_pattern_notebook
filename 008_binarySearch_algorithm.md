@@ -31,8 +31,9 @@
 * <a href="#sa2m">4. search-a-2d-matrix​​(#74)[重点查看矩阵的遍历]</a>
 * <a href="#fbv">5. ​first-bad-version​​​(#278)</a>
 * <a href="#fmirsa">6. find-minimum-in-rotated-sorted-array​​​​(#153)</a>
-* <a href="#fmirsaii">7. find-minimum-in-rotated-sorted-array​​​​-ii(#154)[很好的思路]</a>
-* <a href="#sirsa">8. ​search-in-rotated-sorted-array​(#33)</a>
+* <a href="#fmirsaii">7. find-minimum-in-rotated-sorted-array​​​​-ii(#154)[**利用二分法查找重复的最小值**]</a>
+* <a href="#sirsa">8. ​search-in-rotated-sorted-array​(#33)[**利用二分法查找target**]</a>
+* <a href="#sirsaii">9. ​search-in-rotated-sorted-array-ii​(#81)[**利用二分法查找重复target**]</a>
 
 
 
@@ -460,4 +461,60 @@ linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sor
 
 #### 8. ​search-in-rotated-sorted-array​(#33)
 linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/ "搜索旋转排序数组")
-- 旋转的升序排序数组，搜索目标值，如果存在目标值，返回索引，否则-1
+- 旋转的升序排序数组，搜索目标值，如果存在，返回索引，否则-1
+- 思路一：模板三(重在思路)
+  - 1. 通过mid中间节点将其分割为有序和部分有序数组
+  - 2. 找到有序数组在前半部分还是后半部分
+  - 3. 判断target是否在有序数组中，进行start和end赋值
+  - 4. 最后判断边界条件情况
+    ```cpp
+    class Solution {
+    public:
+        int search(vector<int>& nums, int target) 
+        {
+            if(nums.size() == 0)
+            {
+                return -1;
+            }
+            int start = 0;
+            int end = nums.size() - 1;
+            while(start + 1 < end)
+            {
+                int mid = start + ((end - start)>>1);
+                if(nums[mid] == target)
+                    return mid;
+                // 判断哪部分有序
+                if(nums[0] <= nums[mid])
+                {
+                    // 如果target在前半部分有序部分，将end = mid
+                    if(target >= nums[0] && target <= nums[mid])
+                        end = mid;
+                    else
+                        start = mid;
+                }
+                else
+                {
+                    // 如果target在后半部分有序部分，将start = mid
+                    if(target >= nums[mid] && target <= nums[end])
+                        start = mid;
+                    else
+                        end = mid;
+                }
+            }
+            // 判断临界条件
+            if(nums[start] == target)
+                return start;
+            if(nums[end] == target)
+                return end;
+            return -1;
+        }
+    };
+    ```
+---
+
+<div id="sirsaii" onclick="window.location.hash">
+
+#### 9. ​search-in-rotated-sorted-array-ii​(#81)
+linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/ "搜索旋转排序数组 II")
+- 旋转重复的升序排序数组，搜索目标值，如果存在，返回索引，否则-1
+- 思路一：
