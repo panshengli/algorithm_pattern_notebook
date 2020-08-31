@@ -7,15 +7,22 @@
     简单选择排序 | O(n2) | O(n2) | O(n2) | O(1) | 稳定
     直接插入排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定
     希尔排序 | O(nlogn)~O(n2) | O(n1.3) | O(n2) | O(1) | 不稳定
-    堆排序 | O(nlogn) | O(nlogn) | O(nlogn) | **O(1)** | 不稳定
+    **堆排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | **O(1)** | 不稳定
     **归并排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | O(n) | **稳定**
     **快速排序** | **O(nlogn)** | O(nlogn) | O(n2) | O(logn)~O(n) | 不稳定
+- 稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面
+- 不稳定：如果a原本在b的前面，而a=b，排序之后a可能会在b的后面
+-   **归并排序与快排**：
+    - 1. 都是分治思想，但分解和合并的策略不一样
+    - 2. 归并是从中间分两个，合并后两个数列再次排序
+    - 3. 快排是比较后，小的在左大的在右，直接合并不再需要排序
+    - 所以**快排比归并排序更高效**一些
 ---
 
 ## 📑 index
 - 分治法应用
-  * <a href="#mergeSort">1. [代码框架]mergeSort</a>
-  * <a href="#quickSort">2. [代码框架]quickSort</a>
+  * <a href="#mergeSort">1. [代码框架] mergeSort</a>
+  * <a href="#quickSort">2. [代码框架] quickSort</a>
 
 
 
@@ -27,9 +34,8 @@
 
 #### mergeSort
 - 排序思想：
-  1. 将待排序序列从中间一分为二，对左右两边再进行递归分割操作，得到n个相互独立的子序列；
-  2. 对n个独立的子序列递归的执行合并操作，最终得到有序的序列。
-  3. 归并排序与快排 ：归并排序与快排两种排序思想都是分而治之，但是它们分解和合并的策略不一样：归并是从中间直接将数列分成两个，而快排是比较后将小的放左边大的放右边，所以在合并的时候归并排序还是需要将两个数列重新再次排序，而快排则是直接合并不再需要排序，所以**快排比归并排序更高效**一些
+  1. 将序列一分为二，对两边进行递归分割操作，得到独立子序列；
+  2. 对独立子序列递归的执行合并操作，得到有序的序列。
 - python版本
     ```python
     def merge(left, right):
@@ -61,17 +67,14 @@
     {
         //进入归并步骤时，数组将由两个数组合并，升序排序划分，左边的称之为左数组，同理，右边的称之为右数组。
 
-        // 待定左数组的右边界
+        // 待定数组边界
         int left_mid = (startIndex+endIndex)/2;
-        //待定右数组的左边界
         int mid_right = ((startIndex+endIndex)/2)+1;
-        //待定左数组长度
+        //待定数组长度
         int left_length = (left_mid-startIndex)+1;
-        //待定右数组长度
         int right_length = (endIndex-mid_right)+1;
-        //初始化左数组
+        //初始化
         int left_array[left_length];
-        //初始化右数组
         int right_array[right_length];
 
         for(int i=left_mid;i>=startIndex;i--)
@@ -91,7 +94,7 @@
         //双数组循环排序，复杂度O(n)，排序后的结果直接赋回原数组ms上
         for(int i=startIndex;i<=endIndex;i++)
         {
-            if(l_index!=left_length && r_index!=right_length)
+            if(l_index != left_length && r_index != right_length)
             {
                 if(left_array[l_index]<right_array[r_index])
                 {
@@ -137,12 +140,10 @@
 <div id="quickSort" onclick="window.location.hash">
 
 #### quickSort
-- 快速排序是一种基于**分治技术**的重要排序算法
-- 快排是一种不稳定排序，比如基准值的前后都存在与基准值相同的元素，那么相同值就会被放在一边，这样就打乱了之前的相对顺序
-- 时间复杂度：快排的时间复杂度为O(nlogn)
-- 空间复杂度：排序时需要另外申请空间，并且随着数列规模增大而增大，其复杂度为：O(nlogn)
-- 快速排序有一个缺点就是对于小规模的数据集性能不是很好
-- 快排由于是原地交换所以没有合并过程 传入的索引是存在的索引（如：0、length-1 等），越界可能导致崩溃
+- 排序思想：
+  - 基于分治思想的不稳定排序(基准前后放在一边)
+  - 快速排序缺点：**对小规模数据性能不是很好**
+  - 快排是原地交换，无合并过程传入的索引是存在的索引（如：0、length-1 等），**越界可能导致崩溃**
 - python版本
     ```python
     def quick_sort(b):
@@ -174,7 +175,7 @@
         p = q;
         q = temp;
     }
-    
+
     int Partition(int InputArray[],int nLow,int nHigh)
     {
         int i = nLow,j = nHigh+1;
@@ -205,5 +206,3 @@
     }
     ```
 ---
-
-
