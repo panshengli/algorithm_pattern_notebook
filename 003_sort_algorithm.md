@@ -23,6 +23,12 @@
 - 分治法应用
   * <a href="#mergeSort">1. [代码框架] mergeSort</a>
   * <a href="#quickSort">2. [代码框架] quickSort</a>
+- mergeSort应用
+  * <a href="./005_lists_structure.md">3. [003_lists_structure 5&7] merge-sort</a>
+  * <a href="sc">4. [数组mergeSort] sort-colors(#75)</a>
+
+
+
 
 
 
@@ -32,7 +38,7 @@
 
 <div id="mergeSort" onclick="window.location.hash">
 
-#### mergeSort
+#### 1. [代码框架] mergeSort
 - 排序思想：
   1. 将序列一分为二，对两边进行递归分割操作，得到独立子序列；
   2. 对独立子序列递归的执行合并操作，得到有序的序列。
@@ -67,7 +73,7 @@
     {
         //进入归并步骤时，数组将由两个数组合并，升序排序划分，左边的称之为左数组，同理，右边的称之为右数组。
 
-        // 待定数组边界
+        // 待定数组边界,左数组右边界和右数组左边界
         int left_mid = (startIndex+endIndex)/2;
         int mid_right = ((startIndex+endIndex)/2)+1;
         //待定数组长度
@@ -139,7 +145,7 @@
 
 <div id="quickSort" onclick="window.location.hash">
 
-#### quickSort
+#### 2. [代码框架] quickSort
 - 排序思想：
   - 基于分治思想的不稳定排序(基准前后放在一边)
   - 快速排序缺点：**对小规模数据性能不是很好**
@@ -206,3 +212,11 @@
     }
     ```
 ---
+
+<div id="sc" onclick="window.location.hash">
+
+#### 4. [数组mergeSort] sort-colors(#75)
+linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类")
+- n个元素的**数组**，原地对它们进行排序
+- 思路一：mergeSort
+  - 1. todo
