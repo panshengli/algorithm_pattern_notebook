@@ -8,7 +8,7 @@
 
 ##### 二分搜索模板
 - 给一个**有序数组**和目标值，找第一次/最后一次/任何一次出现的索引，如果没有出现返回-1
-- **模板四要素**
+- **二分法核心模板四要素(必备&理解)**
   - 1、**初始化**：start=0、end=len-1
   - 2、**循环退出条件**：start + 1 < end
   - 3、比较**中点和目标值**：A[mid] ==、 <、> target
@@ -417,7 +417,7 @@ public:
 
 <div id="fmirsaii" onclick="window.location.hash">
 
-#### 7. find-minimum-in-rotated-sorted-array​​​​(#154)
+#### 7. find-minimum-in-rotated-sorted-array​​​​-ii(#154)
 linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/ "寻找旋转排序数组中的最小值ii")
 - 升序排序重复的数组,在未知某点旋转,找出最小元素
 - 思路一：模板三
@@ -427,7 +427,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sor
     ```cpp
     class Solution {
     public:
-        int findMin(vector<int>& nums) 
+        int findMin(vector<int>& nums)
         {
             int start = 0;
             int end = nums.size()-1;
@@ -448,7 +448,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sor
                 else
                 {
                     end--;
-                } 
+                }
             }
             // 处理临界情况
             return nums[start]<=nums[end] ? nums[start] : nums[end];
@@ -470,7 +470,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-ar
     ```cpp
     class Solution {
     public:
-        int search(vector<int>& nums, int target) 
+        int search(vector<int>& nums, int target)
         {
             if(nums.size() == 0)
             {
@@ -516,5 +516,62 @@ linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-ar
 
 #### 9. ​search-in-rotated-sorted-array-ii​(#81)
 linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/ "搜索旋转排序数组 II")
-- 旋转重复的升序排序数组，搜索目标值，如果存在，返回索引，否则-1
-- 思路一：
+- 旋转重复的升序排序数组，搜索目标值，如果存在，返回true，否则false
+- 思路一: 模板三(与题8思路一致)
+  - **本题重点**是对题8数据进行预处理
+    ```cpp
+    class Solution {
+    public:
+        bool search(vector<int>& nums, int target)
+        {
+            if(nums.size() == 0)
+            {
+                return false;
+            }
+            int start = 0;
+            int end = nums.size() - 1;
+            while(start + 1 < end)
+            {
+                int mid = start + ((end - start)>>1);
+                if(nums[mid] == target)
+                {
+                    return true;
+                }
+                // 重点：预处理数据
+                if(nums[start] == nums[mid])
+                {
+                    start ++;
+                    continue;
+                }
+                // 找不降数组
+                if(nums[start] <= nums[mid])
+                {
+                    if(target >= nums[start] && target <= nums[mid])
+                    {
+                        end = mid;
+                    }
+                    else
+                    {
+                        start = mid;
+                    }
+                else
+                {
+                    if(target >= nums[mid] && target <= nums[end])
+                    {
+                        start = mid;
+                    }
+                    else
+                    {
+                        end = mid;
+                    }
+                }
+            }
+            if(nums[start] == target || nums[end] == target)
+            {
+                return true;
+            }
+            return false;
+        }
+    };
+    ```
+---
