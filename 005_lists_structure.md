@@ -508,7 +508,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
 
 #### 6. ​​partition-list​​​​(#86)
 linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链表")
-- 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
+- 给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
 - **思路：将大于等于x的节点，放到另外一个链表，最后连接这两个链表**
 - 独立写出，需要注意
   - **写出两个链表后连接时，不要忘了尾端链表指向为空**
@@ -553,7 +553,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
 
 #### 7. ​sort-list(#148)
 linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
-- 在**O(nlogn)时间复杂度**和常数级空间复杂度下，对链表进行排序
+- **O(nlogn)时间复杂度**和常数级空间复杂度，对链表排序
 - 只有 heapSort, mergeSort, quickSort
 - **时间复杂度想到二分法**，从而联想到归并排序
 - [参考思路：快慢指针+二路归并（C++）](https://leetcode-cn.com/problems/sort-list/solution/kuai-man-zhi-zhen-er-lu-gui-bing-c-by-jiangtianyu0/)
@@ -564,9 +564,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
   - 调用**有序链表**两两合并(**两路归并**),见`6. ​​partition-list`
 - 注意点：
   - 调用两路归并算法时，不能用迭代方式，因为题目要求空间复杂度为常数级
-- 递归版本(**两路归并用递归，如果不要求空间复杂度情况下**)
-- 执行用时：88 ms, 在所有 C++ 提交中击败了37.07% 的用户
-- 内存消耗：31 MB, 在所有 C++ 提交中击败了6.29% 的用户
+- 思路一: 递归版本(**两路归并用递归，如果不要求空间复杂度情况下**)
+  - 执行用时：88 ms, 在所有 C++ 提交中击败了37.07% 的用户
+  - 内存消耗：31 MB, 在所有 C++ 提交中击败了6.29% 的用户
     ```cpp
     class Solution {
     public:
