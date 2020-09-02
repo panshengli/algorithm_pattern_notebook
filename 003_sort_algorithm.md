@@ -219,4 +219,65 @@
 linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类")
 - n个元素的**数组**，原地对它们进行排序
 - 思路一：mergeSort
-  - 1. todo
+  - 1. 数组的合并方式，开辟临时变量
+  - 2. 将临时变量的数组最终合并到nums
+    ```cpp
+    class Solution {
+    public:
+        void sortColors(vector<int>& nums) 
+        {
+            if(nums.size() == 0) return;
+            int start = 0;
+            int end = nums.size() - 1;
+            mergeSort(nums, start, end);
+        }
+        void mergeSort(vector<int>& nums, int start, int end)
+        {
+            int mid = start + ((end - start) >> 1);
+            if(end - start > 0)
+            {
+                mergeSort(nums, start, mid);
+                mergeSort(nums, mid + 1, end);
+                mergeTwoNums(nums, start, end);
+            }
+        }
+        void mergeTwoNums(vector<int>& nums, int start, int end)
+        {
+            int length = end - start + 1;
+            int mid = start + ((end - start)>>1);
+            vector<int> tmp;
+            tmp.resize(length);
+            int index = 0;
+            int lhs = start;
+            int rhs = mid +1;
+            // 判断两组nums是否越界
+            while(lhs <= mid && rhs <= end)
+            {
+                if(nums[lhs] <= nums[rhs])
+                {
+                    tmp[index++] = nums[lhs++];
+                }
+                else
+                {
+                    tmp[index++] = nums[rhs++];
+                }
+            }
+            // 遍历剩余的数组
+            while(lhs <= mid)
+            {
+                tmp[index++] = nums[lhs++];
+            }
+            while(rhs <= end)
+            {
+                tmp[index++] = nums[rhs++];
+            }
+            // 重点：合并tmp数组到nums中
+            for(int i = 0; i < length; i++)
+            {
+                nums[start + i] = tmp[i];
+            }
+        }
+    };
+    ```
+- 思路二：quickSort
+  - 1. TODO

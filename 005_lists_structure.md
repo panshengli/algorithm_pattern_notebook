@@ -490,6 +490,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
                 return l1;
             if(l1->val <= l2->val)
             {
+                // 注意递归需要连接，
                 l1->next = mergeTwoLists(l1->next,l2);
                 // 注意：递归的结束后返回的结果
                 return l1;
@@ -570,13 +571,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     ```cpp
     class Solution {
     public:
-        ListNode* sortList(ListNode* head) 
+        ListNode* sortList(ListNode* head)
         {
             // 注意if在recursion中的判断条件
             if(head == nullptr || head->next == nullptr)
             {
                 return head;
             }
+            // 注意：快慢指针初始时指向同一起点
             ListNode* pre_slow = new ListNode();
             ListNode* slow = head;
             pre_slow->next = slow;
@@ -623,25 +625,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     public:
         ListNode* sortList(ListNode* head) 
         {
-            // 注意if在recursion中以及在快慢指针的判断条件
-            if(head == nullptr || head->next == nullptr)
-            {
-                return head;
-            }
-            ListNode* pre_slow = new ListNode();
-            ListNode* slow = head;
-            pre_slow->next = slow;
-            ListNode* fast = head;
-            // 注意：要判断fast->next是否为空(合并的list个数为偶数时)
-            while(fast != nullptr && fast->next != nullptr)
-            {
-                pre_slow = slow;
-                slow = slow->next;
-                fast = fast->next->next;
-            }
-            // 将切割后的链表结束指向空
-            pre_slow->next = nullptr;
-            return mergeTwoList(sortList(head),sortList(slow));
+            // 同上
         }
         ListNode* mergeTwoList(ListNode* l1, ListNode* l2)
         {
