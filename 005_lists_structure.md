@@ -617,9 +617,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
         }
     };
     ```
-- 迭代版本（注意思路，特别时mergeTwoList中，ListNode的定义）
-- 执行用时：100 ms, 在所有 C++ 提交中击败了23.40% 的用户
-- 内存消耗：36.4 MB, 在所有 C++ 提交中击败了5.15% 的用户
+- 思路二：迭代版本（注意思路，特别时mergeTwoList中，ListNode的定义）
+  - 执行用时：100 ms, 在所有 C++ 提交中击败了23.40% 的用户
+  - 内存消耗：36.4 MB, 在所有 C++ 提交中击败了5.15% 的用户
     ```cpp
     class Solution {
     public:
@@ -667,6 +667,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
         }
     };
     ```
+- 思路三：quickSort链表
+  - todo
+  - https://leetcode-cn.com/problems/sort-list/solution/gui-bing-pai-xu-he-kuai-su-pai-xu-by-a380922457/
 ---
 
 <div id="reorderList" onclick="window.location.hash">

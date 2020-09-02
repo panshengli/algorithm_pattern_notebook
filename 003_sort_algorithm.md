@@ -25,7 +25,11 @@
   * <a href="#quickSort">2. [代码框架] quickSort</a>
 - mergeSort应用
   * <a href="./005_lists_structure.md">3. [003_lists_structure 5&7] merge-sort</a>
-  * <a href="sc">4. [数组mergeSort] sort-colors(#75)</a>
+  * <a href="sc">4. [**很棒的数组mergeSort**] sort-colors(#75)</a>
+  * <a href="kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
+
+
+
 
 
 
@@ -75,7 +79,7 @@
 - 排序思想：
   - 基于分治思想的不稳定排序(基准前后放在一边)
   - 快速排序缺点：**对小规模数据性能不是很好**
-  - 快排是原地交换，无合并过程传入的索引是存在的索引（如：0、length-1 等），**越界可能导致崩溃**
+  - 快排是原地交换，无合并过程传入的索引是存在的索引（如：0、length-1等），**越界可能导致崩溃**
 - python版本
     ```python
     def quick_sort(b):
@@ -129,7 +133,7 @@
 
     void QuickSort(int InputArray[],int nLow,int nHigh)
     {
-        if (nLow < nHigh)
+        if (nHigh - nLow > 0)
         {
             int index = Partition(InputArray,nLow,nHigh);
             QuickSort(InputArray,nLow,index-1);
@@ -205,5 +209,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
         }
     };
     ```
-- 思路二：quickSort
-  - 1. TODO
+---
+
+<div id="sc" onclick="window.location.hash">
+
+#### 5. [**数组quickSort**] kth-largest-element-in-an-array(#215)
+linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/ "数组中的第K个最大元素")
+- 在未排序的数组中找到第k个最大的元素
