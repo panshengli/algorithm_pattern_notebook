@@ -216,3 +216,125 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
 #### 5. [**数组quickSort**] kth-largest-element-in-an-array(#215)
 linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/ "数组中的第K个最大元素")
 - 在未排序的数组中找到第k个最大的元素
+- 思路一：quickSort(未优化)
+    ```cpp
+    class Solution {
+    public:
+        int findKthLargest(vector<int>& nums, int k)
+        {
+            int low = 0;
+            int high = nums.size()-1;
+            quickSort(nums, low, high);
+            return nums[nums.size()-k];
+        }
+
+        void quickSort(vector<int>& nums, int low, int high)
+        {
+            // 2. 尾递归用while，普通情况if判断
+            if(high-low > 0)
+            {
+                int pivot = partition(nums, low, high);
+                quickSort(nums, low, pivot - 1);
+                quickSort(nums, pivot + 1, high);
+            }
+        }
+
+        int partition(vector<int>& nums, int low, int high)
+        {
+            int pivotKey = nums[low];
+            while(high-low > 0)
+            {
+                //从两边向中间逼近
+                while(low < high && nums[high] >= pivotKey)
+                {
+                    high -- ;
+                }
+                nums[low] = nums[high];
+                while(low < high && nums[low] <= pivotKey)
+                {
+                    low ++;
+                }
+                nums[high] = nums[low];
+            }
+            // 重点：减少不必要的交换后要还原nums[low]
+            nums[low] = pivotKey;
+            return low;
+        }
+    };
+    ```
+- 思路二：quickSort(优化版)
+    ```cpp
+    class Solution {
+    public:
+        int findKthLargest(vector<int>& nums, int k) 
+        {
+            int low = 0;
+            int high = nums.size()-1;
+            quickSort(nums, low, high);
+            for(auto x:nums)
+            {
+                cout<<"nums[]: "<<x<<endl;
+            }
+            return nums[nums.size()-k];
+        }
+        // 采用最优的quickSort方式
+        // 1. 两者中取最短，为了减少递归层数
+        // 2. 尾递归方式
+        // 3. partition中利用三数取中
+        // 4. 利用值交换方式代替swap
+        void quickSort(vector<int>& nums, int low, int high)
+        {
+            // 2. 尾递归用while，普通情况if判断
+            while(high-low > 0)
+            {
+                int mid = low + ((high - low)>>1);
+                int pivot = partition(nums, low, high);
+                // 1. 两者取短 + 尾递归优化，最坏空间复杂度优化至logn
+                if(pivot < mid)
+                {
+                    quickSort(nums, low, pivot - 1);
+                    low = pivot + 1;
+                }
+                else
+                {
+                    quickSort(nums, pivot + 1, high);
+                    high = pivot - 1;
+                }
+            }
+        }
+
+        int partition(vector<int>& nums, int low, int high)
+        {
+            // 3. 省略三种取中
+            int pivotKey = nums[low];
+            while(high-low > 0)
+            {
+                //从两边向中间逼近，注意顺序一定不要写反
+                while(low < high && nums[high] >= pivotKey)
+                {
+                    high -- ;
+                }
+                nums[low] = nums[high];
+                while(low < high && nums[low] <= pivotKey)
+                {
+                    low ++;
+                }
+                // 4. 减少不必要的交换
+                nums[high] = nums[low];
+            }
+            // 重点：减少不必要的交换后要还原nums[low]
+            nums[low] = pivotKey;
+            return low;
+        }
+    };
+    ```
+- 思路三：利用stl库
+  - std::sort()内部实现处理形式不同
+    - 1. 数据量小时，利用insertSort()
+    - 2. 数据量大时，利用quickSort()
+    - 3. 栈深度过大时，采用heapSort()
+    ```cpp
+    sort(nums.begin(),nums.end());
+    ```
+- 思路四：heapSort
+--- 
