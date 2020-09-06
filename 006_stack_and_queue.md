@@ -9,6 +9,15 @@
     stack | -- | -- | top()<br>peek() | -- | push()<br>emplace() | pop() [删除尾] | empty()
     queue | -- | -- | front() | back() | push()<br>emplace() | pop() [删除头] | empty()
     deque | -- | -- | front() | back() | push_front()<br>push_back() | pop_front()<br>pop_back() | empty()
+    priority_deque | -- | -- | top() | back() | push() | pop()[删除头] | empty()
+- Note: 
+  - **定义：priority_queue<Type, Container, Functional>**
+    ```cpp
+    //升序队列
+    priority_queue <int,vector<int>,greater<int> > q;
+    //降序队列
+    priority_queue <int,vector<int>,less<int> >q;
+    ```
 ---
 
 ## 📑 index
@@ -23,7 +32,6 @@
 - Queue 队
   * <a href="#iqus">1. implement-queue-using-stacks(#232)</a>
   * <a href="#01-matrix">2. 01-matrix(#542)</a>
-  * 
 
 
 

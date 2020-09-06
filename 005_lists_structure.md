@@ -668,9 +668,51 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     };
     ```
 - 思路三：quickSort链表
-  - todo
-  - https://leetcode-cn.com/problems/sort-list/solution/gui-bing-pai-xu-he-kuai-su-pai-xu-by-a380922457/
+  - 思路见注释
+    ```cpp
+    class Solution {
+    public:
+        ListNode* sortList(ListNode* head)
+        {
+            quickSort(head, nullptr);
+            return head;
+        }
+        ListNode* partition(ListNode* begin, ListNode* end)
+        {
+            // 1. 基准选为首元素，声明两个变量
+            ListNode* slow = begin;
+            ListNode* fast = begin->next;
+            int privot = begin->val;
+            // 2. 小于key，更新slow指向，slow与fast值交换，更新fast指向
+            while (fast != end)
+            {
+                if (fast->val < privot)
+                {
+                    // slow始终指向<=key
+                    // slow->next始终>key或者为fast指向的节点
+                    slow = slow->next;
+                    swap(slow->val, fast->val);
+                }
+                fast = fast->next;
+            }
+            // 3. 循环执行2直至fast至尾部；交换链表头元素与slow指向元素值
+            swap(begin->val, slow->val);
+            // 4. 以slow为分割点分两部分，两个序列递归上述步骤排序完成
+            return slow;
+        }
+
+        void quickSort(ListNode* begin, ListNode* end)
+        {
+            if (begin != end) {
+                ListNode* temp = partition(begin, end);
+                quickSort(begin, temp);
+                quickSort(temp->next, end);
+            }
+        }
+    };
+    ```
 ---
+
 
 <div id="reorderList" onclick="window.location.hash">
 

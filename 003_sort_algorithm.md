@@ -102,45 +102,6 @@
         # 使用迭代进行比较
         return quick_sort(left) + [pivot] + quick_sort(right)
     ```
-- cpp版本
-    ```cpp
-    void Swap(int &p,int &q)
-    {
-        int temp;
-        temp = p;
-        p = q;
-        q = temp;
-    }
-
-    int Partition(int InputArray[],int nLow,int nHigh)
-    {
-        int i = nLow,j = nHigh+1;
-        int x=InputArray[i];
-        while (true)
-        {
-            //将 < x的元素交换到中轴左边区域
-            while (InputArray[++i]<x);
-            //将 >x的元素交换到中轴右边区域
-            while (InputArray[--j]>x);
-            if (i>=j)break;
-            Swap(InputArray[i],InputArray[j]);
-        }
-        //将x交换到它在排序序列中应在的位置上
-        InputArray[nLow]=InputArray[j];
-        InputArray[j]=x;
-        return j;
-    }
-
-    void QuickSort(int InputArray[],int nLow,int nHigh)
-    {
-        if (nHigh - nLow > 0)
-        {
-            int index = Partition(InputArray,nLow,nHigh);
-            QuickSort(InputArray,nLow,index-1);
-            QuickSort(InputArray,index+1,nHigh);
-        }
-    }
-    ```
 ---
 
 <div id="sc" onclick="window.location.hash">
@@ -216,7 +177,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
 #### 5. [**数组quickSort**] kth-largest-element-in-an-array(#215)
 linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/ "数组中的第K个最大元素")
 - 在未排序的数组中找到第k个最大的元素
-- 思路一：quickSort(未优化)
+- 思路一： quickSort(未优化)
     ```cpp
     class Solution {
     public:
@@ -262,7 +223,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
         }
     };
     ```
-- 思路二：quickSort(优化版)
+- 思路二： quickSort(优化版)
     ```cpp
     class Solution {
     public:
@@ -328,7 +289,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
         }
     };
     ```
-- 思路三：利用stl库
+- 思路三： stl::sort库
   - std::sort()内部实现处理形式不同
     - 1. 数据量小时，利用insertSort()
     - 2. 数据量大时，利用quickSort()
@@ -336,5 +297,46 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
     ```cpp
     sort(nums.begin(),nums.end());
     ```
-- 思路四：heapSort
---- 
+- 思路四： priority_queue
+  - 1. 本质就是二叉堆，可以使用优先队列priority_queue
+  - 2. 维护一个k大小的小顶堆，堆顶就是第k个最大的数
+  - 3. 注意思路和方法
+    ```cpp
+    class Solution {
+    public:
+        int findKthLargest(vector<int>& nums, int k)
+        {
+            // priority_queue<Type, Container, Functional>
+            priority_queue<int,vector<int>,greater<int>> pq;
+            for (auto n : nums)
+            {
+                if (pq.size() == k && pq.top() >= n)
+                    continue;
+                if (pq.size() == k)
+                {
+                    pq.pop();
+                }
+                pq.push(n);
+            }
+            return pq.top();
+        }
+    };
+    ```
+- 思路五： heapSort
+  - 二叉堆
+  - 注意： 数组的第一个索引 0 空着不用
+      ```cpp
+      // 根节点索引
+      int parent(int root) {
+          return root / 2;
+      }
+      // 左子树索引
+      int left(int root) {
+          return root * 2;
+      }
+      // 右子树索引
+      int right(int root) {
+          return root * 2 + 1;
+      }
+      ```
+---
