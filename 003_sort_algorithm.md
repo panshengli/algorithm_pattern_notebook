@@ -27,7 +27,7 @@
   * <a href="./005_lists_structure.md">3. [003_lists_structure 5&7] merge-sort</a>
   * <a href="sc">4. [**很棒的数组mergeSort**] sort-colors(#75)</a>
   * <a href="kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
-
+  * <a href="tkfe">6. [**数组heapSort**] top-k-frequent-elements(#347)</a>
 
 
 
@@ -322,6 +322,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
         }
     };
     ```
+---
+
 - 思路五： heapSort
   - 二叉堆
   - 注意： 数组的第一个索引 0 空着不用
@@ -340,3 +342,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
       }
       ```
 ---
+
+<div id="tkfe" onclick="window.location.hash">
+
+#### 6. [**数组heapSort**] top-k-frequent-elements(#347)
+linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "前K个高频元素")
+- 非空整数数组，返回其中出现频率前k高的元素
+- 时间复杂度必须优于O(nlogn)
+- 
