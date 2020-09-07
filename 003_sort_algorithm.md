@@ -328,7 +328,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
   - 二叉堆
   - 根节点索引 root / 2;
   - 左子树索引 root * 2 + 1
-  - 右子树索引 root * 2 + 1;
+  - 右子树索引 root * 2 + 2;
 - 思路：
   - 以大顶堆为例，分为「**建堆**」,「**调整**」和「**删除**」
   - 一. 构建堆
@@ -420,14 +420,12 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
             {
                 counter[x]++;
             }
-            
             for (auto pair : counter)
             {
                 // pair的比较，先比较第一个元素，第一个相等比较第二个
                 pq.push(std::make_pair(pair.second, pair.first));
                 if (pq.size() > k) pq.pop();
             }
-
             while(!pq.empty())
             {
                 res.push_back(pq.top().second);
