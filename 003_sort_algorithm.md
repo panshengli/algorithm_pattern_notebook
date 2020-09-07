@@ -324,23 +324,76 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
     ```
 ---
 
-- 思路五： heapSort
+- 思路五： heapSort(**很棒的堆排序思路**)
   - 二叉堆
-  - 注意： 数组的第一个索引 0 空着不用
-      ```cpp
-      // 根节点索引
-      int parent(int root) {
-          return root / 2;
-      }
-      // 左子树索引
-      int left(int root) {
-          return root * 2;
-      }
-      // 右子树索引
-      int right(int root) {
-          return root * 2 + 1;
-      }
-      ```
+  - 根节点索引 root / 2;
+  - 左子树索引 root * 2 + 1
+  - 右子树索引 root * 2 + 1;
+- 思路：
+  - 以大顶堆为例，分为「**建堆**」,「**调整**」和「**删除**」
+  - 一. 构建堆
+    - 找到根节点进行遍历
+  - 二. 调整堆
+    - 1. 找到根节点和其左右子树比较，找到最大的索引
+    - 2. 如果子树小于根节点，那么进行值交换
+    - 3. 进行向上迭代重复操作
+  - 三. 删除堆(大顶堆的根节点一定是最大值)
+    - 1. 进行循环删除的过程
+    - 2. 在删除将最后一个值赋值到第一个
+    - 3. 将heapSize大小减一
+    - 4. 将最大堆进行调整,调用步骤二
+    ```cpp
+    class Solution {
+    public:
+        int findKthLargest(vector<int>& nums, int k)
+        {
+            int heap_size = nums.size();
+            // 1. 建立堆
+            buildHeap(nums,heap_size);
+            // 3. 删除堆
+            // 注意：1. index的>=，而非<= 2. for循环注意使用nums.size()，而非heap_size
+            for(int index = nums.size()-1; index >= nums.size()-k+1;index--)
+            {
+                swap(nums[0],nums[index]);
+                heap_size--;
+                // 重点：因为交换了nums[0],对顶堆0进行调整
+                maxHeap(nums,0,heap_size);
+            }
+            return nums[0];
+        }
+
+        void buildHeap(vector<int>& nums, int heap_size)
+        {
+            for(int root_index = heap_size/2;root_index >= 0;root_index--)
+            {
+                // 2. 调整堆
+                maxHeap(nums, root_index,heap_size);
+            }
+        }
+
+        void maxHeap(vector<int>& nums, int root_index,int heap_size)
+        {
+            int largest_index = root_index;
+            int left_index = root_index*2+1;
+            int right_index = root_index*2+2;
+            // 注意：nums[largest_index]中不能写root_index
+            if(left_index<heap_size && nums[largest_index]<nums[left_index])
+            {
+                largest_index = left_index;
+            }
+            if(right_index<heap_size && nums[largest_index]<nums[right_index])
+            {
+                largest_index = right_index;
+            }
+            if(largest_index != root_index)
+            {
+                swap(nums[root_index],nums[largest_index]);
+                // 交换后largest_index为root的索引，进行largest_index递归
+                maxHeap(nums,largest_index,heap_size);
+            }
+        }
+    };
+    ```
 ---
 
 <div id="tkfe" onclick="window.location.hash">
@@ -349,4 +402,38 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
 linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "前K个高频元素")
 - 非空整数数组，返回其中出现频率前k高的元素
 - 时间复杂度必须优于O(nlogn)
-- 
+- 思路：heapSort实现(根据题4思路四实现)
+  - 利用map和priority_queue实现
+  - 1. 注意临时变量的生命
+  - 2. 注意push pair的次序，和pair的比较准则
+    ```cpp
+    class Solution {
+    public:
+        vector<int> topKFrequent(vector<int>& nums, int k) 
+        {
+            // priority_queue<Type, Container, Functional>
+            priority_queue<std::pair<int,int>,vector<std::pair<int,int>>,greater<std::pair<int,int>>> pq;
+            std::unordered_map<int,int> counter;
+            std::vector<int> res;
+            // 添加元素并计数
+            for(auto x: nums)
+            {
+                counter[x]++;
+            }
+            
+            for (auto pair : counter)
+            {
+                // pair的比较，先比较第一个元素，第一个相等比较第二个
+                pq.push(std::make_pair(pair.second, pair.first));
+                if (pq.size() > k) pq.pop();
+            }
+
+            while(!pq.empty())
+            {
+                res.push_back(pq.top().second);
+                pq.pop();
+            }
+            return res;
+        }
+    };
+    ```
