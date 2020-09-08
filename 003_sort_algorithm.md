@@ -39,6 +39,7 @@
 [//]: # (Image References)
 [image1]: .readme/dfs.png "dfs"
 [image2]: .readme/bubble_sort.gif "bubbleSort"
+[image3]: .readme/selection_sort.gif "selectionSort"
 
 
 <div id="mergeSort" onclick="window.location.hash">
@@ -506,3 +507,27 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
 
 #### 8. [代码框架] selectionSort
 - 排序思想：
+  - 通过当前值与其他值比较
+  - 找到最小值的索引
+  - 如果索引非当前索引，进行值交换，如下图
+![][image3]
+    ```cpp
+    void selectionSort(vector<int>& nums)
+        {
+            for(int i = 0; i <= nums.size()-2;i++)
+            {
+                int min_index = i;
+                for(int j =nums.size()-1;j>i;j--)
+                {
+                    if(nums[min_index]>nums[j])
+                    {
+                        min_index = j;
+                    }
+                }
+                if(i != min_index)
+                {
+                    swap(nums[i],nums[min_index]);
+                }
+            }
+        }
+    ```
