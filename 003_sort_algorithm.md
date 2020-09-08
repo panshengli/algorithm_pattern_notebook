@@ -28,7 +28,8 @@
   * <a href="#kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
   * <a href="#tkfe">6. [**数组heapSort**] top-k-frequent-elements(#347)</a>
 * <a href="#bubbleSort">7. [代码框架] bubbleSort</a>
-* <a href="#selectionSort">8. [代码框架] selectionSort</a>
+* <a href="#selectSort">8. [代码框架] selectSort</a>
+* <a href="#insertSort">9. [代码框架] insertSort</a>
 
 
 
@@ -39,15 +40,18 @@
 [//]: # (Image References)
 [image1]: .readme/dfs.png "dfs"
 [image2]: .readme/bubble_sort.gif "bubbleSort"
-[image3]: .readme/selection_sort.gif "selectionSort"
-
+[image3]: .readme/select_sort.gif "selectSort"
+[image4]: .readme/merge_sort.gif "mergeSort"
+[image5]: .readme/quick_sort.gif "quickSort"
+[image6]: .readme/heap_sort.gif "heapSort"
 
 <div id="mergeSort" onclick="window.location.hash">
 
 #### 1. [代码框架] mergeSort
 - 排序思想：
-  1. 将序列一分为二，对两边进行递归分割操作，得到独立子序列；
-  2. 对独立子序列递归的执行合并操作，得到有序的序列。
+  1. 将序列一分为二，对两边进行递归分割操作，得到独立子序列
+  2. 对独立子序列递归的执行合并操作，得到有序的序列,如下图
+![][image4]
 - python版本
     ```python
     def merge(left, right):
@@ -81,7 +85,8 @@
 - 排序思想：
   - 基于分治思想的不稳定排序(基准前后放在一边)
   - 快速排序缺点：**对小规模数据性能不是很好**
-  - 快排是原地交换，无合并过程传入的索引是存在的索引（如：0、length-1等），**越界可能导致崩溃**
+  - 快排是原地交换，无合并过程传入的索引是存在的索引（如：0、length-1等），**越界可能导致崩溃**,如下图
+![][image5]
 - python版本
     ```python
     def quick_sort(b):
@@ -332,7 +337,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
   - 左子树索引 root * 2 + 1
   - 右子树索引 root * 2 + 2;
 - 思路：
-  - 以大顶堆为例，分为「**建堆**」,「**调整**」和「**删除**」
+  - 以大顶堆为例，分为「**建堆**」,「**调整**」和「**删除**」，如下图
+![][image6]
   - 一. 构建堆
     - 找到根节点进行遍历
   - 二. 调整堆
@@ -503,16 +509,16 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
     ```
 ---
 
-<div id="selectionSort" onclick="window.location.hash">
+<div id="selectSort" onclick="window.location.hash">
 
-#### 8. [代码框架] selectionSort
+#### 8. [代码框架] selectSort
 - 排序思想：
   - 通过当前值与其他值比较
   - 找到最小值的索引
   - 如果索引非当前索引，进行值交换，如下图
 ![][image3]
     ```cpp
-    void selectionSort(vector<int>& nums)
+    void selectSort(vector<int>& nums)
         {
             for(int i = 0; i <= nums.size()-2;i++)
             {
@@ -531,3 +537,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
             }
         }
     ```
+---
+
+<div id="insertSort" onclick="window.location.hash">
+
+#### 9. [代码框架] insertSort
+- 排序思想：
