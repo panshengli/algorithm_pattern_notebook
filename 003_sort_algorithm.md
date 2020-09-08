@@ -24,11 +24,11 @@
   * <a href="#mergeSort">1. [代码框架] mergeSort</a>
   * <a href="#quickSort">2. [代码框架] quickSort</a>
   * <a href="./005_lists_structure.md">3. [003_lists_structure 5&7] merge-sort</a>
-  * <a href="sc">4. [**很棒的数组mergeSort**] sort-colors(#75)</a>
-  * <a href="kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
-  * <a href="tkfe">6. [**数组heapSort**] top-k-frequent-elements(#347)</a>
-* <a href="bubbleSort">7. [代码框架] bubbleSort</a>
-
+  * <a href="#sc">4. [**很棒的数组mergeSort**] sort-colors(#75)</a>
+  * <a href="#kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
+  * <a href="#tkfe">6. [**数组heapSort**] top-k-frequent-elements(#347)</a>
+* <a href="#bubbleSort">7. [代码框架] bubbleSort</a>
+* <a href="#selectionSort">8. [代码框架] selectionSort</a>
 
 
 
@@ -173,7 +173,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
     ```
 ---
 
-<div id="sc" onclick="window.location.hash">
+<div id="kleiaa" onclick="window.location.hash">
 
 #### 5. [**数组quickSort**] kth-largest-element-in-an-array(#215)
 linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/ "数组中的第K个最大元素")
@@ -500,3 +500,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
         }
     }
     ```
+---
+
+<div id="selectionSort" onclick="window.location.hash">
+
+#### 8. [代码框架] selectionSort
+- 排序思想：
