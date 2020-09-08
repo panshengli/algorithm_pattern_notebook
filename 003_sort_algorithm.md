@@ -417,7 +417,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "å
     ```cpp
     class Solution {
     public:
-        vector<int> topKFrequent(vector<int>& nums, int k) 
+        vector<int> topKFrequent(vector<int>& nums, int k)
         {
             // priority_queue<Type, Container, Functional>
             priority_queue<std::pair<int,int>,vector<std::pair<int,int>>,greater<std::pair<int,int>>> pq;
