@@ -20,14 +20,14 @@
 ---
 
 ## 📑 index
-- 分治法应用
+- mergeSort & quickSort and heapSort
   * <a href="#mergeSort">1. [代码框架] mergeSort</a>
   * <a href="#quickSort">2. [代码框架] quickSort</a>
-- mergeSort应用
   * <a href="./005_lists_structure.md">3. [003_lists_structure 5&7] merge-sort</a>
   * <a href="sc">4. [**很棒的数组mergeSort**] sort-colors(#75)</a>
   * <a href="kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
   * <a href="tkfe">6. [**数组heapSort**] top-k-frequent-elements(#347)</a>
+* <a href="bubbleSort">7. [代码框架] bubbleSort</a>
 
 
 
@@ -38,6 +38,7 @@
 
 [//]: # (Image References)
 [image1]: .readme/dfs.png "dfs"
+[image2]: .readme/bubble_sort.gif "bubbleSort"
 
 
 <div id="mergeSort" onclick="window.location.hash">
@@ -434,4 +435,68 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
             return res;
         }
     };
+    ```
+---
+
+<div id="bubbleSort" onclick="window.location.hash">
+
+#### 7. [代码框架] bubbleSort
+- 排序思想：
+  - 传统思路
+    - 两两比较相邻的关键字，反序进行交换，如下图
+![][image2]
+    - 但这样排序效率较为低效
+    ```cpp
+    void bubbleSort(vector<int>& nums)
+        {
+            for(int i = 0; i <= nums.size()-2;i++)
+            {
+                for(int j =i+1;j<=nums.size()-1;j++)
+                {
+                    if(nums[i]>nums[j])
+                        swap(nums[i],nums[j]);
+                }
+            }
+        }
+    ```
+    
+  - 改进一：
+    - 内层遍历从后向前
+    - 比较前者大于后者进行值交换
+    ```cpp
+    void bubbleSort(vector<int>& nums)
+    {
+        for(int i = 0; i <= nums.size()-2;i++)
+        {
+            for(int j =nums.size()-1;j>i;j--)
+            {
+                // 比较前者大于后者进行值交换
+                if(nums[j-1]>nums[j])
+                    swap(nums[j-1],nums[j]);
+            }
+        }
+    }
+    ```
+  - 改进二：
+    - 利用flag标记，有数据交换进行排序
+    - 针对部分有序
+    ```cpp
+    void bubbleSort(vector<int>& nums)
+    {
+        bool flag = true;
+        // 注意flag的放置条件
+        for(int i = 0; i <= nums.size()-2 && flag;i++)
+        {
+            flag = false;
+            for(int j =nums.size()-1;j>i;j--)
+            {
+                if(nums[j-1]>nums[j])
+                {
+                    swap(nums[j-1],nums[j]);
+                    // 如果后面每一个元素都大于前面，则部分有序，提高效率
+                    flag = true;
+                }
+            }
+        }
+    }
     ```
