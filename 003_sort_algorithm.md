@@ -30,7 +30,7 @@
 * <a href="#bubbleSort">7. [代码框架] bubbleSort</a>
 * <a href="#selectSort">8. [代码框架] selectSort</a>
 * <a href="#insertSort">9. [代码框架] insertSort</a>
-
+* <a href="#shellSort">10. [代码框架] shellSort</a>
 
 
 
@@ -45,6 +45,7 @@
 [image5]: .readme/quick_sort.gif "quickSort"
 [image6]: .readme/heap_sort.gif "heapSort"
 [image7]: .readme/insect_sort.gif "insectSort"
+[image8]: .readme/shell_sort.gif "shellSort"
 
 <div id="mergeSort" onclick="window.location.hash">
 
@@ -546,3 +547,24 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
 - 排序思想：
   - 将数字直接插入到有序的数组中，如下图
 ![][image7]
+    ```cpp
+    void insectSort(vector<int>& nums)
+        {
+            for(int i = 0; i <= nums.size()-2;i++)
+            {
+                // 定义j为后一个值，j的索引为1
+                for (int j = i+1; j >= 1 && nums[j] < nums[j-1]; j--)
+                {
+                    swap(nums[j-1],nums[j]);
+                }
+            }
+        }
+    ```
+---
+
+<div id="shellSort" onclick="window.location.hash">
+
+#### 10. [代码框架] shellSort
+- 排序思想：
+  - 分割成为若干子序列分别进行直接插入排序，见下图
+![][image8]
