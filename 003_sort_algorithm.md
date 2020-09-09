@@ -568,3 +568,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
 - 排序思想：
   - 分割成为若干子序列分别进行直接插入排序，见下图
 ![][image8]
+  - 1. 分组，每个一定间隔的数为一组
+  - 2. 组内排序
+  - 3. 不断循环1和2，知道分组间隔变为1
+  - 4. 运用插入排序
