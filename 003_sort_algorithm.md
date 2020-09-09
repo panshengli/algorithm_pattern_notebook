@@ -44,6 +44,7 @@
 [image4]: .readme/merge_sort.gif "mergeSort"
 [image5]: .readme/quick_sort.gif "quickSort"
 [image6]: .readme/heap_sort.gif "heapSort"
+[image7]: .readme/insect_sort.gif "insectSort"
 
 <div id="mergeSort" onclick="window.location.hash">
 
@@ -453,19 +454,19 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
     - 两两比较相邻的关键字，反序进行交换，如下图
 ![][image2]
     - 但这样排序效率较为低效
-    ```cpp
-    void bubbleSort(vector<int>& nums)
-        {
-            for(int i = 0; i <= nums.size()-2;i++)
+        ```cpp
+        void bubbleSort(vector<int>& nums)
             {
-                for(int j =i+1;j<=nums.size()-1;j++)
+                for(int i = 0; i <= nums.size()-2;i++)
                 {
-                    if(nums[i]>nums[j])
-                        swap(nums[i],nums[j]);
+                    for(int j =i+1;j<=nums.size()-1;j++)
+                    {
+                        if(nums[i]>nums[j])
+                            swap(nums[i],nums[j]);
+                    }
                 }
             }
-        }
-    ```
+        ```
     
   - 改进一：
     - 内层遍历从后向前
@@ -529,7 +530,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
                     {
                         min_index = j;
                     }
-                }
+                }   
                 if(i != min_index)
                 {
                     swap(nums[i],nums[min_index]);
@@ -543,3 +544,5 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
 
 #### 9. [代码框架] insertSort
 - 排序思想：
+  - 将数字直接插入到有序的数组中，如下图
+![][image7]
