@@ -572,3 +572,28 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
   - 2. 组内排序
   - 3. 不断循环1和2，知道分组间隔变为1
   - 4. 运用插入排序
+  - 增量的选取，i=i/3+1 时的复杂度为O(n^1.5),好于i=i/2 其复杂度为O(n^2)
+    ```cpp
+    void shellSort(vector<int>& nums)
+    {
+        int increment = nums.size();
+        while (increment > 1)
+        {
+            // 增量的选取
+            increment = increment / 3 + 1;
+            for (int i = increment; i < nums.size(); i++)
+            {
+                int temp = nums[i];
+                if (nums[i] < nums[i - increment])
+                {
+                    int j;
+                    for (j = i - increment; j >= 0 && nums[j] > temp; j = j - increment)
+                        nums[j + increment] = nums[j];
+                    nums[j + increment] = temp;
+                }
+            }
+        }
+    }
+    ```
+---
+
