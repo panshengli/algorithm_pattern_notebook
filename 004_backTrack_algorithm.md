@@ -8,7 +8,7 @@
 
 #### 1. subSets(#78)
 linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所有子集")
-
+> 给定一组不含重复元素的整数数组nums，返回所有可能的子集
 1. backtrack algorithm
 
     ```go

@@ -30,8 +30,8 @@
   * <a href="#lrih">6. largest-rectangle-in-histogram(#84)</a>
 
 - Queue 队
-  * <a href="#iqus">1. implement-queue-using-stacks(#232)</a>
-  * <a href="#01-matrix">2. 01-matrix(#542)</a>
+  * <a href="#iqus">7. implement-queue-using-stacks(#232)</a>
+  * <a href="#01-matrix">8. 01-matrix(#542)</a>
 
 
 
@@ -49,7 +49,7 @@
 
 #### 1. min-stack(#155)
 linkage: [leetcode](https://leetcode-cn.com/problems/min-stack/ "最小栈")
-- 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈
+> 设计一个支持 push ，pop ，top 操作，并能在常数时间内检索到最小元素的栈
   - push(x) —— 将元素 x 推入栈中
   - pop() —— 删除栈顶的元素
   - top() —— 获取栈顶元素
@@ -143,7 +143,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/min-stack/ "最小栈")
 
 #### 2. evaluate-reverse-polish-notation(#150)
 linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-notation/ "逆波兰表达式求值")
-- 根据 逆波兰表示法，求表达式的值
+> 根据 逆波兰表示法，求表达式的值
 - 说明：
   - 整数除法只保留整数部分。
   - 给定逆波兰表达式总是有效的。换句话说，表达式总会得出有效数值且不存在除数为 0 的情况。
@@ -198,7 +198,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-not
 
 #### 3. decode-string(#394)
 linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串解码")
-- 给定一个经过编码的字符串，返回它解码后的字符串
+> 给定一个经过编码的字符串，返回它解码后的字符串
 - 思路题：利用stack思想
   - 1. 申明关于nums和strs的stack;
   - 2. 将数字push到nums，字母push到strs;
@@ -256,7 +256,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串�
 
 #### 4. clone-graph(#133)
 linkage: [leetcode](https://leetcode-cn.com/problems/clone-graph/ "克隆图")
-- 给你无向连通图中一个节点的引用，请你返回该图的深拷贝(克隆)
+> 给你无向连通图中一个节点的引用，请你返回该图的深拷贝(克隆)
 - 因为图存在环，所以要标记访问过的结点，避免重复形成死循环
 - **重点掌握，后面图遍历都和这个有关系**
 - 思路一：dfs(递归方式)
@@ -344,7 +344,7 @@ private:
 
 #### 5. number-of-islands(#200)
 linkage: [leetcode](https://leetcode-cn.com/problems/number-of-islands/ "岛屿数量")
-- 给你一个由'1'（陆地）和'0'（水）组成的的二维网格，请你计算网格中岛
+> 给你一个由'1'（陆地）和'0'（水）组成的的二维网格，请你计算网格中岛
 - 思路一：dfs
   - 1. 遍历当前vector，当遍历字符'1'时，count加1
   - 2. 进入dfs递归操作，注意递归返回的条件
@@ -426,7 +426,7 @@ void bfs(vector<vector<char>>& grid, int i, int j)
 
 #### 6. largest-rectangle-in-histogram(#84)
 linkage: [leetcode](https://leetcode-cn.com/problems/largest-rectangle-in-histogram/ "柱状图中最大的矩形")
-- n 个柱子，求能勾勒出来的矩形的最大面积
+> n个柱子，求能勾勒出来的矩形的最大面积
 - 思路一：暴力求解
   - 左右端点法(不推荐，了解思路)
   - 1. 尝试所有可能矩形
@@ -514,10 +514,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/largest-rectangle-in-histog
 
 <div id="iqus" onclick="window.location.hash">
 
-#### 1. implement-queue-using-stacks(#232)
+#### 7. implement-queue-using-stacks(#232)
 linkage: [leetcode](https://leetcode-cn.com/problems/implement-queue-using-stacks/ "用栈实现队列")
-- 使用栈实现队列的下列操作
-  - push(), pop(), peek()和empty()
+> 使用栈实现队列的下列操作
+> push(), pop(), peek()和empty()
 - 思路题：
   - 主要在于pop()的写法
   - 利用**两个临时stack进行存储，一个用于出栈，一个入栈**
@@ -549,9 +549,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-queue-using-stack
 
 <div id="01-matrix" onclick="window.location.hash">
 
-#### 2. 01-matrix(#542)
+#### 8. 01-matrix(#542)
 linkage: [leetcode](https://leetcode-cn.com/problems/01-matrix/ "01矩阵")
-- 给定一个由 0 和 1 组成的矩阵，找出每个元素到最近的 0 的距离
+> 给定一个由 0 和 1 组成的矩阵，找出每个元素到最近的 0 的距离
 - 思路：bfs方法
   - 1. vector所有元素赋值为INT_MAX, `vector<vector<int>> result(outer,vector<int>(inner, INT_MAX));`
   - 2. 遍历vector将0元素赋值为0，同时将其索引进行入队处理
@@ -584,7 +584,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/01-matrix/ "01矩阵")
                     }
                 }
             }
-            
+
             std::vector<std::pair<int,int>> around = {{1,0},{-1,0},{0,-1},{0,1}};
 
             while(!que.empty())
@@ -611,3 +611,4 @@ linkage: [leetcode](https://leetcode-cn.com/problems/01-matrix/ "01矩阵")
         }
     };
     ```
+---

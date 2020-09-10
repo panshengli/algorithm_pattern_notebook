@@ -127,7 +127,7 @@
 
 #### 4. [数组mergeSort] sort-colors(#75)
 linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类")
-- n个元素的**数组**，原地对它们进行排序
+> n个元素的**数组**，原地对它们进行排序
 - 思路一：mergeSort
   - 1. 数组的合并方式，开辟临时变量
   - 2. 将临时变量的数组最终合并到nums
@@ -195,7 +195,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
 
 #### 5. [**数组quickSort**] kth-largest-element-in-an-array(#215)
 linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-array/ "数组中的第K个最大元素")
-- 在未排序的数组中找到第k个最大的元素
+> 在未排序的数组中找到第k个最大的元素
 - 思路一： quickSort(未优化)
     ```cpp
     class Solution {
@@ -416,7 +416,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
 
 #### 6. [**数组heapSort**] top-k-frequent-elements(#347)
 linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "前K个高频元素")
-- 非空整数数组，返回其中出现频率前k高的元素
+> 非空整数数组，返回其中出现频率前k高的元素
 - 时间复杂度必须优于O(nlogn)
 - 思路：heapSort实现(根据题4思路四实现)
   - 利用map和priority_queue实现

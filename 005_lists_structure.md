@@ -42,7 +42,7 @@
 
 #### 1. ​remove-duplicates-from-sorted-list​(#83)
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
-- 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
+> 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
 - 迭代版本（直接法）
 ```cpp
 class Solution {
@@ -151,7 +151,7 @@ public:
 
 #### ​​2. remove-duplicates-from-sorted-list-ii​(#82)
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
-- 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
+> 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
 - 方式一： 迭代方法(注意元素去重以及边界条件处理)
     ```cpp
     class Solution {
@@ -229,7 +229,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
 
 #### 3. ​​​reverse-linked-list​​​(#206)
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反转一个单链表")
-- 反转一个单链表
+> 反转一个单链表
 - 定义两个指针： preprepre 和 curcurcur ；preprepre 在前 curcurcur 在后
 - 每次让 preprepre 的 nextnextnext 指向 curcurcur ，实现一次局部反转
 - 局部反转完成之后， preprepre 和 curcurcur 同时往前移动一个位置
@@ -291,7 +291,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反�
 
 #### 4. ​​​reverse-linked-list​​​-ii(#92)
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "反转链表 II")
-- 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
+> 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
 - 方法一：迭代法-头插法
     ```cpp
     class Solution {
@@ -424,7 +424,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
 
 #### 5. ​merge-two-sorted-lists(#21)
 linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "合并两个有序链表")
-- 将两个**升序链表**合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的
+> 将两个**升序链表**合并为一个新的升序链表并返回。新链表是通过拼接给定的两个链表的所有节点组成的
 - 迭代版本(谁值大指向谁，然后节点指向下一节点)
 - 关键步骤：
   - 1.临时变量的定义和操作
@@ -509,7 +509,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
 
 #### 6. ​​partition-list​​​​(#86)
 linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链表")
-- 给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
+> 给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
 - **思路：将大于等于x的节点，放到另外一个链表，最后连接这两个链表**
 - 独立写出，需要注意
   - **写出两个链表后连接时，不要忘了尾端链表指向为空**
@@ -554,7 +554,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
 
 #### 7. ​sort-list(#148)
 linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
-- **O(nlogn)时间复杂度**和常数级空间复杂度，对链表排序
+> **O(nlogn)时间复杂度**和常数级空间复杂度，对链表排序
 - 只有 heapSort, mergeSort, quickSort
 - **时间复杂度想到二分法**，从而联想到归并排序
 - [参考思路：快慢指针+二路归并（C++）](https://leetcode-cn.com/problems/sort-list/solution/kuai-man-zhi-zhen-er-lu-gui-bing-c-by-jiangtianyu0/)
@@ -718,9 +718,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
 
 #### 8. ​reorder-list(#143)
 linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表")
-- 示例
-- 给定链表 1->2->3->4, 重新排列为 1->4->2->3.
-- 给定链表 1->2->3->4->5, 重新排列为 1->5->2->4->3.
+> 示例
+> 给定链表 1->2->3->4, 重新排列为 1->4->2->3.
+> 给定链表 1->2->3->4->5, 重新排列为 1->5->2->4->3.
 - 思路：一、找到中点；二、反转后面链表；三、拼接前后链表
 - 迭代+递归（根据思路自己写出，相应的对应题型有3,4）
     ```cpp
@@ -788,7 +788,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
 
 #### 9. ​​linked-list-cycle(#141)
 linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形链表")
-- 给定一个链表，判断链表中是否有环,
+> 给定一个链表，判断链表中是否有环,
 - pos索引从0开始，如果pos是-1，则在该链表中没有环，如图：
 ![alt text][image3]
   - 解释：链表中有一个环，其尾部连接到第二个节点
@@ -826,7 +826,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
 
 #### 10. ​​​linked-list-cycle-ii​(#142)
 linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环形链表 II")
-- 给定一个链表，返回链表开始入环的第一个节点(索引从0开始)
+> 给定一个链表，返回链表开始入环的第一个节点(索引从0开始)
 - 如果链表无环，则返回null
 ![][image4]
 - 迭代版本(快慢指针)[**推荐**]
@@ -906,7 +906,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环�
 
 #### 11. ​palindrome-linked-list​​​​​(#234)
 linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "回文链表")
-- 请判断一个链表是否为回文链表
+> 请判断一个链表是否为回文链表
 - 思路(独立写出)：
   - 1.快慢指针找到链表中点
   - 2.翻转后半部分链表
@@ -1028,8 +1028,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
 
 #### 12. ​copy-list-with-random-pointer(#138)
 linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-pointer/ "复制带随机指针的链表")
-- 给定一个链表，每个节点包含一个额外增加的随机指针
-- 该指针可以指向链表中的任何节点或空节点,要求返回这个链表的深拷贝
+> 给定一个链表，每个节点包含一个额外增加的随机指针
+> 该指针可以指向链表中的任何节点或空节点,要求返回这个链表的深拷贝
 - 思路一：hashMap
   - 常用模板，借助哈希保存节点信息，时间复杂度：O(n)，空间复杂度：O(n)
     ```cpp

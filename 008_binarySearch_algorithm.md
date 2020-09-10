@@ -7,7 +7,7 @@
 
 
 ##### 二分搜索模板
-- 给一个**有序数组**和目标值，找第一次/最后一次/任何一次出现的索引，如果没有出现返回-1
+> 给一个**有序数组**和目标值，找第一次/最后一次/任何一次出现的索引，如果没有出现返回-1
 - **二分法核心模板四要素(必备&理解)**
   - 1、**初始化**：start=0、end=len-1
   - 2、**循环退出条件**：start + 1 < end
@@ -48,7 +48,7 @@
 
 #### 1. binary-search(#704)
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查找")
-- 给一个有序数组和目标值，如果存在，返回目标索引，否则返回-1
+> 给一个有序数组和目标值，如果存在，返回目标索引，否则返回-1
 - 思路一：迭代版本
   - 注意：
     - `left + (right - left) / 2` 和 `(left + right) / 2`结果相同，但防止了left和right太大直接相加导致溢出
@@ -165,8 +165,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
 #### 2. ​search-for-range​(#61_lintcode)
 linkage: [leetcode](https://www.lintcode.com/problem/search-for-a-range/description "搜索区间
 ")
-- n个整数**排序数组**，找出target起始和结束位置
-- 如不在，返回[-1, -1]
+> n个整数**排序数组**，找出target起始和结束位置
+> 如不存在，返回[-1, -1]
 - 思路：迭代版
   - 利用题1迭代版本的模板1
   - 首先找到target是否存在
@@ -231,8 +231,8 @@ public:
 
 #### 3. ​search-insert-position​(#35)
 linkage: [leetcode](https://leetcode-cn.com/problems/search-insert-position/ "搜索插入位置")
-- 排序数组和一个目标值，找到目标值，返回索引
-- 如果不存在，返回按顺序插入的位置
+> 排序数组和一个目标值，找到目标值，返回索引
+> 如果不存在，返回按顺序插入的位置
 - 思路：迭代版本
   - 参考题1模板1，注意最后返回值的处理
     ```cpp
@@ -271,9 +271,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/search-insert-position/ "�
 
 #### 4. search-a-2d-matrix​​(#74)
 linkage: [leetcode](https://leetcode-cn.com/problems/search-a-2d-matrix/ "搜索二维矩阵")
-- 判断mxn矩阵,是否存在一个目标值
-  - 每行中的整数从左到右按升序排列
-  - 每行的第一个整数大于前一行的最后一个整数
+> 判断mxn矩阵,是否存在一个目标值
+>  - 每行中的整数从左到右按升序排列
+>  - 每行的第一个整数大于前一行的最后一个整数
 - 思路：迭代法(利用模板#1)
 ```cpp
 class Solution {
@@ -315,7 +315,7 @@ public:
 
 #### 5. ​first-bad-version​​​(#278)
 linkage: [leetcode](https://leetcode-cn.com/problems/first-bad-version/ "第一个错误的版本")
-- 每个版本都是基于之前的版本开发的,找出第一个错误版本
+> 每个版本都是基于之前的版本开发的,找出第一个错误版本
 - 思路一：迭代法(基于模板#1)
     ```cpp
     class Solution {
@@ -350,7 +350,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/first-bad-version/ "第一�
 
 #### 6. find-minimum-in-rotated-sorted-array​​​​(#153)
 linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array/ "寻找旋转排序数组中的最小值")
-- 升序排序的数组,在未知某点旋转,找出最小元素
+> 升序排序的数组,在未知某点旋转,找出最小元素
 - 思路一：左闭右闭区间
     ```cpp
     class Solution {
@@ -419,7 +419,7 @@ public:
 
 #### 7. find-minimum-in-rotated-sorted-array​​​​-ii(#154)
 linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sorted-array-ii/ "寻找旋转排序数组中的最小值ii")
-- 升序排序重复的数组,在未知某点旋转,找出最小元素
+> 升序排序重复的数组,在未知某点旋转,找出最小元素
 - 思路一：模板三
   - 注意mid和最右值end比较，如图
   - 最小值右边的点一定小于等于end点，最小值左边的点一定大于等于end点
@@ -461,7 +461,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sor
 
 #### 8. ​search-in-rotated-sorted-array​(#33)
 linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-array/ "搜索旋转排序数组")
-- 旋转的升序排序数组，搜索目标值，如果存在，返回索引，否则-1
+> 旋转的升序排序数组，搜索目标值，如果存在，返回索引，否则-1
 - 思路一：模板三(重在思路)
   - 1. 通过mid中间节点将其分割为有序和部分有序数组
   - 2. 找到有序数组在前半部分还是后半部分
@@ -516,7 +516,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-ar
 
 #### 9. ​search-in-rotated-sorted-array-ii​(#81)
 linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-array-ii/ "搜索旋转排序数组 II")
-- 旋转重复的升序排序数组，搜索目标值，如果存在，返回true，否则false
+> 旋转重复的升序排序数组，搜索目标值，如果存在，返回true，否则false
 - 思路一: 模板三(与题8思路一致)
   - **本题重点**是对题8数据进行预处理
     ```cpp

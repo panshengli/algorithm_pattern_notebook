@@ -8,7 +8,7 @@
 
 #### 1. strStr(#28)
 linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符串查找")
-
+> 给定一个字符串和一个目标字符串，在字符串中找出目标字符串出现的第一个位置(从0开始)，否则返回-1
 1. **Rabin-Karp Algorithm** instead of kmp
 
     ```cpp
