@@ -31,6 +31,9 @@
 * <a href="#selectSort">8. [代码框架] selectSort</a>
 * <a href="#insertSort">9. [代码框架] insertSort</a>
 * <a href="#shellSort">10. [代码框架] shellSort</a>
+* <a href="#countSort">11. [代码思想] countSort</a>
+* <a href="#bucketSort">12. [代码思想] bucketSort</a>
+* <a href="#radixSort">13. [代码思想] radixSort</a>
 
 
 
@@ -46,6 +49,13 @@
 [image6]: .readme/heap_sort.gif "heapSort"
 [image7]: .readme/insect_sort.gif "insectSort"
 [image8]: .readme/shell_sort.gif "shellSort"
+[image9]: .readme/count_sort.gif "countSort-计数排序"
+[image10]: .readme/bucket_sort.gif "bucketSort-桶排序"
+[image11]: .readme/radix_sort.gif "radixSort-基数排序"
+
+
+
+
 
 <div id="mergeSort" onclick="window.location.hash">
 
@@ -597,3 +607,35 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
     ```
 ---
 
+<div id="countSort" onclick="window.location.hash">
+
+#### 11. [代码思想] countSort(计数排序)
+- 排序思想：
+  - 不是基于比较排序算法
+  - 存储数据需要**额外开辟空间**
+  - 输入的数据必须是**有确定范围**的整数
+  - 当输入的元素是n个[0,k]，时间/空间复杂度均是O(n+k)，如下图
+![][image9]
+---
+
+<div id="bucketSort" onclick="window.location.hash">
+
+#### 11. [代码思想] bucketSort(桶排序)
+- 排序思想：
+  - 基于计数的排序算法
+  - 数据分到**有限数量桶**里，每个桶再分别排序
+  - 非空桶排好序的数据拼接，
+  - 桶划分的越小，各个桶之间的数据越少，排序所用的时间也会越少
+  - 如下图
+![][image10]
+---
+
+<div id="radixSort" onclick="window.location.hash">
+
+#### 11. [代码思想] radixSort(基数排序)
+- 排序思想：
+  - 按照低位先排序，然后收集
+  - 再按照高位排序，然后再收集
+  - 依次类推，直到最高位
+  - 基数排序的性能比桶排序要略差，如下图
+![][image11]
