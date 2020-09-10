@@ -433,7 +433,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "Âê
     ```cpp
     class Solution {
     public:
-        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) 
+        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
         {
             if(l1 == nullptr)
             {

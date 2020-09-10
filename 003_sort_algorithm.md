@@ -251,10 +251,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
             int low = 0;
             int high = nums.size()-1;
             quickSort(nums, low, high);
-            for(auto x:nums)
-            {
-                cout<<"nums[]: "<<x<<endl;
-            }
             return nums[nums.size()-k];
         }
         // 采用最优的quickSort方式
