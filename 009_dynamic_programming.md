@@ -37,7 +37,10 @@
 
 
 ## 📑 index
-* <a href="#triangle">1. triangle(#120)</a>
+- Example
+  * <a href="#triangle">1. triangle(#120)</a>
+- Sequence (40%)
+  * <a href="#cs">2. ​climbing-stairs​(#70)</a>
 
 
 
@@ -157,3 +160,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/triangle/ "三角形最小�
   };
   ```
 ---
+
+<div id="cs" onclick="window.location.hash">
+
+#### 2. ​climbing-stairs​(#70)
+linkage: [leetcode](https://leetcode-cn.com/problems/climbing-stairs/ "爬楼梯")
+> n阶楼梯，每次可上1或2阶，有多少种方法
