@@ -18,6 +18,8 @@
 
 #### 008_二分搜索
 
+#### 009_动态规划
+
 
 
 
@@ -25,6 +27,10 @@
 
 # Change Log
 data structure and algorithm notebook
+
+## 2020.09.10
+- added dynamic programming
+- modified some format of file contect
 
 ## 2020.08.24
 - added binary search markdown
