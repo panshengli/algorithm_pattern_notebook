@@ -166,3 +166,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/triangle/ "三角形最小�
 #### 2. ​climbing-stairs​(#70)
 linkage: [leetcode](https://leetcode-cn.com/problems/climbing-stairs/ "爬楼梯")
 > n阶楼梯，每次可上1或2阶，有多少种方法
+- 条件：
+  - 可行个数
+  - 排序不能交换
