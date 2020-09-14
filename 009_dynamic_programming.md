@@ -37,11 +37,11 @@
 
 
 ## 📑 index
-- Example
+- Sample
   * <a href="#triangle">1. triangle(#120)</a>
 - Sequence (40%)
   * <a href="#cs">2. ​climbing-stairs​(#70)</a>
-
+  * <a href="#jg">3. ​jump-game​​(#55)</a>
 
 
 
@@ -216,3 +216,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/climbing-stairs/ "爬楼梯
   - 初值：n[1] = 1, n[2] = 2, n[3] = 3
   - 递推公式：n[n] = n[n-1] + n[n-3]
 ---
+
+<div id="jg" onclick="window.location.hash">
+
+#### 3. ​jump-game​​(#55)
+linkage: [leetcode](https://leetcode-cn.com/problems/jump-game/ "跳跃游戏")
+> 非负整数数组，最初位于数组的第一个位置
+> 每个元素代表该位置跳跃**最大长度**
+> 判断是否能到最后一个位置
