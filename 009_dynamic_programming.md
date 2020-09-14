@@ -65,7 +65,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/triangle/ "三角形最小�
 > 每一步只能移动到下一行中相邻的结点上
 - 思路一：recursion方式+记忆化(自顶向下)
   - 1. 注意：考虑**临时变量是否放在递归函数**内
-  - 2. 注意：**临时变量的复用**(LOC63-64)，否则极容易造成指数时间复杂度
+  - 2. 注意：**临时变量的复用**(LOC78-79)，否则极容易造成指数时间复杂度
   - 3. 注意：考虑dp的解题思路，自顶向下还是自底向上，主要是**建立状态转移方程**
   - 4. 递归需要大量堆栈上的空间，容易栈溢出，最好将递归转换为递推
   ```cpp
@@ -169,3 +169,50 @@ linkage: [leetcode](https://leetcode-cn.com/problems/climbing-stairs/ "爬楼梯
 - 条件：
   - 可行个数
   - 排序不能交换
+- 思路一：传统dp思想(Fibonacci Sequence)
+  - 重点：初始值的选取，递归公式的推导
+  ```cpp
+  class Solution {
+  public:
+      int climbStairs(int n)
+      {
+          // 找规律，初始值为
+          if(n == 1)
+              return 1;
+          if(n == 2)
+              return 2;
+          vector<int> stairs(n);
+          stairs[0] = 1;
+          stairs[1] = 2;
+          for(int i=2;i<=n-1;i++)
+          {
+              stairs[i] = stairs[i-1]+stairs[i-2];
+          }
+          return stairs[n-1];
+      }
+  };
+  ```
+- 思路二：优化空间复杂度
+  - 只存储最近的三个值，空间复杂度由6.3MB->5.9MB
+  ```cpp
+  for(int i=2;i<=n-1;i++)
+  {
+      stairs[2] = stairs[0]+stairs[1];
+      stairs[0] = stairs[1];
+      stairs[1] = stairs[2];
+  }
+  return stairs[2];
+  ```
+- 思路三：简单版本的recursion
+  - 超出了时间限制
+  ```cpp
+  if(n == 1 || n ==2)
+      return n;
+  return climbStairs(n-1) + climbStairs(n-2);cpp
+  ```
+- **扩展：字节跳动20秋招T1**
+  - 添加一个条件：不允许两次连续爬两阶
+- 思路：耐心的进行公式推导
+  - 初值：n[1] = 1, n[2] = 2, n[3] = 3
+  - 递推公式：n[n] = n[n-1] + n[n-3]
+---
