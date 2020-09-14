@@ -224,3 +224,25 @@ linkage: [leetcode](https://leetcode-cn.com/problems/jump-game/ "跳跃游戏")
 > 非负整数数组，最初位于数组的第一个位置
 > 每个元素代表该位置跳跃**最大长度**
 > 判断是否能到最后一个位置
+- 思路一：贪心法
+  - 找到当前位置的最大步长
+  - 索引到某一步数小于当前最大步长，返回false
+```cpp
+class Solution {
+public:
+    bool canJump(vector<int>& nums)
+    {
+        int k = 0;
+        for (int i = 0; i < nums.size(); i++)
+        {
+            if (i > k) return false;
+            k = max(k, i + nums[i]);
+            // 优化
+            if(k>=nums.size()-1)
+                break;
+        }
+        return true;
+    }
+};
+```
+- 思路二：dp
