@@ -264,4 +264,35 @@ public:
     }
 };
 ```
-- 思路三：dp
+- 思路三：dp(**推荐**)
+  - 1. 动态规划法dp[i]表示i下标能不能到达
+  - 2. dp[i]能否到达取决于dp[0:i-1]中能到达的地方
+  - 3. dp[j]为dp[i]的某个位置,当dp[j]=true且nums[j]+j>=i,则i就能到达
+  - 4. dp方程存在i>j,dp[j]=true,nums[j]+j>=i,则dp[i]=true
+  ```cpp
+  class Solution {
+  public:
+      bool canJump(vector<int>& nums) 
+      {
+          vector<bool> dp(nums.size(),false);
+          // 第一个格子一定能到达
+          dp[0] = true;
+          for(int i=0;i<=nums.size()-1;i++)
+          {
+              //优化一：从最后一个遍历
+              for(int j=i;j>=0;j--)
+              {
+                  if(dp[j]==true && j+nums[j]>=i)
+                  {
+                      dp[i] = true;
+                      // 优化二：找到最后一个直接跳出循环
+                      break;
+                  }
+              }
+          }
+          return dp[nums.size()-1];
+      }
+  };
+  ```
+---
+
