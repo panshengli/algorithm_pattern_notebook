@@ -393,3 +393,12 @@ public:
 ```
 ---
 
+<div id="ppii" onclick="window.location.hash">
+
+#### 6. ​​palindrome-partitioning-ii​(#132)
+linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning-ii/ "分割回文串 II")
+> 将字符串s分割成一些子串，使每个子串都是回文串
+> 返回返回符合要求的**最少分割次数**
+- 思路一：dp
+  - todo
+

@@ -60,7 +60,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
 <div id="pp" onclick="window.location.hash">
 
 #### 2. ​​palindrome-partitioning(#131)[非dp做法,回溯]
-linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning/ "三角形最小路径和")
+linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning/ "分割回文串")
 > 将字符串s分割成一些子串，使每个子串都是回文串
 > 返回s所有可能的分割方案
 - 思路一：backtrack
