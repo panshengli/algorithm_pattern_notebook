@@ -408,6 +408,8 @@ public:
 linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning-ii/ "分割回文串 II")
 > 将字符串s分割成一些子串，使每个子串都是回文串
 > 返回返回符合要求的**最少分割次数**
-- 思路一：dp
-  - todo
+- 思路一：利用回溯方法
+  - 讲所有的可能找到，最后取出最小的个数，导致超出时间限制
+- 思路二：dp方法
+  - 
 
