@@ -34,6 +34,9 @@
   - 二叉树子节点无交集，大部分二叉树都用递归或者分治法，即 DFS就可解决
   - 有重复走的情况，**子节点/问题有交集**，用动态规划来解决
 ---
+- **DP & 贪心算法**
+  - 贪心算法大多靠背答案，如果能用动态规划就尽量用动规，不用贪心算法
+---
 
 
 ## 📑 index
@@ -41,7 +44,11 @@
   * <a href="#triangle">1. triangle(#120)</a>
 - Sequence (40%)
   * <a href="#cs">2. ​climbing-stairs​(#70)</a>
-  * <a href="#jg">3. ​jump-game​​(#55)</a>
+  * <a href="#jg">3. ​jump-game​​(#55)[推荐dp做法]</a>
+  * <a href="#jgii">4. ​jump-game-ii​​(#45)</a>
+  * <a href="#pp">5. ​​palindrome-partitioning(#131)[非dp做法]</a>
+  * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132)</a>
+
 
 
 
@@ -53,6 +60,7 @@
 
 [//]: # (Image References)
 [image1]: .readme/triangle_state_function.png "triangle_state_function"
+[image2]: .readme/jump_game_ii.png "jump_game_ii"
 
 
 
@@ -272,7 +280,7 @@ public:
   ```cpp
   class Solution {
   public:
-      bool canJump(vector<int>& nums) 
+      bool canJump(vector<int>& nums)
       {
           vector<bool> dp(nums.size(),false);
           // 第一个格子一定能到达
@@ -296,3 +304,100 @@ public:
   ```
 ---
 
+#### 4. ​jump-game-ii​​(#45)
+linkage: [leetcode](https://leetcode-cn.com/problems/jump-game-ii/ "跳跃游戏 II")
+> 与T3相同，多加一个条件:**最少跳跃步数**
+> 输出最少跳跃步数
+- 思路一：贪心法
+```cpp
+class Solution {
+public:
+    int jump(vector<int>& nums)
+    {
+        int max_step = 0;
+        int end_max_step = 0;
+        int count = 0;
+        // 注意：一定能跳到终点，i的索引到终点的前一个
+        for(int i = 0; i<nums.size()-1;i++)
+        {
+            max_step = max(nums[i]+i,max_step);
+            if(i==end_max_step)
+            {
+                end_max_step = max_step;
+                count++;
+            }
+        }
+        return count;
+    }
+};
+```
+- 扩展：
+  - 添加条件：如果不能跳到最后一个位置，返回-1
+```cpp
+class Solution {
+public:
+    int jump(vector<int>& nums) 
+    {
+        int max_step = 0;
+        int end_max_step = 0;
+        int count = 0;
+        // 注意：不一定能跳到终点
+        for(int i = 0; i<=nums.size()-1;i++)
+        {
+            if(i>max_step) return -1;
+            if(i == nums.size()-1) break;
+            max_step = max(nums[i]+i,max_step);
+            if(i==end_max_step)
+            {
+                end_max_step = max_step;
+                count++;
+            }
+        }
+        return count;
+    }
+};
+```
+- 思路二：dp未优化版(无法ac，推荐)
+  - 利用vector存储当前步数的值
+  - 核心思想：若到i最少需要n步跳跃，则跳到i前面的点一定会小于等于n步
+![][image2]
+  - 如图，例如：要确定dp[5]的值，根据dp[4]=2;则dp[5]一定等于dp[4]或者dp[4]+1
+  - 状态转移方程：f[i] = min(f[j]+1,f[i])
+  - 注意：状态，初始化，推导，结果(见注释)
+```cpp
+class Solution {
+public:
+    int jump(vector<int>& nums)
+    {
+        // 状态：dp[i] 表示从起点到当前位置最小次数
+        // 推导：dp[i] = dp[j],nums[j]+j >=i,min(dp[j]+1，dp[i])
+        // 初始化：dp[0] = 0
+        // 结果：dp[n-1]
+        vector<int> dp(nums.size());
+        dp[0] = 0;
+        for(int i = 1;i<nums.size();i++)
+        {
+            //nums[i]最大步数为i
+            dp[i] = i;
+            for(int j = 0; j<i; j++)
+            {
+                if(nums[j]+j >= i)
+                {
+                    dp[i]=min(dp[j]+1,dp[i]);
+                }
+            }
+        }
+        return dp[nums.size()-1];
+    }
+};
+```
+---
+
+<div id="pp" onclick="window.location.hash">
+
+#### 5. ​​palindrome-partitioning(#131)[非dp做法]
+linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning/ "三角形最小路径和")
+> 将字符串s分割成一些子串，使每个子串都是回文串
+> 返回s所有可能的分割方案
+- 思路一：
+  - 经过分析，**一般情况下返回所有可能的方案，不能使用dp的情况**
