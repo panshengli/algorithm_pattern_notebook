@@ -40,13 +40,13 @@
 
 
 ## 📑 index
-- Sample
+- Trtorial
   * <a href="#triangle">1. triangle(#120)</a>
 - Sequence (40%)
   * <a href="#cs">2. ​climbing-stairs​(#70)</a>
   * <a href="#jg">3. ​jump-game​​(#55)[推荐dp做法]</a>
   * <a href="#jgii">4. ​jump-game-ii​​(#45)</a>
-  * <a href="#pp">5. ​​palindrome-partitioning(#131)[非dp做法]</a>
+  * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131)[非dp做法,回溯T2]</a>
   * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132)</a>
 
 
@@ -393,11 +393,3 @@ public:
 ```
 ---
 
-<div id="pp" onclick="window.location.hash">
-
-#### 5. ​​palindrome-partitioning(#131)[非dp做法]
-linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning/ "三角形最小路径和")
-> 将字符串s分割成一些子串，使每个子串都是回文串
-> 返回s所有可能的分割方案
-- 思路一：
-  - 经过分析，**一般情况下返回所有可能的方案，不能使用dp的情况**
