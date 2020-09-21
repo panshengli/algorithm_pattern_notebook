@@ -56,7 +56,12 @@
   * <a href="#jg">3. ​jump-game​​(#55)[推荐dp做法]</a>
   * <a href="#jgii">4. ​jump-game-ii​​(#45)</a>
   * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131)[非dp做法,回溯T2]</a>
-  * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132)</a>
+  * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
+  * <a href="#lps">7. ​​longest-palindromic-substring​(#5)</a>
+
+
+
+
 
 
 
@@ -411,4 +416,119 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning-ii/
 - 思路一：利用回溯方法
   - 讲所有的可能找到，最后取出最小的个数，导致超出时间限制
 - 思路二：dp方法
+  - 1. 思考状态
+    - dp[i]：表示前缀子串s[0:i]分割成子串的最小分割次数
+  - 2. 状态转移方程
+    - 建立dp[i]与dp[i-1], ..., dp[0]
+    - s[0:i]为回文串，dp[i]=0
+    - s[0:i]非回文串，尝试枚举分割的边界j
+      - s[j + 1, i]是回文串，则dp[i]在dp[j]上多一个分割
+        ```cpp
+        for(int j = 0; j < i; j++)
+        {
+          if(isPalindrome(s,j+1,i))
+          {
+            dp[i] = min(dp[i],dp[j]+1);
+          }
+        }
+        ```
+  - 3. 初始状态
+    - 单个字符，s[0] = 0
+  - 4. 输出
+    - dp[length-1]
+  ```cpp
+  class Solution {
+  public:
+      int minCut(string s)
+      {
+          int len = s.length();
+          if(len <2) return 0;
+          vector<int> dp(len);
+          // 对状态转移方程的处理
+          for(int i = 0; i< len; i++)
+          {
+              dp[i] = i;
+          }
+          for(int i = 0; i < len; i++)
+          {
+              if(isPalindrome(s,0,i))
+              {
+                  dp[i] = 0;
+                  continue;
+              }
+              for(int j = 0; j < i; j++)
+              {
+                  // 如果子串为回文串，那么需要在原有基础上加1
+                  if(isPalindrome(s,j+1,i))
+                  {
+                      dp[i] = min(dp[i],dp[j]+1);
+                  }
+              }
+          }
+          return dp[len-1];
+      }
+
+      bool isPalindrome(const string& s, int start, int end)
+      {
+          for(int i = start, j = end; i < j; i++, j--)
+          {
+              if(s[i] != s[j])
+              {
+                  return false;
+              }
+          }
+          return true;
+      }
+  };
+  ```
+- 思路三：dp优化
+  - 根据T7最长回文子串来进行优化
+  - todo
+---
+
+<div id="lps" onclick="window.location.hash">
+
+#### 7. ​​longest-palindromic-substring​(#5)
+linkage: [leetcode](https://leetcode-cn.com/problems/longest-palindromic-substring/ "最长回文子串")
+> 给定一个字符串s，找s中最长的回文子串
+> 假设s的最大长度1000
+- 思路一：brute
+  - 时间复杂度：O(n^3), 时间超时
+```cpp
+class Solution {
+public:
+    string longestPalindrome(string s)
+    {
+        string res = "";
+        int len = s.size();
+        for(int i = 0; i < len; i++)
+        {
+            // 判断每个字符串是否为回文，注意max_length取法
+            int max_length = len - i;
+            for (int j = 1; j <= max_length; j++)
+            {
+                string sub_str = s.substr(i,j);
+                if(isPalindrome(sub_str) && sub_str.size() > res.size())
+                {
+                    res = sub_str;
+                }
+            }
+        }
+        return res;
+    }
+
+    bool isPalindrome(const string& s)
+    {
+        for(int i = 0, j = s.size()-1; i < j; i++, j--)
+        {
+            if(s[i] != s[j])
+            {
+                return false;
+            }
+        }
+        return true;
+    }
+};
+```
+- 思路二：dp
   - todo
