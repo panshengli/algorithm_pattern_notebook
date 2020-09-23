@@ -531,4 +531,67 @@ public:
 };
 ```
 - 思路二：dp
-  - todo
+  - 思路：
+    - 1. 对于一个子串，如果是回文串，且长度大于2，首尾去除字母后，仍是回文串
+    - 2. 用P(i,j)表示字符串s的第i到j个字母组成的串(下文表示成s[i:j])是否为回文串
+      > P(i,j) = {true,​ Si​到Sj是回文串},{false,​ 其他情况：s[i,j]本身不是一个回文串，i>j, s[i,j]本身不合法}
+  - 四要素：
+    - 1. 状态转移方程: P(i,j)=P(i+1,j−1) && (Si​==Sj​)
+    - 2. 边界条件: (j-1)-(i+1)+1 < 2, 即 j-i < 3
+    - 3. 初值：p[i][i] = true
+    - 4. 最终答案: P(i,j)=true中记录起始位置，最后截取
+  ```cpp
+  class Solution {
+  public:
+      string longestPalindrome(string s) 
+      {
+          int len = s.size();
+          if(len < 2)
+          {
+              return s;
+          }
+          vector<vector<bool>> dp(len, vector<bool>(len,false));
+          // 注意初值的选取
+          int max_len = 1;
+          int begin = 0;
+          // 1. 初始化：填充对角线元素，一定是回文串
+          for(int i = 0; i < len; i++)
+          {
+              dp[i][i] = true;
+          }
+          // 填充左下角位置[i+1][j-1]
+          for(int j = 1; j < len; j++)
+          {
+              for(int i = 0; i < j; i++)
+              {
+                  if(s[i] != s[j])
+                  {
+                      dp[i][j] = false;
+                  }
+                  else
+                  {
+                      // 边界条件: 长度为0和1时 j-1-(i+1)+1 < 2
+                      if(j-i < 3)
+                      {
+                          dp[i][j] = true;
+                      }
+                      // 状态方程
+                      else
+                      {
+                          dp[i][j] = dp[i+1][j-1];
+                      }
+                  }
+                  // 输出条件
+                  if(dp[i][j] && j-i+1 > max_len)
+                  {
+                      max_len = j-i+1;
+                      begin = i;
+                  }
+              }
+          }
+          return s.substr(begin,max_len);
+      }
+  };
+  ```
+---
+
