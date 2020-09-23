@@ -28,6 +28,9 @@
 # Change Log
 data structure and algorithm notebook
 
+## 2020.09.23
+- added pngToGif scripts of py for dp_300.gif
+
 ## 2020.09.10
 - added dynamic programming
 - modified some format of file contect

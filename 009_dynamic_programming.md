@@ -53,12 +53,12 @@
   * <a href="#triangle">1. triangle(#120)</a>
 - Sequence (40%)
   * <a href="#cs">2. ​climbing-stairs​(#70)</a>
-  * <a href="#jg">3. ​jump-game​​(#55)[推荐dp做法]</a>
+  * <a href="#jg">3. ​jump-game​​(#55, 推荐dp做法)</a>
   * <a href="#jgii">4. ​jump-game-ii​​(#45)</a>
-  * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131)[非dp做法,回溯T2]</a>
+  * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131, 非dp做法,回溯T2)</a>
   * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
-  * <a href="#lps">7. ​​longest-palindromic-substring​(#5,很棒的dp题解)</a>
-  * <a href="#lis">8. longest-increasing-subsequence​​(#300)</a>
+  * <a href="#lps">7. ​​longest-palindromic-substring​(#5, 很棒的dp题解)</a>
+  * <a href="#lis">8. longest-increasing-subsequence(#300, HuaWei&m美团)</a>
 
 
 
@@ -76,7 +76,7 @@
 [//]: # (Image References)
 [image1]: .readme/triangle_state_function.png "triangle_state_function"
 [image2]: .readme/jump_game_ii.png "jump_game_ii"
-
+[image3]: .readme/dp_300.gif "longest_increasing_subsequence"
 
 
 
@@ -595,7 +595,47 @@ public:
 
 <div id="lis" onclick="window.location.hash">
 
-#### 8. longest-increasing-subsequence​​(#300)
+#### 8. longest-increasing-subsequence​​(#300，huawei&m美团)
 linkage: [leetcode](https://leetcode-cn.com/problems/longest-increasing-subsequence/ "最长上升子序列")
 > 一个无序的整数数组，找到最长上升子序列的长度
-- 思路一：
+- 思路一：dp
+![][image3]
+  ```cpp
+  class Solution {
+  public:
+      int lengthOfLIS(vector<int>& nums) 
+      {
+          int len = nums.size();
+          if(len < 2)
+          {
+              return len;
+          }
+          // 初始状态情况
+          vector<int> dp(len,1);
+          int max_length = 0;
+          for(int i = 0; i < len; i++)
+          {
+              // 临界条件
+              for(int j = 0; j < i; j++)
+              {
+                  // 状态转移方程，注意j和i的比较
+                  if(nums[j] < nums[i])
+                  {
+                      dp[i] = max(dp[i], dp[j]+1);
+                  }
+              }
+          }
+          // 最终结果
+          for(int i = 0; i < len; i++)
+          {
+              max_length = max(max_length,dp[i]);
+          }
+          return max_length;
+      }
+  };
+  ```
+- 扩展：要求时间复杂度为n的解法
+  - 思路一：二分法
+    - todo
+---
+
