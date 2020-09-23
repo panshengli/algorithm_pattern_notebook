@@ -59,6 +59,7 @@
   * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
   * <a href="#lps">7. ​​longest-palindromic-substring​(#5, 很棒的dp题解)</a>
   * <a href="#lis">8. longest-increasing-subsequence(#300, HuaWei&m美团)</a>
+  * <a href="#wb">9. ​word-break​(#139)</a>
 
 
 
@@ -634,8 +635,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/longest-increasing-subseque
       }
   };
   ```
-- 扩展：要求时间复杂度为n的解法
+- 扩展：要求时间复杂度为O(nlogn)的解法
   - 思路一：二分法
     - todo
 ---
 
+<div id="wb" onclick="window.location.hash">
+
+#### 9. ​word-break​(#139)
+linkage: [leetcode](https://leetcode-cn.com/problems/word-break/ "单词拆分")
+> 一个非空字符串s和一个非空单词的列表wordDict
+> s是否可以被空格拆分为一个或多个在字典中出现的单词
