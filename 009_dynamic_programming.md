@@ -33,7 +33,7 @@
     - 如: longest-consecutive-sequence
   - **暴力**算法的复杂度已经是**多项式**级别
     - 动态规划擅长与优化指数级别复杂度(2^n,n!)到多项式级别复杂度(n^2,n^3)
-    - 不擅长优化n^3到n^2
+    - 不擅长优化 n^3 到 n^2
 ---
 - **DP & Recursion 区别**
   - 递归是一种程序的实现方式：**函数的自我调用**
@@ -57,7 +57,8 @@
   * <a href="#jgii">4. ​jump-game-ii​​(#45)</a>
   * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131)[非dp做法,回溯T2]</a>
   * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
-  * <a href="#lps">7. ​​longest-palindromic-substring​(#5)</a>
+  * <a href="#lps">7. ​​longest-palindromic-substring​(#5,很棒的dp题解)</a>
+  * <a href="#lis">8. longest-increasing-subsequence​​(#300)</a>
 
 
 
@@ -481,9 +482,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning-ii/
       }
   };
   ```
-- 思路三：dp优化
-  - 根据T7最长回文子串来进行优化
-  - todo
 ---
 
 <div id="lps" onclick="window.location.hash">
@@ -530,7 +528,7 @@ public:
     }
 };
 ```
-- 思路二：dp
+- 思路二：dp(**推荐**)
   - 思路：
     - 1. 对于一个子串，如果是回文串，且长度大于2，首尾去除字母后，仍是回文串
     - 2. 用P(i,j)表示字符串s的第i到j个字母组成的串(下文表示成s[i:j])是否为回文串
@@ -595,3 +593,9 @@ public:
   ```
 ---
 
+<div id="lis" onclick="window.location.hash">
+
+#### 8. longest-increasing-subsequence​​(#300)
+linkage: [leetcode](https://leetcode-cn.com/problems/longest-increasing-subsequence/ "最长上升子序列")
+> 一个无序的整数数组，找到最长上升子序列的长度
+- 思路一：
