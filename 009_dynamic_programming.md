@@ -25,6 +25,7 @@
     - 求是否可行(Yes/No)
     - 求可行个数(Count(*))
   - **满足不能排序或者交换**(Can not sort/swap)
+  - 涉及子序列问题，十有八九都需要动态规划来解决
 ---
 - **极不可能/不适用DP的条件**
   - 求出所有**具体**的方案而非方案**个数**
@@ -710,3 +711,51 @@ linkage: [leetcode](https://leetcode-cn.com/problems/longest-common-subsequence/
 > 若这两个字符串没有公共子序列，则返回0
 - 思路一：dp
   - todo
+```cpp
+class Solution {
+public:
+    int longestCommonSubsequence(string text1, string text2)
+    {
+        if(text1.size() == 0 || text2.size() == 0)
+        {
+            return 0;
+        }
+        string long_str, short_str;
+        if(text1.size() > text2.size())
+        {
+            long_str = "" + text1;
+            short_str = "" + text2;
+        }
+        else
+        {
+            long_str = "" + text2;
+            short_str = "" + text1;
+        }
+        
+        // 1. 初始值
+        vector<vector<int>> dp(short_str.size()+1, vector<int>(long_str.size()+1,0));
+        // 2. 边界条件
+        for(int i = 1; i <= short_str.size(); i++)
+        {
+            for(int j = 1; j <= long_str.size(); j++)
+            {
+                // 3. 状态转移方程
+                if(short_str[i] == long_str[j])
+                {
+                    dp[i][j] = dp[i-1][j-1]+1;
+                    cout<<"i,j: "<<i<<" "<<j<<" "<<dp[i][j]<<endl;
+                    continue;
+                }
+                else
+                {
+                    dp[i][j] = dp[i][j-1];
+                    cout<<"i,j: "<<i<<" "<<j<<" "<<dp[i][j]<<endl;
+                }
+                
+            }
+        }
+        // 4. 最终结果
+        return dp[short_str.size()][long_str.size()];
+    }
+};
+```
