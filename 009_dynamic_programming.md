@@ -59,7 +59,7 @@
   * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
   * <a href="#lps">7. ​​longest-palindromic-substring​(#5, 很棒的dp题解)</a>
   * <a href="#lis">8. longest-increasing-subsequence(#300, HuaWei&m美团)</a>
-  * <a href="#wb">9. ​word-break​(#139)</a>
+  * <a href="#wb">9. ​word-break​(#139, 非常经典的dp)</a>
 
 
 
@@ -78,6 +78,8 @@
 [image1]: .readme/triangle_state_function.png "triangle_state_function"
 [image2]: .readme/jump_game_ii.png "jump_game_ii"
 [image3]: .readme/dp_300.gif "longest_increasing_subsequence"
+[image4]: .readme/dp_words_break.png "words_break"
+
 
 
 
@@ -642,7 +644,53 @@ linkage: [leetcode](https://leetcode-cn.com/problems/longest-increasing-subseque
 
 <div id="wb" onclick="window.location.hash">
 
-#### 9. ​word-break​(#139)
+#### 9. ​word-break​(#139，非常经典的dp)
 linkage: [leetcode](https://leetcode-cn.com/problems/word-break/ "单词拆分")
 > 一个非空字符串s和一个非空单词的列表wordDict
 > s是否可以被空格拆分为一个或多个在字典中出现的单词
+- 思路一：dp
+  - 状态转移方程：dp=[False,⋯ ,False]，长度为n+1。n为字符串长度。dp[i]表示s的前i位是否可以用wordDict中的单词表示
+![][image4]
+  - 初始化：dp[0]=True, 空字符可以被表示
+  - 最终结果：dp[n]
+  - 临界条件：
+    - 索引i，遍历区间[0,n)
+    - 索引j，遍历区间[i+1,n+1)
+  - 注意：
+    - set的查找用法
+
+  ```cpp
+  class Solution {
+  public:
+      bool wordBreak(string s, vector<string>& wordDict) 
+      {
+          unordered_set<string> set_words;
+          for(auto x : wordDict)
+          {
+              set_words.insert(x);
+          }
+          vector<bool> dp(s.size()+1,false);
+          // 1. 初始值
+          dp[0] = true;
+          // 2. 临界条件
+          for(int i = 1; i <= s.size(); i++)
+          {
+              for(int j = 0; j < i; j++)
+              {
+                  // 注意：i-j为字符串长度，由于从1开始
+                  auto sub_str = s.substr(j, i-j);
+                  // 3. 状态转移方程
+                  if(dp[j] && set_words.find(sub_str) != set_words.end())
+                  {
+                      dp[i] = true;
+                      break;
+                  }
+                  
+              }
+          }
+          // 4. 最终结果
+          return dp[s.size()];
+      }
+  };
+  ```
+---
