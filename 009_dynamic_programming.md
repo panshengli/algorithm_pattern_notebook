@@ -63,8 +63,8 @@
   * <a href="#wb">9. ​word-break​(#139, 非常经典的dp)</a>
 
 - Two Sequences DP (40%)
-  * <a href="#lcs">10. longest-common-subsequence​​(#1143)</a>
-
+  * <a href="#lcs">10. longest-common-subsequence​​(#1143，很经典的二维dp，Google，阿里，网易)</a>
+  * <a href="#ul">11. uncrossed-lines​​(#1035，T10同类型)</a>
 
 
 
@@ -651,6 +651,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/longest-increasing-subseque
 linkage: [leetcode](https://leetcode-cn.com/problems/word-break/ "单词拆分")
 > 一个非空字符串s和一个非空单词的列表wordDict
 > s是否可以被空格拆分为一个或多个在字典中出现的单词
+> 相关题目：583，1035，
 - 思路一：dp
   - 状态转移方程：dp=[False,⋯ ,False]，长度为n+1。n为字符串长度。dp[i]表示s的前i位是否可以用wordDict中的单词表示
 ![][image4]
@@ -705,12 +706,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/word-break/ "单词拆分")
 
 <div id="lcs" onclick="window.location.hash">
 
-#### 10. longest-common-subsequence​​(#1143)
+#### 10. longest-common-subsequence​​(#1143，很经典的二维dp)
 linkage: [leetcode](https://leetcode-cn.com/problems/longest-common-subsequence/ "最长公共子序列")
 > 给定两个字符串text1和text2，返回这两个字符串的最长公共子序列的长度
 > 若这两个字符串没有公共子序列，则返回0
-- 思路一：dp
-  - todo
+- 思路一：二维dp
+  - 和跳跃游戏类似
+  - 注意dp在首部加一个值，被设为初始值
+  - 注意状态转移方程的写法，用笔画
 ```cpp
 class Solution {
 public:
@@ -720,42 +723,37 @@ public:
         {
             return 0;
         }
-        string long_str, short_str;
-        if(text1.size() > text2.size())
-        {
-            long_str = "" + text1;
-            short_str = "" + text2;
-        }
-        else
-        {
-            long_str = "" + text2;
-            short_str = "" + text1;
-        }
-        
         // 1. 初始值
-        vector<vector<int>> dp(short_str.size()+1, vector<int>(long_str.size()+1,0));
+        vector<vector<int>> dp(text1.size()+1, vector<int>(text2.size()+1,0));
         // 2. 边界条件
-        for(int i = 1; i <= short_str.size(); i++)
+        for(int i = 1; i <= text1.size(); i++)
         {
-            for(int j = 1; j <= long_str.size(); j++)
+            for(int j = 1; j <= text2.size(); j++)
             {
                 // 3. 状态转移方程
-                if(short_str[i] == long_str[j])
+                if(text1[i-1] == text2[j-1])
                 {
                     dp[i][j] = dp[i-1][j-1]+1;
-                    cout<<"i,j: "<<i<<" "<<j<<" "<<dp[i][j]<<endl;
-                    continue;
                 }
                 else
                 {
-                    dp[i][j] = dp[i][j-1];
-                    cout<<"i,j: "<<i<<" "<<j<<" "<<dp[i][j]<<endl;
+                    dp[i][j] = max(dp[i][j-1],dp[i-1][j]);
                 }
                 
             }
         }
         // 4. 最终结果
-        return dp[short_str.size()][long_str.size()];
+        return dp[text1.size()][text2.size()];
     }
 };
 ```
+---
+
+<div id="ul" onclick="window.location.hash">
+
+#### 11. uncrossed-lines​​(#1035，T10同类型)
+linkage: [leetcode](https://leetcode-cn.com/problems/uncrossed-lines/description/ "不相交的线")
+> 两条独立的水平线上按给定的顺序写下A和B中的整数
+> 绘制一些连接两个数字 A[i] 和 B[j] 的直线
+> 要A[i] == B[j]，且绘制的直线不与任何其他连线(非水平线)相交
+> 返回绘制的最大连线数
