@@ -61,6 +61,8 @@
   * <a href="#lis">8. longest-increasing-subsequence(#300, HuaWei&m美团)</a>
   * <a href="#wb">9. ​word-break​(#139, 非常经典的dp)</a>
 
+- Two Sequences DP (40%)
+  * <a href="#lcs">10. longest-common-subsequence​​(#1143)</a>
 
 
 
@@ -694,3 +696,17 @@ linkage: [leetcode](https://leetcode-cn.com/problems/word-break/ "单词拆分")
   };
   ```
 ---
+- 对于序列类型的问题，如T9. 常见处理方式：
+  - 给 0 位置占位
+  - 初始化则在原来基础上length+1
+  - 返回结果f[n]
+---
+
+<div id="lcs" onclick="window.location.hash">
+
+#### 10. longest-common-subsequence​​(#1143)
+linkage: [leetcode](https://leetcode-cn.com/problems/longest-common-subsequence/ "最长公共子序列")
+> 给定两个字符串text1和text2，返回这两个字符串的最长公共子序列的长度
+> 若这两个字符串没有公共子序列，则返回0
+- 思路一：dp
+  - todo
