@@ -66,7 +66,7 @@
   * <a href="#lcs">10. longest-common-subsequence​​(#1143，**很经典的二维dp**，Google，阿里，网易)</a>
   * <a href="#ul">11. uncrossed-lines​​(#1035，T10的另一种表述方式)</a>
   * <a href="#mlors">12. maximum-length-of-repeated-subarray(#718，T10的同一类型)</a>
-
+  * <a href="#ed">13. ​edit-distance​(#72)</a>
 
 
 
@@ -807,3 +807,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-length-of-repeated-
       }
   };
   ```
+  ---
+
+  <div id="ed" onclick="window.location.hash">
+
+#### 13. ​edit-distance​(#72)
+linkage: [leetcode](https://leetcode-cn.com/problems/edit-distance/ "编辑距离")
+> 两个单词word1和word2
+> 计算将word1转换成word2所使用的最少操作数
