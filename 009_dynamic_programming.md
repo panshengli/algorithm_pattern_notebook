@@ -63,8 +63,14 @@
   * <a href="#wb">9. ​word-break​(#139, 非常经典的dp)</a>
 
 - Two Sequences DP (40%)
-  * <a href="#lcs">10. longest-common-subsequence​​(#1143，很经典的二维dp，Google，阿里，网易)</a>
-  * <a href="#ul">11. uncrossed-lines​​(#1035，T10同类型)</a>
+  * <a href="#lcs">10. longest-common-subsequence​​(#1143，**很经典的二维dp**，Google，阿里，网易)</a>
+  * <a href="#ul">11. uncrossed-lines​​(#1035，T10的另一种表述方式)</a>
+  * <a href="#mlors">12. maximum-length-of-repeated-subarray(#718，T10的同一类型)</a>
+
+
+
+
+
 
 
 
@@ -82,6 +88,10 @@
 [image2]: .readme/jump_game_ii.png "jump_game_ii"
 [image3]: .readme/dp_300.gif "longest_increasing_subsequence"
 [image4]: .readme/dp_words_break.png "words_break"
+
+
+
+
 
 
 
@@ -757,3 +767,43 @@ linkage: [leetcode](https://leetcode-cn.com/problems/uncrossed-lines/description
 > 绘制一些连接两个数字 A[i] 和 B[j] 的直线
 > 要A[i] == B[j]，且绘制的直线不与任何其他连线(非水平线)相交
 > 返回绘制的最大连线数
+- 思路一：二维dp
+  - 本题就是T10的最长公共子串的另一种描述
+  - 核心代码一模一样，解法略
+---
+
+<div id="mlors" onclick="window.location.hash">
+
+#### 12. maximum-length-of-repeated-subarray(#718，T10的同一类型)
+linkage: [leetcode](https://leetcode-cn.com/problems/maximum-length-of-repeated-subarray/ "最长重复子数组")
+> 两个整数数组A和B
+> 返回数组中公共的、长度最长的子数组的长度
+思路一：二维dp
+- 注意：状态转移矩阵的表达
+  ```cpp
+  class Solution {
+  public:
+      int findLength(vector<int>& A, vector<int>& B) 
+      {
+          if(A.size() == 0 || B.size() == 0)
+          {
+              return 0;
+          }
+          int ans = 0;
+          vector<vector<int>> dp(A.size()+1, vector<int>(B.size()+1, 0));
+          for(int i = 1; i <= A.size(); i++)
+          {
+              for(int j = 1; j <= B.size(); j++)
+              {
+                  if(A[i-1] == B[j-1])
+                  {
+                      dp[i][j] = dp[i-1][j-1] + 1;
+                      // 注意：此处状态转移矩阵的选取
+                      ans = max(ans, dp[i][j]);
+                  }
+              }
+          }
+          return dp[A.size()][B.size()];
+      }
+  };
+  ```
