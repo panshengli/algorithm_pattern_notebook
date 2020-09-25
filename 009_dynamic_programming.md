@@ -66,7 +66,8 @@
   * <a href="#lcs">10. longest-common-subsequence​​(#1143，**很经典的二维dp**，Google，阿里，网易)</a>
   * <a href="#ul">11. uncrossed-lines​​(#1035，T10的另一种表述方式)</a>
   * <a href="#mlors">12. maximum-length-of-repeated-subarray(#718，T10的同一类型)</a>
-  * <a href="#ed">13. ​edit-distance​(#72)</a>
+  * <a href="#ed">13. ​edit-distance​(#72，很棒的二维DP题型，Tencent)</a>
+
 
 
 
@@ -88,6 +89,9 @@
 [image2]: .readme/jump_game_ii.png "jump_game_ii"
 [image3]: .readme/dp_300.gif "longest_increasing_subsequence"
 [image4]: .readme/dp_words_break.png "words_break"
+[image5_1]: .readme/dp_insert.gif "dp_insert"
+[image5_2]: .readme/dp_delete.gif "dp_delete"
+[image5_3]: .readme/dp_replace.gif "dp_replace"
 
 
 
@@ -749,7 +753,6 @@ public:
                 {
                     dp[i][j] = max(dp[i][j-1],dp[i-1][j]);
                 }
-                
             }
         }
         // 4. 最终结果
@@ -807,11 +810,58 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-length-of-repeated-
       }
   };
   ```
-  ---
+---
 
-  <div id="ed" onclick="window.location.hash">
+<div id="ed" onclick="window.location.hash">
 
-#### 13. ​edit-distance​(#72)
+#### 13. ​edit-distance​(#72，很棒的二维DP题型，Tencent)
 linkage: [leetcode](https://leetcode-cn.com/problems/edit-distance/ "编辑距离")
 > 两个单词word1和word2
 > 计算将word1转换成word2所使用的最少操作数
+> 可对单词进行插入、删除、替换操作
+- 思路一：二维dp
+  - 1. 初始值: 注意临街值的选取(重要)
+  - 2. 状态转移方程：
+    - i:操作串， j：目标串
+    - 相等时 dp[i][j] = dp[i-1][j-1]
+    - 插入 dp[i][j] = dp[i][j-1] +1
+![][image5_1]
+    - 删除 dp[i][j] = dp[i-1][j] +1
+![][image5_2]
+    - 替换 dp[i][j] = dp[i-1][j-1] +1
+![][image5_3]
+  ```cpp
+  class Solution {
+  public:
+      int minDistance(string word1, string word2) 
+      {
+          vector<vector<int>> dp(word1.size()+1, vector<int>(word2.size()+1,0));
+          // 1. 初始值
+          for (int i = 0; i <= word1.size(); i++) {
+              dp[i][0] = i;
+          }
+          for (int j = 0; j <= word2.size(); j++) {
+              dp[0][j] = j;
+          }
+          // 2. 边界条件
+          for(int i = 1; i <= word1.size(); i++)
+          {
+              for(int j = 1; j <= word2.size(); j++)
+              {
+                  // 3. 状态转移方程
+                  if(word1[i-1] == word2[j-1])
+                  {
+                      dp[i][j] = dp[i-1][j-1];
+                  }
+                  else
+                  {
+                      dp[i][j] = min(min(dp[i][j-1],dp[i-1][j]),dp[i-1][j-1])+1;
+                  }
+              }
+          }
+          // 4. 最终结果
+
+          return dp[word1.size()][word2.size()];
+      }
+  };
+  ```
