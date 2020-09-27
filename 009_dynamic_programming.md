@@ -59,14 +59,15 @@
   * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131, 非dp做法,回溯T2)</a>
   * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
   * <a href="#lps">7. ​​longest-palindromic-substring​(#5, 很棒的dp题解)</a>
-  * <a href="#lis">8. longest-increasing-subsequence(#300, HuaWei&m美团)</a>
+  * <a href="#lis">8. longest-increasing-subsequence(#300, HuaWei&美团)</a>
   * <a href="#wb">9. ​word-break​(#139, 非常经典的dp)</a>
-
 - Two Sequences DP (40%)
   * <a href="#lcs">10. longest-common-subsequence​​(#1143，**很经典的二维dp**，Google，阿里，网易)</a>
   * <a href="#ul">11. uncrossed-lines​​(#1035，T10的另一种表述方式)</a>
   * <a href="#mlors">12. maximum-length-of-repeated-subarray(#718，T10的同一类型)</a>
   * <a href="#ed">13. ​edit-distance​(#72，很棒的二维DP题型，Tencent)</a>
+- Matrix (10%)
+  * <a href="#mps">14. ​​minimum-path-sum​(#64，常规dp 美团)</a>
 
 
 
@@ -862,6 +863,54 @@ linkage: [leetcode](https://leetcode-cn.com/problems/edit-distance/ "编辑距�
           // 4. 最终结果
 
           return dp[word1.size()][word2.size()];
+      }
+  };
+  ```
+
+<div id="mps" onclick="window.location.hash">
+
+#### 14. ​​minimum-path-sum​(#64)
+linkage: [leetcode](https://leetcode-cn.com/problems/minimum-path-sum/ "最小路径和")
+> 非负整数的[m,n]网格
+> 找出从左上到右下路径和最小,输出路径和
+> 每次只能向下或向右移动一次
+- 思路一：dp
+  - 注意临界的几种条件
+  ```cpp
+  class Solution {
+  public:
+      int minPathSum(vector<vector<int>>& grid) 
+      {
+          if(grid.size() == 0)
+              return 0;
+          if(grid[0].size() == 0)
+              return 0;
+          vector<vector<int>> dp(grid.size(),vector<int>(grid[0].size(),0));
+          for(int i = 0; i < grid.size(); i++)
+          {
+              for(int j = 0; j < grid[0].size(); j++)
+              {
+                  if(i == 0 && j == 0)
+                  {
+                      // 初始值
+                      dp[0][0] = grid[0][0];
+                  }
+                  // 注意dp的条件
+                  else if(i !=0 && j == 0)
+                  {
+                      dp[i][j] = dp[i-1][j] + grid[i][j];
+                  }
+                  else if(i == 0 && j != 0)
+                  {
+                      dp[i][j] = dp[i][j-1] + grid[i][j];
+                  }
+                  else
+                  {
+                      dp[i][j] = min(dp[i-1][j],dp[i][j-1]) + grid[i][j];
+                  }
+              }
+          }
+          return dp[grid.size()-1][grid[0].size()-1];
       }
   };
   ```
