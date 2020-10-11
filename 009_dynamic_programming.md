@@ -68,7 +68,10 @@
   * <a href="#ed">13. ​edit-distance​(#72，很棒的二维DP题型，Tencent)</a>
 - Matrix (10%)
   * <a href="#mps">14. ​​minimum-path-sum​(#64，常规dp 美团)</a>
-  * <a href="#up">15. ​​unique-paths(#62)​</a>​
+  * <a href="#up">15. ​​unique-paths(#62)​</a>
+  * <a href="#upii">16. ​​unique-paths-ii(#63)​</a>
+- Two Sequences DP (40%)
+  * <a href="#lcs">17. longest-common-subsequence​(#1143)​</a>​
 
 
 
@@ -916,6 +919,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/minimum-path-sum/ "最小�
       }
   };
   ```
+---
 
 <div id="up" onclick="window.location.hash">
 
@@ -923,3 +927,70 @@ linkage: [leetcode](https://leetcode-cn.com/problems/minimum-path-sum/ "最小�
 linkage: [leetcode](https://leetcode-cn.com/problems/unique-paths/ "不同路径")
 > 机器人位于一个mxn网格的左上角, 每次只能向下或者向右移动一步,到达右下角;
 > 共有多少条不同的路径？
+思路一： 二维dp(独立写出)
+    - 画格子，直接找到状态转移方程
+    ```cpp
+    class Solution {
+    public:
+        int uniquePaths(int m, int n) 
+        {
+            // 初始值
+            vector<vector<int>> dp(m,vector<int>(n,1));
+            for(int i = 1; i < m; i++)
+            {
+                for(int j = 1; j < n; j++)
+                {
+                dp[i][j] = dp[i][j-1] + dp[i-1][j];
+                }
+            }
+            return dp[m-1][n-1];
+        }
+    };
+    ```
+---
+
+<div id="upii" onclick="window.location.hash">
+
+#### 16. ​​unique-paths-ii​(#63)
+linkage: [leetcode](https://leetcode-cn.com/problems/unique-paths-ii/ "不同路径 II")
+> 机器人位于一个mxn网格的左上角, 每次只能向下或者向右移动一步,到达右下角
+> 网格中有障碍物, 障碍物和空位置分别用 1 和 0 来表示
+> 共有多少条不同的路径？
+- 思路一：二维dp
+  - 重点是对障碍物的处理，状态转移方程和t15一样
+    ```cpp
+    class Solution {
+    public:
+        int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) 
+        {
+            int m = obstacleGrid.size();
+            int n = obstacleGrid[0].size();
+            vector<vector<int>> dp(m,vector<int>(n,0));
+            // 初始值，重点是判断网格是否存在障碍物
+            for (int i = 0; i < m && obstacleGrid[i][0] == 0; i++) {
+                dp[i][0] = 1;
+            }
+            for (int j = 0; j < n && obstacleGrid[0][j] == 0; j++) {
+                dp[0][j] = 1;
+            }
+            for(int i = 1; i < m; i++)
+            {
+                for(int j = 1; j < n; j++)
+                {
+                    if(obstacleGrid[i][j] == 0)
+                    {
+                        dp[i][j] = dp[i][j-1] + dp[i-1][j];
+                    }
+                }
+            }
+            return dp[m-1][n-1];
+        }
+    };
+    ```
+---
+
+<div id="lcs" onclick="window.location.hash">
+
+#### 17. longest-common-subsequence​(#1143)
+linkage: [leetcode](https://leetcode-cn.com/problems/longest-common-subsequence/ "最长公共子序列")
+> 给定两个字符串，返回最长公共子序列的长度
