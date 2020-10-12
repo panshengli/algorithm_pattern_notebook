@@ -41,7 +41,7 @@
   - 动态规划：是一种**解决问题的思想**(大问题化解小问题)，可用递归来实现
 ---
 - **DP & DFS 区别**
-  - 二叉树子节点无交集，大部分二叉树都用递归或者分治法，即 DFS就可解决
+  - 二叉树子节点无交集，大部分二叉树都用递归或者分治法，即DFS就可解决
   - 有重复走的情况，**子节点/问题有交集**，用动态规划来解决
 ---
 - **DP & 贪心算法**
@@ -70,8 +70,8 @@
   * <a href="#mps">14. ​​minimum-path-sum​(#64，常规dp 美团)</a>
   * <a href="#up">15. ​​unique-paths(#62)​</a>
   * <a href="#upii">16. ​​unique-paths-ii(#63)​</a>
-- Two Sequences DP (40%)
-  * <a href="#lcs">17. longest-common-subsequence​(#1143)​</a>​
+- 零钱和背包 (10%)
+  * <a href="#cc">17. ​coin-change​​(#322)​</a>​
 
 
 
@@ -989,8 +989,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/unique-paths-ii/ "不同路
     ```
 ---
 
-<div id="lcs" onclick="window.location.hash">
+<div id="cc" onclick="window.location.hash">
 
-#### 17. longest-common-subsequence​(#1143)
-linkage: [leetcode](https://leetcode-cn.com/problems/longest-common-subsequence/ "最长公共子序列")
-> 给定两个字符串，返回最长公共子序列的长度
+#### 17. ​coin-change​​(#322)
+linkage: [leetcode](https://leetcode-cn.com/problems/coin-change/ "零钱兑换")
+> 给定不同面额的硬币和一个总金额
+> 返回可凑成总金额所需的最少的硬币个数，如无，返回-1
+- 思路一：二维dp
