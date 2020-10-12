@@ -71,10 +71,10 @@
   * <a href="#up">15. ​​unique-paths(#62)​</a>
   * <a href="#upii">16. ​​unique-paths-ii(#63)​</a>
 - 零钱和背包 (10%)
-  * <a href="#cc">17. ​coin-change​​(#322)​</a>​
-
-
-
+  * <a href="#cc">17. ​coin-change​​(#322,求最少组合)​</a>​
+  * <a href="#ccii">18. ​coin-change-ii​​(#518，求组合个数)​</a>
+  * <a href="#bp">19. ​backpack(#lintcode92,背包问题)​</a>
+  * <a href="#bpii">20. ​backpack-ii(#lintcode125,加上价值条件限制)​</a>
 
 
 
@@ -98,6 +98,8 @@
 [image5_1]: .readme/dp_insert.gif "dp_insert"
 [image5_2]: .readme/dp_delete.gif "dp_delete"
 [image5_3]: .readme/dp_replace.gif "dp_replace"
+[image6]: .readme/backpack.png "dp_backpack"
+[image7]: .readme/backpack_ii.png "dp_backpack_ii"
 
 
 
@@ -991,8 +993,135 @@ linkage: [leetcode](https://leetcode-cn.com/problems/unique-paths-ii/ "不同路
 
 <div id="cc" onclick="window.location.hash">
 
-#### 17. ​coin-change​​(#322)
+#### 17. ​coin-change​​(#322，典型的背包动态规划)
 linkage: [leetcode](https://leetcode-cn.com/problems/coin-change/ "零钱兑换")
 > 给定不同面额的硬币和一个总金额
 > 返回可凑成总金额所需的最少的硬币个数，如无，返回-1
-- 思路一：二维dp
+> 完全背包：每一种面额的硬币有无限个
+- 思路一：
+  - 思路：和其他DP不太一样，i表示钱或者容量
+  - 利用amount进行dp
+  - 注意初始值的选取
+    ```cpp
+    class Solution {
+    public:
+        int coinChange(vector<int>& coins, int amount) 
+        {
+            if(amount == 0)
+                return 0;
+            // 注意初值的选取
+            vector<int> dp(amount+1,amount+1);
+            // 初始化
+            dp[0] = 0;
+            for(int i = 1; i <= amount; i++)
+            {
+                for(int j = 0; j < coins.size(); j++)
+                {
+                    if(coins[j] <= i)
+                    {
+                        // 状态转移方程，+1是指取出一枚当前的硬币
+                        dp[i] = min(dp[i-coins[j]]+1, dp[i]);
+                    }
+                }
+            }
+            return dp[amount] > amount? -1 : dp[amount];
+        }
+    };
+    ```
+- 小结：
+  - 0/1背包 定义：物品只能用一次
+    - dp[i][j]=max(dp[i−1][j],dp[i−1][j−weight[i]]+value[i])
+  - 完全背包 定义：物品可以用无限次
+    - dp[i][j]=max(dp[i−1][j],dp[i][j−weight[i]]+value[i])
+---
+
+<div id="ccii" onclick="window.location.hash">
+
+#### 18. ​coin-change-ii​​(#518)
+linkage: [leetcode](https://leetcode-cn.com/problems/coin-change-2/ "零钱兑换 II")
+> 承接T17，返回条件改变
+> 返回可凑成总金额的组合数，如无，返回0
+- 思路：(tbd)
+    ```cpp
+    class Solution {
+    public:
+        int change(int amount, vector<int>& coins) 
+        {
+            // if(amount == 0 || coins.size() == 0)
+            //     return 0;
+            vector<int> dp(amount+1, 0);
+            // 有一种方案凑成 0 元，那就是 一个也不选
+            dp[0] = 1;
+            //前i个方案凑成的j个方案数
+            for(int i = 1; i <= coins.size(); i++)
+            {
+                for(int j = coins[i-1]; j<= amount; j++)
+                {
+                    dp[j] += dp[j-coins[i-1]];
+                }
+            }
+            return dp[amount];
+        }
+    };
+    ```
+---
+
+<div id="bp" onclick="window.location.hash">
+
+#### 19. ​backpack(#lintcode92,背包问题)
+linkage: [leetcode](https://www.lintcode.com/problem/backpack/description "背包问题")
+> n个物品中挑选若干物品，最多能装多满？
+> 每个物品的大小为A[i]
+> 典型的01背包问题：每种类型的物品最多只能选择一件
+- 思路：主要查找状态转移方程
+​![][image6]
+    ```cpp
+    class Solution {
+    public:
+        /**
+         * @param m: An integer m denotes the size of a backpack
+         * @param A: Given n items with size A[i]
+         * @return: The maximum size
+         */
+        int backPack(int m, vector<int> &A) 
+        {
+            // write your code here
+            int size = A.size(), i = 0, j = 0;
+
+            if(size <= 0) {
+                return 0;
+            }
+
+            sort(A.begin(), A.end());
+            vector< vector<int> > dp(size, vector<int>(m+1, 0) );
+
+            for(i=0; i<size; i++) {
+                for(j=1; j<=m; j++) {
+                    if(i==0 && j>=A[i]) {
+                        dp[i][j] = A[i];
+                    }
+                    else if(i>0 && j>=A[i]){
+                        dp[i][j] = max(dp[i-1][j-A[i]] + A[i], dp[i-1][j]);
+                    }
+                    else if(i>0 && j<A[i]){
+                        dp[i][j] = dp[i-1][j];
+                    }
+                }
+            }
+            return dp[size-1][m];
+        }
+    };
+    ```
+---
+
+<div id="bpii" onclick="window.location.hash">
+
+#### 20. ​backpack-ii(#lintcode125,加上价值条件限制)​
+linkage: [leetcode](https://www.lintcode.com/problem/backpack-ii/description "背包问题 II")
+> n个物品中挑选若干物品装到容量m的背包，最多装入背包的总价值？
+> 每个物品的大小为A[i]和数组 V[i] 表示每个物品的价值
+> 典型的01背包问题：每种类型的物品最多只能选择一件
+- 思路：主要查找状态转移方程
+​![][image7]
+---
+
