@@ -10,10 +10,10 @@
     - 小”和“大”指问题的规模，即从f(0)到f(n)依序计算
 ---
 - **DP 四点要素**
-  - 状态 State
-    - 灵感，创造力，**存储小规模问题的结果**
-  - 方程 Function
-    - **状态之间的联系**，怎么通过小的状态，来算大的状态
+  - 临界条件状态 Condition
+    - 状态之间的临界情况
+  - 状态转移方程 Function
+    - **状态之间的联系**，建立状态转移返程
   - **初始化** Intialization
     - 最极限的小状态是什么, **起点**
   - **答案** Answer
@@ -54,7 +54,7 @@
   * <a href="#triangle">1. triangle(#120)</a>
 - Sequence (40%)
   * <a href="#cs">2. ​climbing-stairs​(#70)</a>
-  * <a href="#jg">3. ​jump-game​​(#55, 推荐dp做法)</a>
+  * <a href="#jg">3. ​jump-game​​(#55, 推荐，很棒的dp思路，不容易想到))</a>
   * <a href="#jgii">4. ​jump-game-ii​​(#45)</a>
   * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131, 非dp做法,回溯T2)</a>
   * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
@@ -210,6 +210,37 @@ linkage: [leetcode](https://leetcode-cn.com/problems/triangle/ "三角形最小�
       }
   };
   ```
+- 思路四：二遍手撸
+```cpp
+class Solution {
+public:
+    int minimumTotal(vector<vector<int>>& triangle) 
+    {
+        // 初始化
+        vector<vector<int>> dp(triangle.size(),vector<int>(triangle.size(),INT_MAX));
+        dp[0][0] = triangle[0][0];
+        for(int i = 1; i < triangle.size(); i++)
+        {
+            for(int j = 0; j <= i; j++)
+            {
+                if(j == 0)
+                {
+                    dp[i][j] = dp[i-1][j] + triangle[i][j];
+                }
+                else if(j == triangle.size()-1)
+                {
+                    dp[i][j] = dp[i-1][j-1] + triangle[i][j];
+                }
+                else
+                {
+                    dp[i][j] = triangle[i][j] + min(dp[i-1][j], dp[i-1][j-1]);
+                }
+            }
+        }
+        return *min_element(dp[triangle.size()-1].begin(), dp[triangle.size()-1].end());
+    }
+};
+```
 ---
 
 <div id="cs" onclick="window.location.hash">
@@ -270,7 +301,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/climbing-stairs/ "爬楼梯
 
 <div id="jg" onclick="window.location.hash">
 
-#### 3. ​jump-game​​(#55)
+#### 3. ​jump-game​​(#55,很棒的dp思路，不容易想到)
 linkage: [leetcode](https://leetcode-cn.com/problems/jump-game/ "跳跃游戏")
 > 非负整数数组，最初位于数组的第一个位置
 > 每个元素代表该位置跳跃**最大长度**
