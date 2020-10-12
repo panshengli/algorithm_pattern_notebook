@@ -57,7 +57,7 @@
   * <a href="#jg">3. ​jump-game​​(#55, 推荐，很棒的dp思路，不容易想到))</a>
   * <a href="#jgii">4. ​jump-game-ii​​(#45)</a>
   * <a href="./004_backTrack_algorithm.md">5. ​​palindrome-partitioning(#131, 非dp做法,回溯T2)</a>
-  * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5)</a>
+  * <a href="#ppii">6. ​​palindrome-partitioning-ii​(#132, Tencent 2020-08-23 T5,很好的dp思路题)</a>
   * <a href="#lps">7. ​​longest-palindromic-substring​(#5, 很棒的dp题解)</a>
   * <a href="#lis">8. longest-increasing-subsequence(#300, HuaWei&美团)</a>
   * <a href="#wb">9. ​word-break​(#139, 非常经典的dp)</a>
