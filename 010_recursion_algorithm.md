@@ -160,3 +160,29 @@ public:
 #### 4. fibonacci-number(#509)
 linkage: [leetcode](https://leetcode-cn.com/problems/fibonacci-number/ "斐波那契数")
 > 斐波那契数,给定N，计算F(N)
+- 思路：用dp和recursion均可
+    ```cpp
+    class Solution {
+    public:
+        int fib(int N) 
+        {
+            // 注意临界条件，否则越界
+            vector<int> fn(N+1,0);
+            if(N < 2)
+                return N;
+            fn[0] = 0;
+            fn[1] = 1;
+            recursionFib(fn,2);
+            return fn[N];
+        }
+
+        void recursionFib(vector<int>& fn, int n)
+        {
+            if(n > fn.size()-1)
+                return;
+            fn[n] = fn[n-1] + fn[n-2];
+            recursionFib(fn, n+1);
+        }
+    };
+    ```
+---
