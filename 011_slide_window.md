@@ -12,7 +12,11 @@
 --- 
 
 ## 📑 index
-* <a href="#mws">1. minimum-window-substring(#76)</a>
+* <a href="#mws">1. minimum-window-substring(#76，很棒的滑动窗口题型)</a>
+* <a href="#pis">2. permutation-in-string(#567,比较典型的滑动窗口思路)</a>
+* <a href="#faaias">3. find-all-anagrams-in-a-string(#438，和T2相同)</a>
+* <a href="#lswrc">4. longest-substring-without-repeating-characters(#3)</a>
+
 
 
 
@@ -23,8 +27,8 @@
 
 [//]: # (Image References)
 [image1]: .readme/slide_window1.gif "slide window"
-
-
+[image2]: .readme/slide_window2.gif "slide window"
+[image3]: .readme/hash_map.gif "hash_map"
 
 
 <div id="mws" onclick="window.location.hash">
@@ -108,3 +112,118 @@ linkage: [leetcode](https://leetcode-cn.com/problems/minimum-window-substring/ "
   ```
 ---
 
+<div id="pis" onclick="window.location.hash">
+
+#### 2. permutation-in-string(#567)
+linkage: [leetcode](https://leetcode-cn.com/problems/permutation-in-string/ "字符串的排列")
+> 给定两个字符串s1和s2
+> 第一个字符串的排列之一是第二个字符串的子串
+- 思路：滑动窗口
+  - 通过比较巧妙地方式：用哈希表记录窗口中各个字符出现次数的差值
+    - 正数表示还应该出现几次
+    - 0表示正好
+    - 负数表示多出现了几次
+  ```cpp
+  class Solution {
+  public:
+      bool checkInclusion(string s1, string s2) 
+      {
+          if(s1.size() > s2.size() || s2.size() == 0 )
+          {
+              return false;
+          }
+          if(s1.size() == 0)
+          {
+              return true;
+          }
+          unordered_map<char, int> s1_map;
+          // 对s1进行hash操作
+          for(auto s1_key : s1)
+          {
+              s1_map[s1_key]++;
+          }
+          int lhs = 0;
+          int rhs = 0;
+          while(rhs < s2.size())
+          {
+              char s2_key = s2[rhs++];
+              s1_map[s2_key]--;
+              // 正数表示还应该出现几次
+              // 0表示正好
+              // 负数表示多出现了几次
+              while(lhs < rhs && s1_map[s2_key] < 0)
+              {
+                  // 减去后加回去
+                  s1_map[s2[lhs++]] ++;
+              }
+              if (rhs - lhs == s1.size())
+              {
+                  return true;
+              }
+          }
+          return false;
+      }
+  };
+  ```
+---
+
+<div id="faaias" onclick="window.location.hash">
+
+#### 3. find-all-anagrams-in-a-string(#438)
+linkage: [leetcode](https://leetcode-cn.com/problems/find-all-anagrams-in-a-string/ "找到字符串中所有字母异位词")
+> 给定一个字符串s和一个非空字符串p
+> 找到s中所有是p的字母异位词的子串
+> 返回这些子串的起始索引
+- 思路：滑动窗口
+  - 和T2相同思路
+  ```cpp
+  class Solution {
+  public:
+      vector<int> findAnagrams(string s, string p) 
+      {
+          if(s.size() < p.size() || p.size() == 0)
+              return vector<int>();
+          unordered_map<char,int> p_map;
+          for(auto p_key : p)
+          {
+              p_map[p_key]++;
+          }
+          int lhs = 0;
+          int rhs = 0;
+          vector<int> nums;
+          while(rhs < s.size())
+          {
+              // 重点一：首先对p_map进行处理
+              char s_key = s[rhs++];
+              p_map[s_key]--;
+              while(lhs < rhs && p_map[s_key] < 0)
+              {
+                  //处理后进行还原
+                  p_map[s[lhs++]]++;
+              }
+              if(rhs - lhs == p.size())
+              {
+                  nums.push_back(lhs);
+              }
+          }
+          return nums;
+      }
+  };
+  ```
+---
+
+<div id="lswrc" onclick="window.location.hash">
+
+#### 4. longest-substring-without-repeating-characters(#3)
+linkage: [leetcode](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/ "无重复字符的最长子串")
+> 给定一个字符串，找出**不含有重复字符**的**最长子串**的长度
+- 思路：滑动窗口
+![][image2]
+```cpp
+
+```
+- 思路：hash_map
+![][image3]
+```cpp
+
+```
