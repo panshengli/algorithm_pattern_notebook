@@ -15,6 +15,7 @@
 - BST特点：
   - 左子树所有节点小于(或等于)根节点
   - 右子树所有节点大于(或等于)根节点
+  - 可用中序遍历进行排序
 ---
 
 ## 📑 index
@@ -102,7 +103,7 @@
                 // 非递归前序遍历
                 s.push(make_pair(root->right, false));
                 s.push(make_pair(root->left, false));
-                s.push(make_pair(root, true));
+                s.push(make_pair(root, true));    // 只剩下一个元素，因此从stack拿出来即可
                 // 非递归中序遍历
                 s.push(make_pair(root->right, false));
                 s.push(make_pair(root, true));
@@ -138,7 +139,7 @@
         }
     }
     ```
-1. 教科书上的非递归遍历
+3. 教科书上的非递归遍历
     ```cpp
     //非递归前序遍历
     void preorderTraversal(TreeNode *root, vector<int> &path)
@@ -584,27 +585,25 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
     ```cpp
     class Solution {
     public:
-        bool isValidBST(TreeNode* root) 
+        bool isValidBST(TreeNode* root)
         {
-            return recursionSearch(root,kIntMax_,kIntMin_);
+            return recursionBST(root,LONG_MAX, LONG_MIN);
         }
-        bool recursionSearch(TreeNode* root, int64_t _max, int64_t _min)
+
+        bool recursionBST(TreeNode* root, long max, long min)
         {
-            // recursion exit
-            if(root==nullptr)
+            // 递归的出口
+            if(root == nullptr)
             {
                 return true;
             }
-            if(root->val >= _max || root->val <= _min)
+            //递归的判断条件
+            if(root->val >= max || root->val <= min)
             {
                 return false;
             }
-            return recursionSearch(root->left,root->val,_min)&&recursionSearch(root->right,_max,root->val);
+            return recursionBST(root->left, root->val, min) && recursionBST(root->right, max, root->val);
         }
-    private:
-        // test_case中测试用例
-        int64_t kIntMax_ = LONG_MAX;
-        int64_t kIntMin_ = LONG_MIN;
     };
     ```
 - 思路二：中序遍历方式
@@ -628,6 +627,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
             }
             return true;
         }
+
         void inOrderTraversal(TreeNode* root)
         {
             // 注意recursion的出口
@@ -639,6 +639,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
             }
             
         }
+
     private:
         vector<int64_t> inorder_lists_;
     };
@@ -700,9 +701,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
 
 #### 11. insert-into-a-binary-search-tree(#701)
 linkage: [leetcode](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/ "二叉搜索树中的插入操作")
-> 给定二叉搜索树（BST）的根节点和要插入树中的值，将值插入二叉搜索树。
-> - 返回插入后二叉搜索树的根节点。 保证原始二叉搜索树中不插入存在的值。
-> - 只要符合二叉搜索树即可，不需要维护子树的高度差。
+> 给定BST根节点和要插入的值，将值插入二叉搜索树
+> 返回插入后二叉搜索树的根节点，不插入存在的值。
+> 符合二叉搜索树即可，不需要维护子树高度差
 - 思路一：**DFS Recursion**
     1、若 root == null，则返回 TreeNode(val)。
     2、若 val > root.val，插入到右子树
@@ -731,9 +732,9 @@ public:
 };
 ```
 - 思路二：**迭代非Recursion**
-    1、二叉搜索树，如果val小于等于当前节点，则直接向左遍历，大于当前节点，则向右遍历。
-    2、终止条件为下一个遍历节点为空，这个节点也就是需要插入节点的位置。
-    3、在开始需要保存一个root指针，用于当做返回结果。
+    1、二叉搜索树，如果val小于等于当前节点，向左遍历；若大于当前节点，则向右遍历
+    2、终止条件为下一个遍历节点为空，这个节点也就是需要插入节点的位置
+    3、在开始需要保存一个root指针，用于当做返回结果
     ```cpp
     class Solution {
     public:
@@ -743,6 +744,7 @@ public:
             TreeNode* res = root;
             if(root==nullptr)
             {
+                // 注意要new
                 return new TreeNode(val);
             }
             while(root != nullptr)
