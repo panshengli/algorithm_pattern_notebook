@@ -217,13 +217,36 @@ linkage: [leetcode](https://leetcode-cn.com/problems/find-all-anagrams-in-a-stri
 #### 4. longest-substring-without-repeating-characters(#3)
 linkage: [leetcode](https://leetcode-cn.com/problems/longest-substring-without-repeating-characters/ "无重复字符的最长子串")
 > 给定一个字符串，找出**不含有重复字符**的**最长子串**的长度
-- 思路：滑动窗口
-![][image2]
-```cpp
+- 思路：滑动窗口+hashSet/hashMap
+    ```cpp
+    class Solution {
+    public:
+        int lengthOfLongestSubstring(string s)
+        {
+            if(s.size() == 0)
+                return 0;
+            unordered_set<char> s_set;
+            int lhs(0), rhs(0), max_len(0);
+            while(rhs < s.size())
+            {
+                // 2. 如果找到，删除前面的可以
+                if(s_set.find(s[rhs]) != s_set.end())
+                {
+                    s_set.erase(s[lhs]);
+                    lhs++;
+                }
+                // 1. 如果没找到，添加key，计算长度
+                else
+                {
+                    s_set.insert(s[rhs]);
+                    max_len = max(max_len, rhs-lhs+1);
+                    rhs++;
+                }
+                
+            }
+            return max_len;
+        }
+    };
+    ```
+---
 
-```
-- 思路：hash_map
-![][image3]
-```cpp
-
-```
