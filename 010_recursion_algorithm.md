@@ -137,7 +137,7 @@ public:
             //递归构建右子树，并拿到右子树所有可能的根结点列表right
             vector<TreeNode*> rightTrees = getAns(i + 1, end);
             //左子树右子树两两组合
-            for (TreeNode* leftTree : leftTrees) 
+            for (TreeNode* leftTree : leftTrees)
             {
                 for (TreeNode* rightTree : rightTrees)
                 {

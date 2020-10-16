@@ -12,6 +12,9 @@
         TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
     };
     ```
+- BST特点：
+  - 左子树所有节点小于(或等于)根节点
+  - 右子树所有节点大于(或等于)根节点
 ---
 
 ## 📑 index
