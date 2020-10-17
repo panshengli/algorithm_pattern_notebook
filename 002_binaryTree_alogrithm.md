@@ -39,14 +39,14 @@
 
 
 
-
-
 ---
 
 
 [//]: # (Image References)
 [image1]: .readme/dfs.png "dfs"
-
+[image2]: .readme/del_bst1.png "delete bst"
+[image3]: .readme/del_bst2.png "delete bst"
+[image4]: .readme/del_bst3.png "delete bst"
 ---
 
 
@@ -790,3 +790,101 @@ public:
 linkage: [leetcode](https://leetcode-cn.com/problems/delete-node-in-a-bst/ "删除二叉搜索树中的节点")
 > 给定一个二叉搜索树的根节点root和一个值key，删除二叉搜索树中的key对应的节点
 > 返回根节点
+- 思路一：递归
+  - 方法：
+    - 删除节点分为两步， 1. 找到删除位置； 2. 分析不同情况
+    - 画图分析可知：
+      - 1. 当删除节点在叶子节点，代码：
+        ```cpp
+        root = nullptr
+        ```
+        ![][image2]
+      - 2. 当节点在后继successor上，找到其右子树对应的左节点,代码如下：
+        ```cpp
+        TreeNode* successorNode(TreeNode* root)
+        {
+            root = root->right;
+            while(root->left != nullptr)
+            {
+                root = root->left;
+            }
+            return root;
+        }
+        ```
+        ![][image3]
+      - 3. 节点在前驱predecessor上，找到其左子树对应的右节点
+        ```cpp
+        TreeNode* predecessorNode(TreeNode* root)
+        {
+            root = root->left;
+            while(root->right != nullptr)
+            {
+                root = root->right;
+            }
+            return root;
+        }
+        ```
+        ![][image4]
+    - 最终利用递归，代码如下：
+    ```cpp
+    class Solution {
+    public:
+        TreeNode* deleteNode(TreeNode* root, int key) 
+        {
+            if(root == nullptr)
+            {
+                return nullptr;
+            }
+            // 利用递归找到对应节点
+            if(key < root->val)
+            {
+                // 返回值起到连接指向
+                root->left = deleteNode(root->left, key);
+            }
+            else if(key > root->val)
+            {
+                root->right = deleteNode(root->right, key);
+            }
+            else
+            {
+                //找到key，分三种情况
+                if(root->left == nullptr && root->right == nullptr)
+                {
+                    root = nullptr;
+                }
+                else if(root->right != nullptr)
+                {
+                    // 找后驱节点
+                    root->val = successorNode(root);
+                    root->right = deleteNode(root->right,root->val);
+                }
+                else
+                {
+                    root->val = predecessorNode(root);
+                    root->left = deleteNode(root->left,root->val);
+                }
+            }
+            return root;
+        }
+
+        int successorNode(TreeNode* root)
+        {
+            root = root->right;
+            while(root->left != nullptr)
+            {
+                root = root->left;
+            }
+            return root->val;
+        }
+
+        int predecessorNode(TreeNode* root)
+        {
+            root = root->left;
+            while(root->right != nullptr)
+            {
+                root = root->right;
+            }
+            return root->val;
+        }
+    };
+    ```
