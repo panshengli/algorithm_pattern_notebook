@@ -33,7 +33,7 @@
 - 二叉搜索树应用
   * <a href="#vbst">10. validate-binary-search-tree(#98)</a>
   * <a href="#iiabst">11. insert-into-a-binary-search-tree(#701)</a>
-  * <a href="#dniab">12. delete-node-in-a-bst(#450)</a>
+  * <a href="#dniab">12. delete-node-in-a-bst(#450，注意体会与T11区别)</a>
 
 
 
