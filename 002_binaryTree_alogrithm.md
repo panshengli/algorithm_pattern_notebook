@@ -20,25 +20,28 @@
 
 ## 📑 index
 - 二叉树遍历
-  * <a href="#binaryTree">1. [代码框架] binaryTree</a>
-  * <a href="#BFS">2. [代码框架] BFS</a>
-  * <a href="#maxDepthBinaryTree">3. maxDepthBinaryTree(#104)</a>
-  * <a href="#balancedTree">4. balancedTree(#110)</a>
-  * <a href="#binary-tree-maximum-path-sum">5. binary-tree-maximum-path-sum(#124)</a>
-  * <a href="#lowest-common-ancestor-of-a-binary-tree">6. lowest-common-ancestor-of-a-binary-tree(#236)</a>
+  * <a href="#bt">1. [代码框架] binary-tree(相关题型#94，二叉树中序遍历)</a>
+  * <a href="#bfs">2. [代码框架] BFS</a>
+  * <a href="#mdobt">3. maximum-depth-of-binary-tree(#104)</a>
+  * <a href="#bbt">4. balanced-binary-tree(#110)</a>
+  * <a href="#btnps">5. binary-tree-maximum-path-sum(#124)</a>
+  * <a href="#lcaoabt">6. lowest-common-ancestor-of-a-binary-tree(#236)</a>
 - BFS 层次应用
-  * <a href="#binary-tree-level-order-traversal">7. binary-tree-level-order-traversal(#102)[与3类似]</a>
-  * <a href="#binary-tree-level-order-traversal-ii">8. binary-tree-level-order-traversal-ii(#107)[与7类似]</a>
-  * <a href="#binary-tree-zigzag-level-order-traversal">9. binary-tree-zigzag-level-order-traversal(#103)[与8类似]</a>
+  * <a href="#btlot">7. binary-tree-level-order-traversal(#102)[与3类似]</a>
+  * <a href="#btlotii">8. binary-tree-level-order-traversal-ii(#107)[与7类似]</a>
+  * <a href="#btzlot">9. binary-tree-zigzag-level-order-traversal(#103)[与8类似]</a>
 - 二叉搜索树应用
-  * <a href="#validate-binary-search-tree">10. validate-binary-search-tree(#98)</a>
-  * <a href="#insert-into-a-binary-search-tree">11. insert-into-a-binary-search-tree(#701)</a>
-
-* <a href="#binaryTree">12. binary-tree-inorder-traversal(#94)[使用1.stack方式遍历]</a>
-
+  * <a href="#vbst">10. validate-binary-search-tree(#98)</a>
+  * <a href="#iiabst">11. insert-into-a-binary-search-tree(#701)</a>
+  * <a href="#dniab">12. delete-node-in-a-bst(#450)</a>
 
 
 
+
+
+
+
+---
 
 
 [//]: # (Image References)
@@ -49,9 +52,9 @@
 
 
 
-<div id="binaryTree" onclick="window.location.hash">
+<div id="bt" onclick="window.location.hash">
 
-#### 1. binaryTree
+#### 1. [代码框架] binary-tree(相关题型#94，二叉树中序遍历)
 1. 三种递归遍历 
     Refer by [更简单的非递归遍历二叉树的方法](https://blog.csdn.net/u012102306/article/details/52841163)
     ```cpp
@@ -214,9 +217,9 @@
     ```
 ---
 
-<div id="BFS" onclick="window.location.hash">
+<div id="bfs" onclick="window.location.hash">
 
-#### 2. BFS
+#### 2. [代码框架] BFS
 - 队列 q 就不说了，BFS 的核心数据结构；
 - cur.adj() 泛指 cur 相邻的节点，比如说二维数组中，cur 上下左右四面的位置就是相邻节点；
 - visited 的主要作用是防止走回头路，大部分时候都是必须的，但是像一般的二叉树结构，没有子节点到父节点的指针，不会走回头路就不需要 visited。
@@ -254,9 +257,9 @@
     ```
 ---
 
-<div id="maxDepthBinaryTree" onclick="window.location.hash">
+<div id="mdobt" onclick="window.location.hash">
 
-#### 3. maxDepthBinaryTree(#104)
+#### 3. maximum-depth-of-binary-tree(#104)
 linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/ "二叉树的最大深度")
 > 给定一个二叉树，找出其最大深度
 - **递归方式**
@@ -344,9 +347,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
     ```
 ---
 
-<div id="balancedTree" onclick="window.location.hash">
+<div id="bbt" onclick="window.location.hash">
 
-#### 4. balancedTree(#110)
+#### 4. balanced-binary-tree(#110)
 linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高度平衡的二叉树")
 > 一棵高度平衡二叉树定义为：  一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1
 - 思路:
@@ -376,7 +379,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
     ```
 ---
 
-<div id="binary-tree-maximum-path-sum" onclick="window.location.hash">
+<div id="btnps" onclick="window.location.hash">
 
 #### 5. binary-tree-maximum-path-sum(#124)
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/ "二叉树中的最大路径和")
@@ -413,7 +416,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
     ```
 ---
 
-<div id="lowest-common-ancestor-of-a-binary-tree" onclick="window.location.hash">
+<div id="lcaoabt" onclick="window.location.hash">
 
 #### 6. lowest-common-ancestor-of-a-binary-tree(#236)
 linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ "二叉树的最近公共祖先")
@@ -461,7 +464,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
     ```
 ---
 
-<div id="binary-tree-level-order-traversal" onclick="window.location.hash">
+<div id="btlot" onclick="window.location.hash">
 
 #### 7. binary-tree-level-order-traversal(#102)
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/submissions/ "二叉树的层序遍历")
@@ -538,7 +541,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
     ```
 ---
 
-<div id="binary-tree-level-order-traversal-ii" onclick="window.location.hash">
+<div id="btlotii" onclick="window.location.hash">
 
 #### 8. binary-tree-level-order-traversal-ii(#107)
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii/ "二叉树的层次遍历 II")
@@ -559,7 +562,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
 - 本题还可用DFS实现(略)
 ---
 
-<div id="binary-tree-zigzag-level-order-traversal" onclick="window.location.hash">
+<div id="btzlot" onclick="window.location.hash">
 
 #### 9. binary-tree-zigzag-level-order-traversal(#103)
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/ "二叉树的锯齿形层次遍历")
@@ -576,7 +579,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-zigzag-level-or
    ```
 ---
 
-<div id="validate-binary-search-tree" onclick="window.location.hash">
+<div id="vbst" onclick="window.location.hash">
 
 #### 10. validate-binary-search-tree(#98)
 linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree/ "验证二叉搜索树")
@@ -697,7 +700,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
     ```
 ---
 
-<div id="insert-into-a-binary-search-tree" onclick="window.location.hash">
+<div id="iiabst" onclick="window.location.hash">
 
 #### 11. insert-into-a-binary-search-tree(#701)
 linkage: [leetcode](https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/ "二叉搜索树中的插入操作")
@@ -780,3 +783,10 @@ public:
     };
     ```
 ---
+
+<div id="dniab" onclick="window.location.hash">
+
+#### 12. delete-node-in-a-bst(#450)
+linkage: [leetcode](https://leetcode-cn.com/problems/delete-node-in-a-bst/ "删除二叉搜索树中的节点")
+> 给定一个二叉搜索树的根节点root和一个值key，删除二叉搜索树中的key对应的节点
+> 返回根节点
