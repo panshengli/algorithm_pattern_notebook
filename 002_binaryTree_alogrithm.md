@@ -351,7 +351,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
 
 #### 4. balanced-binary-tree(#110)
 linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高度平衡的二叉树")
-> 一棵高度平衡二叉树定义为：  一个二叉树每个节点 的左右两个子树的高度差的绝对值不超过1
+> 高度平衡二叉树： 每个节点左右子树的高度差不超过1
 - 思路:
     ```cpp
     class Solution {
@@ -373,7 +373,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
             {
                 return 0;
             }
-            return 1+std::max(heightTree(root->left),heightTree(root->right));ss
+            return 1+std::max(heightTree(root->left),heightTree(root->right));
         }
     };
     ```
