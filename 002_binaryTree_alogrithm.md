@@ -93,7 +93,7 @@
             root = s.top().first;
             visited = s.top().second;
             s.pop();
-            // 注意： 不要忘记root为空的处理
+            // 二遍复习忘记点：注意： 不要忘记root为空的处理
             if(root == NULL)
                 continue;
             // 若此前已通过该结点将其局部入栈，则直接出栈输出即可
@@ -142,7 +142,7 @@
         }
     }
     ```
-3. 教科书上的非递归遍历
+1. 教科书上的非递归遍历
     ```cpp
     //非递归前序遍历
     void preorderTraversal(TreeNode *root, vector<int> &path)
@@ -526,6 +526,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
                 int num = q.size();
                 for(int i=0;i<num;i++)
                 {
+                    // 二遍重做：注意queue为front
                     TreeNode* cur = q.front();
                     level_list.push_back(cur->val);
                     q.pop();

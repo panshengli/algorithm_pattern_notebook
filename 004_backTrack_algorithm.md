@@ -1,5 +1,16 @@
 ## BackTrack Algorithm
-
+- 回溯法(backtrack)常用于遍历列表所有子集，是DFS的一种
+- 时间复杂度一般O(N!)，纯暴力穷举
+- 核心思路
+  - 从选择列表里做一个选择
+  - 然后一直递归往下搜索答案
+  - 如果遇到路径不通，就返回来撤销这次选择
+- DFS和BackTrace区别
+  - DFS是一直向一个方向搜索
+  - 回溯算法在DFS基础之上，但在搜索过程中，达到结束条件后，恢复状态，回溯上一层，再次搜索。
+- 使用回溯条件
+  - 当问题需要"回头"，查找出**所有的解**的情况
+---
 ## 📑 index
 * <a href="#subsets">1. subSets(#78)</a>
 * <a href="#pp">2. ​​palindrome-partitioning(#131)[非dp做法,回溯]</a>
@@ -10,7 +21,7 @@
 
 
 
-
+---
 
 <div id="subSets" onclick="window.location.hash">
 
@@ -47,9 +58,13 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
         void backtrack(vector<int>& nums,vector<vector<int>>& res,vector<int> tmp,int index)
         {
             res.push_back(tmp);//由于所有子集都要，所以不用判断返回条件
-            for(int i=index;i<nums.size();i++){
+            for(int i=index;i<nums.size();i++)
+            {
+                // 做出选择
                 tmp.push_back(nums[i]);
+                // 递归进入下一层，注意i+1，标识下一个选择列表的开始位置，最重要的一步
                 backtrack(nums,res,tmp,i+1);
+                //撤销选择
                 tmp.pop_back();
             }
         }
