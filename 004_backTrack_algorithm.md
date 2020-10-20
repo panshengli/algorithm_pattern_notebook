@@ -11,25 +11,7 @@
 - 使用回溯条件
   - 当问题需要"回头"，查找出**所有的解**的情况
 ---
-## 📑 index
-* <a href="#subsets">1. subSets(#78)</a>
-* <a href="#pp">2. ​​palindrome-partitioning(#131)[非dp做法,回溯]</a>
-
-
-
-
-
-
-
----
-
-<div id="subSets" onclick="window.location.hash">
-
-#### 1. subSets(#78)
-linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所有子集")
-> 给定一组不含重复元素的整数数组nums，返回所有可能的子集
-1. backtrack algorithm
-
+- 基本代码框架
     ```go
     // ADT
     // 应用回溯法的题目，简单来说就是穷尽所有可能性
@@ -44,7 +26,27 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
         backtrack(选择列表,路径)
         撤销选择
     ```
+---
 
+## 📑 index
+* <a href="#subsets">1. subSets(#78)</a>
+* <a href="#subsets-ii">2. subSets-ii(#90)</a>
+* <a href="#pp">3. ​​palindrome-partitioning(#131)[非dp做法,回溯]</a>
+
+
+
+
+
+
+
+---
+
+<div id="subsets" onclick="window.location.hash">
+
+#### 1. subSets(#78)
+linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所有子集")
+> 给定一组**不重复元素**的整数数组nums，返回所有可能的子集
+- 思路一：
     ```cpp
     class Solution {
     public:
@@ -72,9 +74,78 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
     ```
 ---
 
+<div id="subsets-ii" onclick="window.location.hash">
+
+#### 2. subSets-ii(#90)
+linkage: [leetcode](https://leetcode-cn.com/problems/subsets-ii/ "子集 II")
+> 给定一组**重复元素**的整数数组nums，返回所有可能的子集
+- 思路一：利用T1方法+利用stl库[sort+unique+erase]
+    ```cpp
+    class Solution {
+    public:
+        vector<vector<int>> subsetsWithDup(vector<int>& nums) 
+        {
+            vector<vector<int>> res;
+            vector<int> tmp;
+            // 对nums进行预处理操作
+            sort(nums.begin(), nums.end());
+            backtraceNums(nums, 0, res, tmp);
+            sort(res.begin(),res.end());
+            // unique 删除是相邻的重复元素，因此需要对数据进行排列
+            res.erase(unique(res.begin(), res.end()), res.end());
+            return res;
+        }
+
+        void backtraceNums(vector<int>& nums, int index, vector<vector<int>>& res, vector<int> &tmp)
+        {
+            sort(tmp.begin(),tmp.end());
+            res.push_back(tmp);
+            for(int i = index; i < nums.size(); i++)
+            {
+                tmp.push_back(nums[i]);
+                backtraceNums(nums, i+1, res, tmp);
+                tmp.pop_back();
+            }
+        }
+    };
+    ```
+- 思路二：回溯 + 剪枝操作
+    ```cpp
+    class Solution {
+    public:
+        vector<vector<int>> subsetsWithDup(vector<int>& nums) 
+        {
+            vector<vector<int>> res;
+            vector<int> tmp;
+            // 对nums进行预处理操作
+            sort(nums.begin(), nums.end());
+            backtraceNums(nums, 0, res, tmp);
+            return res;
+        }
+
+        void backtraceNums(vector<int>& nums, int index, vector<vector<int>>& res, vector<int> &tmp)
+        {
+            sort(tmp.begin(),tmp.end());
+            res.push_back(tmp);
+            for(int i = index; i < nums.size(); i++)
+            {
+                // 剪枝操作处理: 重复元素不进行push(前提需要对数据进行预处理)
+                if(i > index && nums[i] == nums[i-1])
+                {
+                    continue;
+                }
+                tmp.push_back(nums[i]);
+                backtraceNums(nums, i+1, res, tmp);
+                tmp.pop_back();
+            }
+        }
+    };
+    ```
+---
+
 <div id="pp" onclick="window.location.hash">
 
-#### 2. ​​palindrome-partitioning(#131)[非dp做法,回溯]
+#### 3. ​​palindrome-partitioning(#131)[非dp做法,回溯]
 linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning/ "分割回文串")
 > 将字符串s分割成一些子串，使每个子串都是回文串
 > 返回s所有可能的分割方案
