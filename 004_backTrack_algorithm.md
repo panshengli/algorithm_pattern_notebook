@@ -32,7 +32,7 @@
 * <a href="#subsets">1. subSets(#78)</a>
 * <a href="#subsets-ii">2. subSets-ii(#90)</a>
 * <a href="#pp">3. ​​palindrome-partitioning(#131)[非dp做法,回溯]</a>
-
+* <a href="#ps">4. ​permutations​(#46)</a>
 
 
 
@@ -110,6 +110,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets-ii/ "子集 II")
     };
     ```
 - 思路二：回溯 + 剪枝操作
+  - [Refer linkage](https://leetcode-cn.com/problems/subsets/solution/c-zong-jie-liao-hui-su-wen-ti-lei-xing-dai-ni-gao-/)
     ```cpp
     class Solution {
     public:
@@ -208,3 +209,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning/ "�
   };
   ```
 ---
+
+<div id="ps" onclick="window.location.hash">
+
+#### 4. ​permutations​(#46)
+linkage: [leetcode](https://leetcode-cn.com/problems/permutations/ "全排列")
+> 给定一个**没有重复**数字的序列，返回所有可能的全排列
+- 思路一：
