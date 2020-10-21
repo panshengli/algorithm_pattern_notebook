@@ -21,7 +21,7 @@
 ## 📑 index
 - 二叉树遍历
   * <a href="#bt">1. [代码框架] binary-tree(相关题型#94，二叉树中序遍历)</a>
-  * <a href="#bfs">2. [代码框架] BFS</a>
+  * <a href="#midobt">2. minimum-depth-of-binary-tree(#111)</a>
   * <a href="#mdobt">3. maximum-depth-of-binary-tree(#104)</a>
   * <a href="#bbt">4. balanced-binary-tree(#110)</a>
   * <a href="#btnps">5. binary-tree-maximum-path-sum(#124)</a>
@@ -217,43 +217,39 @@
     ```
 ---
 
-<div id="bfs" onclick="window.location.hash">
+<div id="midobt" onclick="window.location.hash">
 
-#### 2. [代码框架] BFS
-- 队列 q 就不说了，BFS 的核心数据结构；
-- cur.adj() 泛指 cur 相邻的节点，比如说二维数组中，cur 上下左右四面的位置就是相邻节点；
-- visited 的主要作用是防止走回头路，大部分时候都是必须的，但是像一般的二叉树结构，没有子节点到父节点的指针，不会走回头路就不需要 visited。
-
+#### 2. minimum-depth-of-binary-tree(#111)
+linkage: [leetcode](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/ "二叉树的最小深度")
+> 给定一个二叉树，找出其最小深度
+> 最小深度：根节点到最近叶子最短路径的节点数量
+- 思路一：递归版本
     ```cpp
-    // 计算从起点 start 到终点 target 的最近距离
-    int BFS(TreeNode start, TreeNode target) 
-    {
-        Queue<TreeNode> q; // 核心数据结构
-        Set<TreeNode> visited; // 避免走回头路
-
-        q.offer(start); // 将起点加入队列
-        visited.add(start);
-        int step = 0; // 记录扩散的步数
-
-        while (q not empty) {
-            int sz = q.size();
-            /* 将当前队列中的所有节点向四周扩散 */
-            for (int i = 0; i < sz; i++) {
-                TreeNode cur = q.poll();
-                /* 划重点：这里判断是否到达终点 */
-                if (cur is target)
-                    return step;
-                /* 将 cur 的相邻节点加入队列 */
-                for (TreeNode x : cur.adj())
-                    if (x not in visited) {
-                        q.offer(x);
-                        visited.add(x);
-                    }
+    class Solution {
+    public:
+        int minDepth(TreeNode* root) 
+        {
+            if(root == nullptr)
+            {
+                return 0;
             }
-            /* 划重点：更新步数在这里 */
-            step++;
+            if(root->left == nullptr && root->right == nullptr)
+            {
+                return 1;
+            }
+            int min_level= INT_MAX;
+            if(root->left != nullptr)
+            {
+                min_level = min(minDepth(root->left),min_level);
+            }
+            if(root->right != nullptr)
+            {
+                min_level = min(minDepth(root->right),min_level);
+            }
+            return 1 + min_level;
+            
         }
-    }
+    };
     ```
 ---
 
@@ -262,7 +258,7 @@
 #### 3. maximum-depth-of-binary-tree(#104)
 linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/ "二叉树的最大深度")
 > 给定一个二叉树，找出其最大深度
-- **递归方式**
+- 思路一：**递归方式**
   - 三个条件：递归定义，递归出口，递归拆解
     ```cpp
     class Solution {
@@ -278,7 +274,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
         }
     };
     ```
-- **BFS**：使用队列
+- 思路二：**BFS**：使用队列
     ```cpp
     class Solution {
     public:
@@ -306,7 +302,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
         }
     };
     ```
-- DFS：用栈的循环版
+- 思路三：DFS：用栈的循环版
 ![alt text][image1]
     ```cpp
     class Solution {
@@ -320,7 +316,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
             findMaxHeight(root, curHeight,maxHeight); 
             return maxHeight;
         }
-        
+
         void findMaxHeight(TreeNode* _root, int& _curHeight, int& _maxHeight)
         {
             _curHeight += 1;
@@ -352,7 +348,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
 #### 4. balanced-binary-tree(#110)
 linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高度平衡的二叉树")
 > 高度平衡二叉树： 每个节点左右子树的高度差不超过1
-- 思路:
+- 思路一:递归版本
     ```cpp
     class Solution {
     public:
@@ -365,7 +361,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
             return std::abs(heightTree(root->left)-heightTree(root->right))<2
                 && isBalanced(root->left) && isBalanced(root->right);
         }
-        
+
     private:
         int heightTree(TreeNode* root)
         {
@@ -384,11 +380,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
 #### 5. binary-tree-maximum-path-sum(#124)
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/ "二叉树中的最大路径和")
 > 给定一个非空二叉树，返回其最大路径和
-- 思路：理解如何递归很关键
+- 思路一：递归版本
     ```cpp
     class Solution {
     public:
-        int maxPathSum(TreeNode* root) 
+        int maxPathSum(TreeNode* root)
         {
             if(root == nullptr)
             {
@@ -397,6 +393,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
             dfs(root);
             return maxValue_;
         }
+
         int dfs(TreeNode* root)
         {
             if(root == nullptr)
@@ -421,7 +418,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
 #### 6. lowest-common-ancestor-of-a-binary-tree(#236)
 linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ "二叉树的最近公共祖先")
 > 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
-- **ADT**
+- 思路一：递归版本**ADT**
     left == null && right == null return null
     left == null && right ！= null return right
     right == null && left ！= null return left
@@ -470,22 +467,23 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
 linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-traversal/submissions/ "二叉树的层序遍历")
 > 给你一个二叉树，请你返回其按层序遍历得到的节点值
 > 即逐层地，从左到右访问所有节点
-- **注意c++中queue()[push,pop]和deque()[push_back,pop_front]的使用**
-- DFS 与 BFS区别
-  1. DFS遍历的代码比BFS简洁太多了！
-  2. 因为递归的方式隐含地使用了系统的栈，我们不需要自己维护一个数据结构。
-  3. 如果只是简单地将二叉树遍历一遍，那么DFS显然是更方便的选择
-    ```java
-    void dfs(TreeNode root)
-    {
-        if (root == null)
-        {
-            return;
-        }
-        dfs(root.left);
-        dfs(root.right);
-    }
-    ```
+- 注意：
+  - **c++中queue()[push,pop]和deque()[push_back,pop_front]的使用**
+  - DFS与BFS区别：
+    - 1. DFS遍历的代码比BFS简洁
+    - 2. 因为递归的方式隐含地使用了系统的栈，我们不需要自己维护一个数据结构
+    - 3. 如果只是简单地将二叉树遍历一遍，那么DFS显然是更方便的选择
+      ```java
+      void dfs(TreeNode root)
+      {
+          if (root == null)
+          {
+              return;
+          }
+          dfs(root.left);
+          dfs(root.right);
+      }
+      ```
     ```java
     void bfs(TreeNode root)
     {
@@ -551,14 +549,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
 - **注意BFS做法:**
   1. 与7类似,需要用std::list每次都往队头塞**
     ```cpp
-    std::list<std::vector<int>> level_lists;
-    std::vector<std::vector<int>> level_vectors;
+    list<vector<int>> level_lists;
+    vector<vector<int>> level_vectors;
     level_vectors.assign(level_lists.begin(),level_lists.end());
     ```
   2. 用std::reverse函数实现
    ```cpp
-   std::vector<std::vector<int>> level_vectors;
-   std::reverse(level_vectors.begin(),level_vectors.end());
+   vector<vector<int>> level_vectors;
+   reverse(level_vectors.begin(),level_vectors.end());
    ```
 - 本题还可用DFS实现(略)
 ---

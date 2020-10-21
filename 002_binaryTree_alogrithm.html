@@ -1,0 +1,1299 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>002_binaryTree_alogrithm.md</title>
+<meta http-equiv="Content-type" content="text/html;charset=UTF-8">
+
+<style>
+/* https://github.com/microsoft/vscode/blob/master/extensions/markdown-language-features/media/markdown.css */
+/*---------------------------------------------------------------------------------------------
+ *  Copyright (c) Microsoft Corporation. All rights reserved.
+ *  Licensed under the MIT License. See License.txt in the project root for license information.
+ *--------------------------------------------------------------------------------------------*/
+
+body {
+	font-family: var(--vscode-markdown-font-family, -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif);
+	font-size: var(--vscode-markdown-font-size, 14px);
+	padding: 0 26px;
+	line-height: var(--vscode-markdown-line-height, 22px);
+	word-wrap: break-word;
+}
+
+#code-csp-warning {
+	position: fixed;
+	top: 0;
+	right: 0;
+	color: white;
+	margin: 16px;
+	text-align: center;
+	font-size: 12px;
+	font-family: sans-serif;
+	background-color:#444444;
+	cursor: pointer;
+	padding: 6px;
+	box-shadow: 1px 1px 1px rgba(0,0,0,.25);
+}
+
+#code-csp-warning:hover {
+	text-decoration: none;
+	background-color:#007acc;
+	box-shadow: 2px 2px 2px rgba(0,0,0,.25);
+}
+
+body.scrollBeyondLastLine {
+	margin-bottom: calc(100vh - 22px);
+}
+
+body.showEditorSelection .code-line {
+	position: relative;
+}
+
+body.showEditorSelection .code-active-line:before,
+body.showEditorSelection .code-line:hover:before {
+	content: "";
+	display: block;
+	position: absolute;
+	top: 0;
+	left: -12px;
+	height: 100%;
+}
+
+body.showEditorSelection li.code-active-line:before,
+body.showEditorSelection li.code-line:hover:before {
+	left: -30px;
+}
+
+.vscode-light.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.15);
+}
+
+.vscode-light.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(0, 0, 0, 0.40);
+}
+
+.vscode-light.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-dark.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.4);
+}
+
+.vscode-dark.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 255, 255, 0.60);
+}
+
+.vscode-dark.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+.vscode-high-contrast.showEditorSelection .code-active-line:before {
+	border-left: 3px solid rgba(255, 160, 0, 0.7);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line:hover:before {
+	border-left: 3px solid rgba(255, 160, 0, 1);
+}
+
+.vscode-high-contrast.showEditorSelection .code-line .code-line:hover:before {
+	border-left: none;
+}
+
+img {
+	max-width: 100%;
+	max-height: 100%;
+}
+
+a {
+	text-decoration: none;
+}
+
+a:hover {
+	text-decoration: underline;
+}
+
+a:focus,
+input:focus,
+select:focus,
+textarea:focus {
+	outline: 1px solid -webkit-focus-ring-color;
+	outline-offset: -1px;
+}
+
+hr {
+	border: 0;
+	height: 2px;
+	border-bottom: 2px solid;
+}
+
+h1 {
+	padding-bottom: 0.3em;
+	line-height: 1.2;
+	border-bottom-width: 1px;
+	border-bottom-style: solid;
+}
+
+h1, h2, h3 {
+	font-weight: normal;
+}
+
+table {
+	border-collapse: collapse;
+}
+
+table > thead > tr > th {
+	text-align: left;
+	border-bottom: 1px solid;
+}
+
+table > thead > tr > th,
+table > thead > tr > td,
+table > tbody > tr > th,
+table > tbody > tr > td {
+	padding: 5px 10px;
+}
+
+table > tbody > tr + tr > td {
+	border-top: 1px solid;
+}
+
+blockquote {
+	margin: 0 7px 0 5px;
+	padding: 0 16px 0 10px;
+	border-left-width: 5px;
+	border-left-style: solid;
+}
+
+code {
+	font-family: Menlo, Monaco, Consolas, "Droid Sans Mono", "Courier New", monospace, "Droid Sans Fallback";
+	font-size: 1em;
+	line-height: 1.357em;
+}
+
+body.wordWrap pre {
+	white-space: pre-wrap;
+}
+
+pre:not(.hljs),
+pre.hljs code > div {
+	padding: 16px;
+	border-radius: 3px;
+	overflow: auto;
+}
+
+pre code {
+	color: var(--vscode-editor-foreground);
+	tab-size: 4;
+}
+
+/** Theming */
+
+.vscode-light pre {
+	background-color: rgba(220, 220, 220, 0.4);
+}
+
+.vscode-dark pre {
+	background-color: rgba(10, 10, 10, 0.4);
+}
+
+.vscode-high-contrast pre {
+	background-color: rgb(0, 0, 0);
+}
+
+.vscode-high-contrast h1 {
+	border-color: rgb(0, 0, 0);
+}
+
+.vscode-light table > thead > tr > th {
+	border-color: rgba(0, 0, 0, 0.69);
+}
+
+.vscode-dark table > thead > tr > th {
+	border-color: rgba(255, 255, 255, 0.69);
+}
+
+.vscode-light h1,
+.vscode-light hr,
+.vscode-light table > tbody > tr + tr > td {
+	border-color: rgba(0, 0, 0, 0.18);
+}
+
+.vscode-dark h1,
+.vscode-dark hr,
+.vscode-dark table > tbody > tr + tr > td {
+	border-color: rgba(255, 255, 255, 0.18);
+}
+
+</style>
+
+<style>
+/* Tomorrow Theme */
+/* http://jmblog.github.com/color-themes-for-google-code-highlightjs */
+/* Original theme - https://github.com/chriskempson/tomorrow-theme */
+
+/* Tomorrow Comment */
+.hljs-comment,
+.hljs-quote {
+	color: #8e908c;
+}
+
+/* Tomorrow Red */
+.hljs-variable,
+.hljs-template-variable,
+.hljs-tag,
+.hljs-name,
+.hljs-selector-id,
+.hljs-selector-class,
+.hljs-regexp,
+.hljs-deletion {
+	color: #c82829;
+}
+
+/* Tomorrow Orange */
+.hljs-number,
+.hljs-built_in,
+.hljs-builtin-name,
+.hljs-literal,
+.hljs-type,
+.hljs-params,
+.hljs-meta,
+.hljs-link {
+	color: #f5871f;
+}
+
+/* Tomorrow Yellow */
+.hljs-attribute {
+	color: #eab700;
+}
+
+/* Tomorrow Green */
+.hljs-string,
+.hljs-symbol,
+.hljs-bullet,
+.hljs-addition {
+	color: #718c00;
+}
+
+/* Tomorrow Blue */
+.hljs-title,
+.hljs-section {
+	color: #4271ae;
+}
+
+/* Tomorrow Purple */
+.hljs-keyword,
+.hljs-selector-tag {
+	color: #8959a8;
+}
+
+.hljs {
+	display: block;
+	overflow-x: auto;
+	color: #4d4d4c;
+	padding: 0.5em;
+}
+
+.hljs-emphasis {
+	font-style: italic;
+}
+
+.hljs-strong {
+	font-weight: bold;
+}
+</style>
+
+<style>
+/*
+ * Markdown PDF CSS
+ */
+
+ body {
+	font-family: -apple-system, BlinkMacSystemFont, "Segoe WPC", "Segoe UI", "Ubuntu", "Droid Sans", sans-serif, "Meiryo";
+	padding: 0 12px;
+}
+
+pre {
+	background-color: #f8f8f8;
+	border: 1px solid #cccccc;
+	border-radius: 3px;
+	overflow-x: auto;
+	white-space: pre-wrap;
+	overflow-wrap: break-word;
+}
+
+pre:not(.hljs) {
+	padding: 23px;
+	line-height: 19px;
+}
+
+blockquote {
+	background: rgba(127, 127, 127, 0.1);
+	border-color: rgba(0, 122, 204, 0.5);
+}
+
+.emoji {
+	height: 1.4em;
+}
+
+code {
+	font-size: 14px;
+	line-height: 19px;
+}
+
+/* for inline code */
+:not(pre):not(.hljs) > code {
+	color: #C9AE75; /* Change the old color so it seems less like an error */
+	font-size: inherit;
+}
+
+/* Page Break : use <div class="page"/> to insert page break
+-------------------------------------------------------- */
+.page {
+	page-break-after: always;
+}
+
+</style>
+
+<script src="https://unpkg.com/mermaid/dist/mermaid.min.js"></script>
+</head>
+<body>
+  <script>
+    mermaid.initialize({
+      startOnLoad: true,
+      theme: document.body.classList.contains('vscode-dark') || document.body.classList.contains('vscode-high-contrast')
+          ? 'dark'
+          : 'default'
+    });
+  </script>
+<h2 id="binarytree-algorithm">BinaryTree Algorithm</h2>
+<ul>
+<li>struct BinaryTree<pre class="hljs"><code><div><span class="hljs-comment">// Definition for a binary tree node.</span>
+<span class="hljs-class"><span class="hljs-keyword">struct</span> <span class="hljs-title">TreeNode</span>
+{</span>
+    <span class="hljs-keyword">int</span> val;
+    TreeNode *left;
+    TreeNode *right;
+    TreeNode() : val(<span class="hljs-number">0</span>), left(<span class="hljs-literal">nullptr</span>), right(<span class="hljs-literal">nullptr</span>) {}
+    TreeNode(<span class="hljs-keyword">int</span> x) : val(x), left(<span class="hljs-literal">nullptr</span>), right(<span class="hljs-literal">nullptr</span>) {}
+    TreeNode(<span class="hljs-keyword">int</span> x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+};
+</div></code></pre>
+</li>
+<li>BST特点：
+<ul>
+<li>左子树所有节点小于(或等于)根节点</li>
+<li>右子树所有节点大于(或等于)根节点</li>
+<li>可用中序遍历进行排序</li>
+</ul>
+</li>
+</ul>
+<hr>
+<h2 id="%F0%9F%93%91-index">📑 index</h2>
+<ul>
+<li>二叉树遍历
+<ul>
+<li><a href="#bt">1. [代码框架] binary-tree(相关题型#94，二叉树中序遍历)</a></li>
+<li><a href="#bfs">2. [代码框架] BFS</a></li>
+<li><a href="#mdobt">3. maximum-depth-of-binary-tree(#104)</a></li>
+<li><a href="#bbt">4. balanced-binary-tree(#110)</a></li>
+<li><a href="#btnps">5. binary-tree-maximum-path-sum(#124)</a></li>
+<li><a href="#lcaoabt">6. lowest-common-ancestor-of-a-binary-tree(#236)</a></li>
+</ul>
+</li>
+<li>BFS 层次应用
+<ul>
+<li><a href="#btlot">7. binary-tree-level-order-traversal(#102)[与3类似]</a></li>
+<li><a href="#btlotii">8. binary-tree-level-order-traversal-ii(#107)[与7类似]</a></li>
+<li><a href="#btzlot">9. binary-tree-zigzag-level-order-traversal(#103)[与8类似]</a></li>
+</ul>
+</li>
+<li>二叉搜索树应用
+<ul>
+<li><a href="#vbst">10. validate-binary-search-tree(#98)</a></li>
+<li><a href="#iiabst">11. insert-into-a-binary-search-tree(#701)</a></li>
+<li><a href="#dniab">12. delete-node-in-a-bst(#450，注意体会与T11区别)</a></li>
+</ul>
+</li>
+</ul>
+<hr>
+<hr>
+<div id="bt" onclick="window.location.hash">
+<h4 id="1-%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6-binary-tree%E7%9B%B8%E5%85%B3%E9%A2%98%E5%9E%8B94%E4%BA%8C%E5%8F%89%E6%A0%91%E4%B8%AD%E5%BA%8F%E9%81%8D%E5%8E%86">1. [代码框架] binary-tree(相关题型#94，二叉树中序遍历)</h4>
+<ol>
+<li>三种递归遍历
+Refer by <a href="https://blog.csdn.net/u012102306/article/details/52841163">更简单的非递归遍历二叉树的方法</a><pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">order</span><span class="hljs-params">(TreeNode *root, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;path)</span>
+</span>{
+    <span class="hljs-keyword">if</span>(root != <span class="hljs-literal">NULL</span>)
+    {
+        <span class="hljs-comment">// preorderTraversal</span>
+        path.push_back(root-&gt;val);
+        order(root-&gt;left, path);
+        order(root-&gt;right, path);
+        <span class="hljs-comment">// inorderTraversal</span>
+        order(root-&gt;left, path);
+        path.push_back(root-&gt;val);
+        order(root-&gt;right, path);
+        <span class="hljs-comment">// postorderTraversal</span>
+        order(root-&gt;left, path);
+        order(root-&gt;right, path);
+        path.push_back(root-&gt;val);
+    }
+}
+</div></code></pre>
+</li>
+<li><strong>更简单的非递归遍历二叉树</strong></li>
+</ol>
+<ul>
+<li>有重合元素的<strong>局部有序</strong>一定能导致<strong>整体有序</strong></li>
+<li>将栈顶元素取出，使以此元素为“根”结点的局部有序入栈，但若此前已通过该结点将其局部入栈，则直接出栈输出即可。<pre class="hljs"><code><div><span class="hljs-comment">// 非递归遍历</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">orderTraversal</span><span class="hljs-params">(TreeNode *root, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;path)</span>
+</span>{
+    <span class="hljs-built_in">stack</span>&lt; pair&lt;TreeNode *, <span class="hljs-keyword">bool</span>&gt; &gt; s;
+    <span class="hljs-comment">// 注意： make_pair不能使用尖括号"&lt;&gt;"</span>
+    s.push(make_pair(root, <span class="hljs-literal">false</span>));
+    <span class="hljs-keyword">bool</span> visited;
+    <span class="hljs-keyword">while</span>(!s.empty())
+    {
+        root = s.top().first;
+        visited = s.top().second;
+        s.pop();
+        <span class="hljs-comment">// 二遍复习忘记点：注意： 不要忘记root为空的处理</span>
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">NULL</span>)
+            <span class="hljs-keyword">continue</span>;
+        <span class="hljs-comment">// 若此前已通过该结点将其局部入栈，则直接出栈输出即可</span>
+        <span class="hljs-keyword">if</span>(visited)
+        {
+            path.push_back(root-&gt;val);
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            <span class="hljs-comment">// 非递归前序遍历</span>
+            s.push(make_pair(root-&gt;right, <span class="hljs-literal">false</span>));
+            s.push(make_pair(root-&gt;left, <span class="hljs-literal">false</span>));
+            s.push(make_pair(root, <span class="hljs-literal">true</span>));    <span class="hljs-comment">// 只剩下一个元素，因此从stack拿出来即可</span>
+            <span class="hljs-comment">// 非递归中序遍历</span>
+            s.push(make_pair(root-&gt;right, <span class="hljs-literal">false</span>));
+            s.push(make_pair(root, <span class="hljs-literal">true</span>));
+            s.push(make_pair(root-&gt;left, <span class="hljs-literal">false</span>));
+            <span class="hljs-comment">// 非递归后序遍历</span>
+            s.push(make_pair(root, <span class="hljs-literal">true</span>));
+            s.push(make_pair(root-&gt;right, <span class="hljs-literal">false</span>));
+            s.push(make_pair(root-&gt;left, <span class="hljs-literal">false</span>));
+        }
+    }
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// 非递归前序遍历简化</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">preorderTraversal</span><span class="hljs-params">(TreeNode *root, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;path)</span>
+</span>{
+    <span class="hljs-built_in">stack</span>&lt;TreeNode *&gt; s;
+    s.push(root);
+    <span class="hljs-keyword">while</span>(!s.empty())
+    {
+        root = s.top();
+        s.pop();
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">NULL</span>)
+        {
+            <span class="hljs-keyword">continue</span>;
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            path.push_back(root-&gt;val);
+            s.push(root-&gt;right);
+            s.push(root-&gt;left);
+        }
+    }
+}
+</div></code></pre>
+</li>
+</ul>
+<ol>
+<li>教科书上的非递归遍历<pre class="hljs"><code><div><span class="hljs-comment">//非递归前序遍历</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">preorderTraversal</span><span class="hljs-params">(TreeNode *root, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;path)</span>
+</span>{
+    <span class="hljs-built_in">stack</span>&lt;TreeNode *&gt; s;
+    TreeNode *p = root;
+    <span class="hljs-keyword">while</span>(p != <span class="hljs-literal">NULL</span> || !s.empty())
+    {
+        <span class="hljs-comment">// 沿左子树一直往下搜索，直至出现没有左子树的结点</span>
+        <span class="hljs-keyword">while</span>(p != <span class="hljs-literal">NULL</span>)
+        {
+            path.push_back(p-&gt;val);
+            s.push(p);
+            p = p-&gt;left;
+        }
+        <span class="hljs-keyword">if</span>(!s.empty())
+        {
+            p = s.top();
+            s.pop();
+            p = p-&gt;right;
+        }
+    }
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">//非递归中序遍历</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">inorderTraversal</span><span class="hljs-params">(TreeNode *root, <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; &amp;path)</span>
+</span>{
+    <span class="hljs-built_in">stack</span>&lt;TreeNode *&gt; s;
+    TreeNode *p = root;
+    <span class="hljs-keyword">while</span>(p != <span class="hljs-literal">NULL</span> || !s.empty())
+    {
+        <span class="hljs-keyword">while</span>(p != <span class="hljs-literal">NULL</span>)
+        {
+            s.push(p);
+            p = p-&gt;left;
+        }
+        <span class="hljs-keyword">if</span>(!s.empty())
+        {
+            p = s.top();
+            path.push_back(p-&gt;val);
+            s.pop();
+            p = p-&gt;right;
+        }
+    }
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-comment">// 非递归后序遍历</span>
+<span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">posOrderUnRecur</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) {
+        <span class="hljs-keyword">return</span>;
+    }
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;TreeNode*&gt; s1, s2;
+    s1.push(root);
+    <span class="hljs-keyword">while</span> (!s1.empty()) {
+        TreeNode* root = s1.top();
+        s2.push(root);
+        s1.pop();
+        <span class="hljs-keyword">if</span> (root-&gt;left != <span class="hljs-literal">nullptr</span>) {
+            s1.push(root-&gt;left);
+        }
+        <span class="hljs-keyword">if</span> (root-&gt;right != <span class="hljs-literal">nullptr</span>) {
+            s1.push(root-&gt;right);
+        }
+    }
+    <span class="hljs-keyword">while</span> (!s2.empty()) {
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">cout</span> &lt;&lt; s2.top()-&gt;value &lt;&lt; <span class="hljs-string">","</span>;
+        s2.pop();
+    }
+}
+</div></code></pre>
+</li>
+</ol>
+<hr>
+<div id="bfs" onclick="window.location.hash">
+<h4 id="2-%E4%BB%A3%E7%A0%81%E6%A1%86%E6%9E%B6-bfs">2. [代码框架] BFS</h4>
+<ul>
+<li>
+<p>队列 q 就不说了，BFS 的核心数据结构；</p>
+</li>
+<li>
+<p>cur.adj() 泛指 cur 相邻的节点，比如说二维数组中，cur 上下左右四面的位置就是相邻节点；</p>
+</li>
+<li>
+<p>visited 的主要作用是防止走回头路，大部分时候都是必须的，但是像一般的二叉树结构，没有子节点到父节点的指针，不会走回头路就不需要 visited。</p>
+<pre class="hljs"><code><div><span class="hljs-comment">// 计算从起点 start 到终点 target 的最近距离</span>
+<span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">BFS</span><span class="hljs-params">(TreeNode start, TreeNode target)</span> 
+</span>{
+    Queue&lt;TreeNode&gt; q; <span class="hljs-comment">// 核心数据结构</span>
+    Set&lt;TreeNode&gt; visited; <span class="hljs-comment">// 避免走回头路</span>
+
+    q.offer(start); <span class="hljs-comment">// 将起点加入队列</span>
+    visited.add(start);
+    <span class="hljs-keyword">int</span> step = <span class="hljs-number">0</span>; <span class="hljs-comment">// 记录扩散的步数</span>
+
+    <span class="hljs-keyword">while</span> (q <span class="hljs-keyword">not</span> empty) {
+        <span class="hljs-keyword">int</span> sz = q.size();
+        <span class="hljs-comment">/* 将当前队列中的所有节点向四周扩散 */</span>
+        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; sz; i++) {
+            TreeNode cur = q.poll();
+            <span class="hljs-comment">/* 划重点：这里判断是否到达终点 */</span>
+            <span class="hljs-keyword">if</span> (cur is target)
+                <span class="hljs-keyword">return</span> step;
+            <span class="hljs-comment">/* 将 cur 的相邻节点加入队列 */</span>
+            <span class="hljs-keyword">for</span> (TreeNode x : cur.adj())
+                <span class="hljs-keyword">if</span> (x <span class="hljs-keyword">not</span> in visited) {
+                    q.offer(x);
+                    visited.add(x);
+                }
+        }
+        <span class="hljs-comment">/* 划重点：更新步数在这里 */</span>
+        step++;
+    }
+}
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="mdobt" onclick="window.location.hash">
+<h4 id="3-maximum-depth-of-binary-tree104">3. maximum-depth-of-binary-tree(#104)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/maximum-depth-of-binary-tree/" title="二叉树的最大深度">leetcode</a></p>
+<blockquote>
+<p>给定一个二叉树，找出其最大深度</p>
+</blockquote>
+<ul>
+<li><strong>递归方式</strong>
+<ul>
+<li>三个条件：递归定义，递归出口，递归拆解<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-comment">// recursive function</span>
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>+<span class="hljs-built_in">std</span>::max(maxDepth(root-&gt;left),maxDepth(root-&gt;right));
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li><strong>BFS</strong>：使用队列<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>) <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">deque</span>&lt;TreeNode*&gt; q;
+        q.push_back(root);
+        <span class="hljs-keyword">int</span> deep = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">while</span>(!q.empty())
+        {
+            deep ++;
+            <span class="hljs-keyword">int</span> num = q.size();
+            <span class="hljs-comment">// 注意必须用num赋值，因为后面会对q.size()进行操作</span>
+            <span class="hljs-comment">// 不可用 for(int i = 0; i&lt;q.size();i++)</span>
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">0</span>; i &lt; num; i++)
+            {
+                TreeNode* p = q.front();
+                q.pop_front();
+                <span class="hljs-keyword">if</span>(p-&gt;left) q.push_back(p-&gt;left);
+                <span class="hljs-keyword">if</span>(p-&gt;right) q.push_back(p-&gt;right);
+            }
+        }
+        <span class="hljs-keyword">return</span> deep;
+    }
+};
+</div></code></pre>
+</li>
+<li>DFS：用栈的循环版
+<img src=".readme/dfs.png" alt="alt text" title="dfs"><pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxDepth</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-comment">// DFS </span>
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>) {<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;}
+        <span class="hljs-keyword">int</span> curHeight = <span class="hljs-number">0</span>;
+        <span class="hljs-keyword">int</span> maxHeight = <span class="hljs-number">0</span>;
+        findMaxHeight(root, curHeight,maxHeight); 
+        <span class="hljs-keyword">return</span> maxHeight;
+    }
+    
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">findMaxHeight</span><span class="hljs-params">(TreeNode* _root, <span class="hljs-keyword">int</span>&amp; _curHeight, <span class="hljs-keyword">int</span>&amp; _maxHeight)</span>
+    </span>{
+        _curHeight += <span class="hljs-number">1</span>;
+        <span class="hljs-keyword">if</span> (_root -&gt; left != <span class="hljs-literal">nullptr</span> || _root -&gt; right != <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">if</span>(_root -&gt; left != <span class="hljs-literal">nullptr</span>)
+            {
+                findMaxHeight(_root -&gt; left, _curHeight, _maxHeight);
+                _curHeight -= <span class="hljs-number">1</span>;
+            }
+            <span class="hljs-comment">// 注意：不要使用else if</span>
+            <span class="hljs-keyword">if</span>(_root -&gt; right != <span class="hljs-literal">nullptr</span>)
+            {
+                findMaxHeight(_root -&gt; right, _curHeight, _maxHeight);
+                _curHeight -= <span class="hljs-number">1</span>;
+            }
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            _maxHeight = <span class="hljs-built_in">std</span>::max(_curHeight,_maxHeight);
+        }
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="bbt" onclick="window.location.hash">
+<h4 id="4-balanced-binary-tree110">4. balanced-binary-tree(#110)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/balanced-binary-tree/" title="高度平衡的二叉树">leetcode</a></p>
+<blockquote>
+<p>高度平衡二叉树： 每个节点左右子树的高度差不超过1</p>
+</blockquote>
+<ul>
+<li>思路:<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isBalanced</span><span class="hljs-params">(TreeNode* root)</span> 
+    </span>{
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-built_in">std</span>::<span class="hljs-built_in">abs</span>(heightTree(root-&gt;left)-heightTree(root-&gt;right))&lt;<span class="hljs-number">2</span>
+            &amp;&amp; isBalanced(root-&gt;left) &amp;&amp; isBalanced(root-&gt;right);
+    }
+    
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">heightTree</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-number">1</span>+<span class="hljs-built_in">std</span>::max(heightTree(root-&gt;left),heightTree(root-&gt;right));
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="btnps" onclick="window.location.hash">
+<h4 id="5-binary-tree-maximum-path-sum124">5. binary-tree-maximum-path-sum(#124)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/binary-tree-maximum-path-sum/" title="二叉树中的最大路径和">leetcode</a></p>
+<blockquote>
+<p>给定一个非空二叉树，返回其最大路径和</p>
+</blockquote>
+<ul>
+<li>思路：理解如何递归很关键<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">maxPathSum</span><span class="hljs-params">(TreeNode* root)</span> 
+    </span>{
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+        dfs(root);
+        <span class="hljs-keyword">return</span> maxValue_;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
+        }
+        <span class="hljs-keyword">int</span> leftMax = <span class="hljs-built_in">std</span>::max(<span class="hljs-number">0</span>,dfs(root-&gt;left));
+        <span class="hljs-keyword">int</span> rightMax = <span class="hljs-built_in">std</span>::max(<span class="hljs-number">0</span>,dfs(root-&gt;right));
+        maxValue_ = <span class="hljs-built_in">std</span>::max(maxValue_,root-&gt;val+leftMax+rightMax);
+        <span class="hljs-keyword">return</span> root-&gt;val + <span class="hljs-built_in">std</span>::max(leftMax,rightMax);
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-keyword">const</span> <span class="hljs-keyword">int</span> kMinInt = INT_MIN;
+    <span class="hljs-keyword">int</span> maxValue_ = kMinInt;
+};
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="lcaoabt" onclick="window.location.hash">
+<h4 id="6-lowest-common-ancestor-of-a-binary-tree236">6. lowest-common-ancestor-of-a-binary-tree(#236)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/" title="二叉树的最近公共祖先">leetcode</a></p>
+<blockquote>
+<p>给定一个二叉树, 找到该树中两个指定节点的最近公共祖先</p>
+</blockquote>
+<ul>
+<li>
+<p><strong>ADT</strong>
+left == null &amp;&amp; right == null return null
+left == null &amp;&amp; right ！= null return right
+right == null &amp;&amp; left ！= null return left
+right ！= null &amp;&amp; left ！=null return root</p>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">TreeNode* <span class="hljs-title">lowestCommonAncestor</span><span class="hljs-params">(TreeNode* root, TreeNode* p, TreeNode* q)</span>
+    </span>{
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">NULL</span>)
+        {
+            <span class="hljs-keyword">return</span> root;
+        }
+        <span class="hljs-keyword">if</span>(root-&gt;val == p-&gt;val || root-&gt;val == q-&gt;val)
+        {
+            <span class="hljs-keyword">return</span> root;
+        }
+        TreeNode* left_son = lowestCommonAncestor(root-&gt;left,p,q);
+        TreeNode* right_son = lowestCommonAncestor(root-&gt;right,p,q);
+        <span class="hljs-keyword">if</span>(left_son == <span class="hljs-literal">NULL</span> &amp;&amp; right_son == <span class="hljs-literal">NULL</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;
+        }
+        <span class="hljs-keyword">if</span>(left_son != <span class="hljs-literal">NULL</span> &amp;&amp; right_son == <span class="hljs-literal">NULL</span>)
+        {
+            <span class="hljs-keyword">return</span> left_son;
+        }
+        <span class="hljs-keyword">if</span>(left_son == <span class="hljs-literal">NULL</span> &amp;&amp; right_son != <span class="hljs-literal">NULL</span>)
+        {
+            <span class="hljs-keyword">return</span> right_son;
+        }
+        <span class="hljs-keyword">if</span>(left_son != <span class="hljs-literal">NULL</span> &amp;&amp; right_son != <span class="hljs-literal">NULL</span>)
+        {
+            <span class="hljs-keyword">return</span> root;
+        }
+        <span class="hljs-keyword">return</span> root;
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="btlot" onclick="window.location.hash">
+<h4 id="7-binary-tree-level-order-traversal102">7. binary-tree-level-order-traversal(#102)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal/submissions/" title="二叉树的层序遍历">leetcode</a></p>
+<blockquote>
+<p>给你一个二叉树，请你返回其按层序遍历得到的节点值
+即逐层地，从左到右访问所有节点</p>
+</blockquote>
+<ul>
+<li><strong>注意c++中queue()[push,pop]和deque()[push_back,pop_front]的使用</strong></li>
+<li>DFS 与 BFS区别
+<ol>
+<li>DFS遍历的代码比BFS简洁太多了！</li>
+<li>因为递归的方式隐含地使用了系统的栈，我们不需要自己维护一个数据结构。</li>
+<li>如果只是简单地将二叉树遍历一遍，那么DFS显然是更方便的选择</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">dfs</span><span class="hljs-params">(TreeNode root)</span>
+</span>{
+    <span class="hljs-keyword">if</span> (root == <span class="hljs-keyword">null</span>)
+    {
+        <span class="hljs-keyword">return</span>;
+    }
+    dfs(root.left);
+    dfs(root.right);
+}
+</div></code></pre>
+<pre class="hljs"><code><div><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bfs</span><span class="hljs-params">(TreeNode root)</span>
+</span>{
+    <span class="hljs-comment">// 注意c++为deque</span>
+    Queue&lt;TreeNode&gt; queue = <span class="hljs-keyword">new</span> ArrayDeque&lt;&gt;();
+    queue.add(root);
+    <span class="hljs-keyword">while</span> (!queue.isEmpty())
+    {
+        TreeNode node = queue.poll();
+        <span class="hljs-comment">// Java 的 pop 写作 poll()</span>
+        <span class="hljs-keyword">if</span> (node.left != <span class="hljs-keyword">null</span>)
+        {
+            queue.add(node.left);
+        }
+        <span class="hljs-keyword">if</span> (node.right != <span class="hljs-keyword">null</span>)
+        {
+            queue.add(node.right);
+        }
+    }
+}
+</div></code></pre>
+</li>
+<li>BFS cpp代码<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; <span class="hljs-title">levelOrder</span><span class="hljs-params">(TreeNode* root)</span> 
+    </span>{
+        <span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; level_lists;
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">NULL</span>)
+        {
+            <span class="hljs-keyword">return</span> level_lists;
+        }
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">queue</span>&lt;TreeNode*&gt; q;
+        q.push(root);
+        <span class="hljs-keyword">while</span>(!q.empty())
+        {
+            <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt; level_list;
+            <span class="hljs-keyword">int</span> num = q.size();
+            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;num;i++)
+            {
+                <span class="hljs-comment">// 二遍重做：注意queue为front</span>
+                TreeNode* cur = q.front();
+                level_list.push_back(cur-&gt;val);
+                q.pop();
+                <span class="hljs-comment">// 注意每一层的处理</span>
+                <span class="hljs-keyword">if</span>(cur-&gt;left != <span class="hljs-literal">NULL</span>) q.push(cur-&gt;left);
+                <span class="hljs-keyword">if</span>(cur-&gt;right != <span class="hljs-literal">NULL</span>) q.push(cur-&gt;right);
+            }
+            level_lists.push_back(level_list);
+        }
+        <span class="hljs-keyword">return</span> level_lists;
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="btlotii" onclick="window.location.hash">
+<h4 id="8-binary-tree-level-order-traversal-ii107">8. binary-tree-level-order-traversal-ii(#107)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/binary-tree-level-order-traversal-ii/" title="二叉树的层次遍历 II">leetcode</a></p>
+<blockquote>
+<p>给定一个二叉树，返回其节点值自底向上的层次遍历。
+即按从叶子节点所在层到根节点所在的层，逐层从左向右遍历</p>
+</blockquote>
+<ul>
+<li><strong>注意BFS做法:</strong>
+<ol>
+<li>与7类似,需要用std::list每次都往队头塞**</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">std</span>::<span class="hljs-built_in">list</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; level_lists;
+<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; level_vectors;
+level_vectors.assign(level_lists.begin(),level_lists.end());
+</div></code></pre>
+<ol start="2">
+<li>用std::reverse函数实现</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt; level_vectors;
+<span class="hljs-built_in">std</span>::reverse(level_vectors.begin(),level_vectors.end());
+</div></code></pre>
+</li>
+<li>本题还可用DFS实现(略)</li>
+</ul>
+<hr>
+<div id="btzlot" onclick="window.location.hash">
+<h4 id="9-binary-tree-zigzag-level-order-traversal103">9. binary-tree-zigzag-level-order-traversal(#103)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/binary-tree-zigzag-level-order-traversal/" title="二叉树的锯齿形层次遍历">leetcode</a></p>
+<blockquote>
+<p>给定一个二叉树，返回其节点值的锯齿形层次遍历。</p>
+</blockquote>
+<ul>
+<li><strong>注意BFS做法:</strong>
+<ol>
+<li>对应层判断一下奇偶</li>
+</ol>
+<pre class="hljs"><code><div> <span class="hljs-comment">// 注意与!levels%2区别</span>
+ <span class="hljs-comment">// 该段代码不能放入循环体内部</span>
+ <span class="hljs-keyword">if</span> (!(levels%<span class="hljs-number">2</span>))
+ {
+     <span class="hljs-built_in">std</span>::reverse(level_value.begin(),level_value.end());
+ }
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="vbst" onclick="window.location.hash">
+<h4 id="10-validate-binary-search-tree98">10. validate-binary-search-tree(#98)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/validate-binary-search-tree/" title="验证二叉搜索树">leetcode</a></p>
+<blockquote>
+<p>给定一个二叉树，判断其是否是一个有效的二叉搜索树</p>
+</blockquote>
+<ul>
+<li>思路一：<strong>利用Recursion方法</strong><pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValidBST</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-keyword">return</span> recursionBST(root,LONG_MAX, LONG_MIN);
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">recursionBST</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">long</span> max, <span class="hljs-keyword">long</span> min)</span>
+    </span>{
+        <span class="hljs-comment">// 递归的出口</span>
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+        <span class="hljs-comment">//递归的判断条件</span>
+        <span class="hljs-keyword">if</span>(root-&gt;val &gt;= max || root-&gt;val &lt;= min)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span> recursionBST(root-&gt;left, root-&gt;val, min) &amp;&amp; recursionBST(root-&gt;right, max, root-&gt;val);
+    }
+};
+</div></code></pre>
+</li>
+<li>思路二：中序遍历方式
+二叉搜索树一个明显的特点就是<strong>中序遍历以后是一个有序数组</strong>，通过这个对比判断是否二叉搜索树
+<ul>
+<li>递归版本<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValidBST</span><span class="hljs-params">(TreeNode* root)</span> 
+    </span>{
+        <span class="hljs-keyword">if</span> (root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+        inOrderTraversal(root);
+        <span class="hljs-keyword">int</span> inorder_num = inorder_lists_.size();
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i = <span class="hljs-number">1</span>; i&lt;inorder_num;i++)
+        {
+            <span class="hljs-keyword">if</span>(inorder_lists_[i<span class="hljs-number">-1</span>]&gt;=inorder_lists_[i])
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">inOrderTraversal</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-comment">// 注意recursion的出口</span>
+        <span class="hljs-keyword">if</span>(root != <span class="hljs-literal">nullptr</span>)
+        {
+            inOrderTraversal(root-&gt;left);
+            inorder_lists_.push_back(root-&gt;val);
+            inOrderTraversal(root-&gt;right);
+        }
+        
+    }
+
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int64_t</span>&gt; inorder_lists_;
+};
+</div></code></pre>
+</li>
+</ul>
+</li>
+<li>非递归版本 <strong>更简单的非递归遍历二叉树版本一致</strong><pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function"><span class="hljs-keyword">bool</span> <span class="hljs-title">isValidBST</span><span class="hljs-params">(TreeNode* root)</span> </span>{
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+        }
+        inOrderTravesal(root);
+        <span class="hljs-keyword">int</span> num = vector_paths_.size();
+        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>; i&lt;num<span class="hljs-number">-1</span>;i++)
+        {
+            <span class="hljs-keyword">if</span>(vector_paths_[i]&gt;=vector_paths_[i+<span class="hljs-number">1</span>])
+            {
+                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;
+            }
+        }
+        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;
+    }
+    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">inOrderTravesal</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        <span class="hljs-built_in">std</span>::<span class="hljs-built_in">stack</span>&lt;<span class="hljs-built_in">std</span>::pair&lt;TreeNode*,<span class="hljs-keyword">bool</span>&gt;&gt; s;
+        s.push(<span class="hljs-built_in">std</span>::make_pair(root,<span class="hljs-literal">false</span>));
+        <span class="hljs-keyword">bool</span> visited;
+        <span class="hljs-keyword">while</span>(!s.empty())
+        {
+            root = s.top().first;
+            visited = s.top().second;
+            s.pop();
+            <span class="hljs-keyword">if</span>(root==<span class="hljs-literal">nullptr</span>)
+            {
+                <span class="hljs-keyword">continue</span>;
+            }
+            <span class="hljs-comment">// 重点核心: 此前已通过该结点将其局部入栈，则直接出栈输出</span>
+            <span class="hljs-keyword">if</span>(visited)
+            {
+                vector_paths_.push_back(root-&gt;val);
+            }
+            <span class="hljs-keyword">else</span>
+            {
+                s.push(<span class="hljs-built_in">std</span>::make_pair(root-&gt;right,<span class="hljs-literal">false</span>));
+                s.push(<span class="hljs-built_in">std</span>::make_pair(root,<span class="hljs-literal">true</span>));
+                s.push(<span class="hljs-built_in">std</span>::make_pair(root-&gt;left,<span class="hljs-literal">false</span>));
+            }
+        }
+    }
+<span class="hljs-keyword">private</span>:
+    <span class="hljs-built_in">std</span>::<span class="hljs-built_in">vector</span>&lt;<span class="hljs-keyword">int64_t</span>&gt; vector_paths_;
+};
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="iiabst" onclick="window.location.hash">
+<h4 id="11-insert-into-a-binary-search-tree701">11. insert-into-a-binary-search-tree(#701)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/insert-into-a-binary-search-tree/" title="二叉搜索树中的插入操作">leetcode</a></p>
+<blockquote>
+<p>给定BST根节点和要插入的值，将值插入二叉搜索树
+返回插入后二叉搜索树的根节点，不插入存在的值。
+符合二叉搜索树即可，不需要维护子树高度差</p>
+</blockquote>
+<ul>
+<li>思路一：<strong>DFS Recursion</strong>
+1、若 root == null，则返回 TreeNode(val)。
+2、若 val &gt; root.val，插入到右子树
+3、若 val &lt; root.val，插入到左子树
+4、返回 root</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">TreeNode* <span class="hljs-title">insertIntoBST</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> val)</span> </span>{
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-comment">// 注意： 返回一个new TreeNode</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TreeNode(val);
+        }
+        <span class="hljs-keyword">if</span>(val &gt; root-&gt;val)
+        {
+            <span class="hljs-comment">// 注意：向右递归后返回结果</span>
+            root-&gt;right = insertIntoBST(root-&gt;right, val);
+        }
+        <span class="hljs-keyword">if</span>(val &lt; root-&gt;val)
+        {
+            root-&gt;left = insertIntoBST(root-&gt;left, val);
+        }
+        <span class="hljs-keyword">return</span> root;
+    }
+};
+</div></code></pre>
+<ul>
+<li>思路二：<strong>迭代非Recursion</strong>
+1、二叉搜索树，如果val小于等于当前节点，向左遍历；若大于当前节点，则向右遍历
+2、终止条件为下一个遍历节点为空，这个节点也就是需要插入节点的位置
+3、在开始需要保存一个root指针，用于当做返回结果<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">TreeNode* <span class="hljs-title">insertIntoBST</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> val)</span> 
+    </span>{
+        <span class="hljs-comment">// 重点1：一定赋予临时变量， 直接操作root只返回插入后的三个值</span>
+        TreeNode* res = root;
+        <span class="hljs-keyword">if</span>(root==<span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-comment">// 注意要new</span>
+            <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> TreeNode(val);
+        }
+        <span class="hljs-keyword">while</span>(root != <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">if</span>(val &lt; root-&gt;val)
+            {
+                <span class="hljs-keyword">if</span>(root-&gt;left ==<span class="hljs-literal">nullptr</span>)
+                {
+                    root-&gt;left = <span class="hljs-keyword">new</span> TreeNode(val);
+                    <span class="hljs-keyword">break</span>;
+                }
+                <span class="hljs-keyword">else</span>
+                {
+                    <span class="hljs-comment">//重点2：将下一节点赋予当前指针</span>
+                    root = root-&gt;left;
+                }
+            }
+            <span class="hljs-keyword">if</span>(val &gt; root-&gt;val)
+            {
+                <span class="hljs-keyword">if</span>(root-&gt;right ==<span class="hljs-literal">nullptr</span>)
+                {
+                    root-&gt;right = <span class="hljs-keyword">new</span> TreeNode(val);
+                    <span class="hljs-keyword">break</span>;
+                }
+                <span class="hljs-keyword">else</span>
+                {
+                    root = root-&gt;right;
+                }
+            }
+        }
+        <span class="hljs-keyword">return</span> res;
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+<hr>
+<div id="dniab" onclick="window.location.hash">
+<h4 id="12-delete-node-in-a-bst450">12. delete-node-in-a-bst(#450)</h4>
+<p>linkage: <a href="https://leetcode-cn.com/problems/delete-node-in-a-bst/" title="删除二叉搜索树中的节点">leetcode</a></p>
+<blockquote>
+<p>给定一个二叉搜索树的根节点root和一个值key，删除二叉搜索树中的key对应的节点
+返回根节点</p>
+</blockquote>
+<ul>
+<li>思路一：递归
+<ul>
+<li>方法：
+<ul>
+<li>删除节点分为两步， 1. 找到删除位置； 2. 分析不同情况</li>
+<li>画图分析可知：
+<ul>
+<li>
+<ol>
+<li>当删除节点在叶子节点，代码：</li>
+</ol>
+<pre class="hljs"><code><div>root = <span class="hljs-literal">nullptr</span>
+</div></code></pre>
+<img src=".readme/del_bst1.png" alt="" title="delete bst"></li>
+<li>
+<ol start="2">
+<li>当节点在后继successor上，找到其右子树对应的左节点,代码如下：</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-function">TreeNode* <span class="hljs-title">successorNode</span><span class="hljs-params">(TreeNode* root)</span>
+</span>{
+    root = root-&gt;right;
+    <span class="hljs-keyword">while</span>(root-&gt;left != <span class="hljs-literal">nullptr</span>)
+    {
+        root = root-&gt;left;
+    }
+    <span class="hljs-keyword">return</span> root;
+}
+</div></code></pre>
+<img src=".readme/del_bst2.png" alt="" title="delete bst"></li>
+<li>
+<ol start="3">
+<li>节点在前驱predecessor上，找到其左子树对应的右节点</li>
+</ol>
+<pre class="hljs"><code><div><span class="hljs-function">TreeNode* <span class="hljs-title">predecessorNode</span><span class="hljs-params">(TreeNode* root)</span>
+</span>{
+    root = root-&gt;left;
+    <span class="hljs-keyword">while</span>(root-&gt;right != <span class="hljs-literal">nullptr</span>)
+    {
+        root = root-&gt;right;
+    }
+    <span class="hljs-keyword">return</span> root;
+}
+</div></code></pre>
+<img src=".readme/del_bst3.png" alt="" title="delete bst"></li>
+</ul>
+</li>
+<li>最终利用递归，代码如下：</li>
+</ul>
+<pre class="hljs"><code><div><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> {</span>
+<span class="hljs-keyword">public</span>:
+    <span class="hljs-function">TreeNode* <span class="hljs-title">deleteNode</span><span class="hljs-params">(TreeNode* root, <span class="hljs-keyword">int</span> key)</span> 
+    </span>{
+        <span class="hljs-keyword">if</span>(root == <span class="hljs-literal">nullptr</span>)
+        {
+            <span class="hljs-keyword">return</span> <span class="hljs-literal">nullptr</span>;
+        }
+        <span class="hljs-comment">// 利用递归找到对应节点</span>
+        <span class="hljs-keyword">if</span>(key &lt; root-&gt;val)
+        {
+            <span class="hljs-comment">// 返回值起到连接指向</span>
+            root-&gt;left = deleteNode(root-&gt;left, key);
+        }
+        <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(key &gt; root-&gt;val)
+        {
+            root-&gt;right = deleteNode(root-&gt;right, key);
+        }
+        <span class="hljs-keyword">else</span>
+        {
+            <span class="hljs-comment">//找到key，分三种情况</span>
+            <span class="hljs-keyword">if</span>(root-&gt;left == <span class="hljs-literal">nullptr</span> &amp;&amp; root-&gt;right == <span class="hljs-literal">nullptr</span>)
+            {
+                root = <span class="hljs-literal">nullptr</span>;
+            }
+            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(root-&gt;right != <span class="hljs-literal">nullptr</span>)
+            {
+                <span class="hljs-comment">// 找后驱节点</span>
+                root-&gt;val = successorNode(root);
+                root-&gt;right = deleteNode(root-&gt;right,root-&gt;val);
+            }
+            <span class="hljs-keyword">else</span>
+            {
+                root-&gt;val = predecessorNode(root);
+                root-&gt;left = deleteNode(root-&gt;left,root-&gt;val);
+            }
+        }
+        <span class="hljs-keyword">return</span> root;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">successorNode</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        root = root-&gt;right;
+        <span class="hljs-keyword">while</span>(root-&gt;left != <span class="hljs-literal">nullptr</span>)
+        {
+            root = root-&gt;left;
+        }
+        <span class="hljs-keyword">return</span> root-&gt;val;
+    }
+
+    <span class="hljs-function"><span class="hljs-keyword">int</span> <span class="hljs-title">predecessorNode</span><span class="hljs-params">(TreeNode* root)</span>
+    </span>{
+        root = root-&gt;left;
+        <span class="hljs-keyword">while</span>(root-&gt;right != <span class="hljs-literal">nullptr</span>)
+        {
+            root = root-&gt;right;
+        }
+        <span class="hljs-keyword">return</span> root-&gt;val;
+    }
+};
+</div></code></pre>
+</li>
+</ul>
+</li>
+</ul>
+
+</body>
+</html>
