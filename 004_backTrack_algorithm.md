@@ -30,9 +30,13 @@
 
 ## 📑 index
 * <a href="#subsets">1. subSets(#78)</a>
-* <a href="#subsets-ii">2. subSets-ii(#90)</a>
+* <a href="#subsets-ii">2. subSets-ii(#90，有条件的回溯)</a>
 * <a href="#pp">3. ​​palindrome-partitioning(#131)[非dp做法,回溯]</a>
-* <a href="#ps">4. ​permutations​(#46)</a>
+* <a href="#ps">4. ​permutations​(#46，回溯算法的应用基础)</a>
+* <a href="#psii">5. ​permutations-ii​(#47,有条件的回溯)</a>
+* <a href="#cs">6. combination-sum​(#39，比较巧妙回溯)</a>
+
+
 
 
 
@@ -76,72 +80,30 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
 
 <div id="subsets-ii" onclick="window.location.hash">
 
-#### 2. subSets-ii(#90)
+#### 2. subSets-ii(#90，有条件的回溯)
 linkage: [leetcode](https://leetcode-cn.com/problems/subsets-ii/ "子集 II")
 > 给定一组**重复元素**的整数数组nums，返回所有可能的子集
 - 思路一：利用T1方法+利用stl库[sort+unique+erase]
-    ```cpp
-    class Solution {
-    public:
-        vector<vector<int>> subsetsWithDup(vector<int>& nums) 
-        {
-            vector<vector<int>> res;
-            vector<int> tmp;
-            // 对nums进行预处理操作
-            sort(nums.begin(), nums.end());
-            backtraceNums(nums, 0, res, tmp);
-            sort(res.begin(),res.end());
-            // unique 删除是相邻的重复元素，因此需要对数据进行排列
-            res.erase(unique(res.begin(), res.end()), res.end());
-            return res;
-        }
+```cpp
+// 对nums进行预处理操作
+sort(nums.begin(), nums.end());
+backtraceNums(nums, 0, res, tmp);
+sort(res.begin(),res.end());
+// unique 删除是相邻的重复元素，因此需要对数据进行排列
+res.erase(unique(res.begin(), res.end()), res.end());
+```
 
-        void backtraceNums(vector<int>& nums, int index, vector<vector<int>>& res, vector<int> &tmp)
-        {
-            sort(tmp.begin(),tmp.end());
-            res.push_back(tmp);
-            for(int i = index; i < nums.size(); i++)
-            {
-                tmp.push_back(nums[i]);
-                backtraceNums(nums, i+1, res, tmp);
-                tmp.pop_back();
-            }
-        }
-    };
-    ```
 - 思路二：回溯 + 剪枝操作
   - [Refer linkage](https://leetcode-cn.com/problems/subsets/solution/c-zong-jie-liao-hui-su-wen-ti-lei-xing-dai-ni-gao-/)
-    ```cpp
-    class Solution {
-    public:
-        vector<vector<int>> subsetsWithDup(vector<int>& nums) 
-        {
-            vector<vector<int>> res;
-            vector<int> tmp;
-            // 对nums进行预处理操作
-            sort(nums.begin(), nums.end());
-            backtraceNums(nums, 0, res, tmp);
-            return res;
-        }
-
-        void backtraceNums(vector<int>& nums, int index, vector<vector<int>>& res, vector<int> &tmp)
-        {
-            sort(tmp.begin(),tmp.end());
-            res.push_back(tmp);
-            for(int i = index; i < nums.size(); i++)
-            {
-                // 剪枝操作处理: 重复元素不进行push(前提需要对数据进行预处理)
-                if(i > index && nums[i] == nums[i-1])
-                {
-                    continue;
-                }
-                tmp.push_back(nums[i]);
-                backtraceNums(nums, i+1, res, tmp);
-                tmp.pop_back();
-            }
-        }
-    };
-    ```
+```cpp
+// 1. 数据预处理
+sort(sort(nums.begin(), nums.end());)
+// 2. 剪枝操作
+if(i > index && nums[i] == nums[i-1])
+{
+    continue;
+}
+```
 ---
 
 <div id="pp" onclick="window.location.hash">
@@ -212,7 +174,127 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-partitioning/ "�
 
 <div id="ps" onclick="window.location.hash">
 
-#### 4. ​permutations​(#46)
+#### 4. ​permutations​(#46，回溯算法的应用基础)</a>
 linkage: [leetcode](https://leetcode-cn.com/problems/permutations/ "全排列")
 > 给定一个**没有重复**数字的序列，返回所有可能的全排列
-- 思路一：
+- 思路一：回溯
+  - 注意：在循环体内选择和撤销选择
+    ```cpp
+    class Solution {
+    public:
+        vector<vector<int>> permute(vector<int>& nums) 
+        {
+            vector<vector<int>> res;
+            if(nums.size() == 0)
+            {
+                return res;
+            }
+            vector<int> tmp;
+            vector<bool> visited(nums.size(),false);
+            backtraceNums(nums, 0, visited, res, tmp);
+            return res;
+        }
+
+        void backtraceNums(vector<int>& nums,
+                        int index,
+                        vector<bool>& visited,
+                        vector<vector<int>>& res,
+                        vector<int> tmp)
+        {
+            if(index == nums.size())
+            {
+                res.push_back(tmp);
+                return;
+            }
+            // 注意：全排列，从第一个元素开始
+            for(int i = 0; i < nums.size(); i++)
+            {
+                if(!visited[i])
+                {
+                    tmp.push_back(nums[i]);
+                    visited[i] = true;
+                    backtraceNums(nums, index+1, visited, res, tmp);
+                    tmp.pop_back();
+                    visited[i] = false;
+                }
+            }
+        }
+    };
+    ```
+---
+
+<div id="psii" onclick="window.location.hash">
+
+#### 5. ​permutations-ii​(#47,有条件的回溯)
+linkage: [leetcode](https://leetcode-cn.com/problems/permutations-ii/ "全排列 II")
+> 给定一个**包含重复**数字的序列，返回所有不重复的全排列
+- 思路一：利用stl库+T4回溯
+```cpp
+sort(nums.begin(), nums.end());
+sort(res.begin(), res.end());
+res.erase(unique(res.begin(), res.end()), res.end());
+```
+- 思路二：T4+剪枝处理
+```cpp
+// 1. 数据预处理
+sort(sort(nums.begin(), nums.end());)
+// 2. 剪枝操作
+if (i > 0 && nums[i] == nums[i - 1] && !visited[i - 1])
+{
+    continue;
+}
+```
+---
+
+<div id="cs" onclick="window.location.hash">
+
+#### 6. combination-sum​(#39，比较巧妙回溯)
+linkage: [leetcode](https://leetcode-cn.com/problems/combination-sum/ "组合总和")
+> 给定一组**不重复元素**的数组candidates和目标值target，返回和为target的组合
+- 思路一：回溯
+  - 注意
+    - 回溯的条件
+    - 回溯的内容
+    - 为什么i从start开始，不从0开始
+    - 为什么回溯时i不为i+1等
+    ```cpp
+    class Solution {
+    public:
+        vector<vector<int>> combinationSum(vector<int>& candidates, int target)
+        {
+        vector<vector<int>> res;
+        if(candidates.size() == 0)
+        {
+            return res;
+        }
+        vector<int> tmp;
+        sort(candidates.begin(), candidates.end());
+        backtraceNums(candidates, target, target, 0, res, tmp);
+        return res;
+        }
+
+        void backtraceNums(const vector<int>& candidates, const int target, int remain, int index, vector<vector<int>>& res, vector<int>& tmp)
+        {
+            if(remain == 0)
+            {
+                res.push_back(tmp);
+            }
+            if(remain < 0)
+            {
+                return;
+            }
+            else
+            {
+                for(int i = index; i < candidates.size();i++)
+                {
+                    tmp.push_back(candidates[i]);
+                    // 注意回溯的写法
+                    backtraceNums(candidates, target, remain - candidates[i], i, res, tmp);
+                    tmp.pop_back();
+                }
+            }
+        }
+    };
+    ```
+---
+
