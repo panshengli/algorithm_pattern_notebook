@@ -223,7 +223,32 @@
 linkage: [leetcode](https://leetcode-cn.com/problems/minimum-depth-of-binary-tree/ "二叉树的最小深度")
 > 给定一个二叉树，找出其最小深度
 > 最小深度：根节点到最近叶子最短路径的节点数量
-- 思路一：递归版本
+- 思路一：dfs
+    ```cpp
+    class Solution {
+    public:
+        int minDepth(TreeNode* root)
+        {
+            if(root == nullptr)
+            {
+                return 0;
+            }
+            else if(root->left == nullptr)
+            {
+                return minDepth(root->right) + 1;
+            }
+            else if(root->right == nullptr)
+            {
+                return minDepth(root->left) + 1;
+            }
+            else
+            {
+                return min(minDepth(root->left), minDepth(root->right)) + 1;
+            }
+        }
+    };
+    ```
+- 思路二：bfs版本
     ```cpp
     class Solution {
     public:
@@ -233,21 +258,27 @@ linkage: [leetcode](https://leetcode-cn.com/problems/minimum-depth-of-binary-tre
             {
                 return 0;
             }
-            if(root->left == nullptr && root->right == nullptr)
+            queue<pair<TreeNode*,int>> q;
+            int depth = 1;
+            q.push(make_pair(root,1));
+            while(!q.empty())
             {
-                return 1;
+                TreeNode *node = q.front().first;
+                depth = q.front().second;
+                q.pop();
+                if (node->left == nullptr && node->right == nullptr) {
+                    return depth;
+                }
+                if(node->left != nullptr)
+                {
+                    q.push(make_pair(node->left, depth + 1));
+                }
+                if(node->right != nullptr)
+                {
+                    q.push(make_pair(node->right, depth + 1));
+                }
             }
-            int min_level= INT_MAX;
-            if(root->left != nullptr)
-            {
-                min_level = min(minDepth(root->left),min_level);
-            }
-            if(root->right != nullptr)
-            {
-                min_level = min(minDepth(root->right),min_level);
-            }
-            return 1 + min_level;
-            
+            return depth;
         }
     };
     ```
