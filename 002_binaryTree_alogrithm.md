@@ -333,45 +333,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
         }
     };
     ```
-- 思路三：DFS：用栈的循环版
-![alt text][image1]
-    ```cpp
-    class Solution {
-    public:
-        int maxDepth(TreeNode* root)
-        {
-            // DFS 
-            if (root == nullptr) {return 0;}
-            int curHeight = 0;
-            int maxHeight = 0;
-            findMaxHeight(root, curHeight,maxHeight); 
-            return maxHeight;
-        }
-
-        void findMaxHeight(TreeNode* _root, int& _curHeight, int& _maxHeight)
-        {
-            _curHeight += 1;
-            if (_root -> left != nullptr || _root -> right != nullptr)
-            {
-                if(_root -> left != nullptr)
-                {
-                    findMaxHeight(_root -> left, _curHeight, _maxHeight);
-                    _curHeight -= 1;
-                }
-                // 注意：不要使用else if
-                if(_root -> right != nullptr)
-                {
-                    findMaxHeight(_root -> right, _curHeight, _maxHeight);
-                    _curHeight -= 1;
-                }
-            }
-            else
-            {
-                _maxHeight = std::max(_curHeight,_maxHeight);
-            }
-        }
-    };
-    ```
 ---
 
 <div id="bbt" onclick="window.location.hash">
@@ -504,39 +465,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
     - 1. DFS遍历的代码比BFS简洁
     - 2. 因为递归的方式隐含地使用了系统的栈，我们不需要自己维护一个数据结构
     - 3. 如果只是简单地将二叉树遍历一遍，那么DFS显然是更方便的选择
-      ```java
-      void dfs(TreeNode root)
-      {
-          if (root == null)
-          {
-              return;
-          }
-          dfs(root.left);
-          dfs(root.right);
-      }
-      ```
-    ```java
-    void bfs(TreeNode root)
-    {
-        // 注意c++为deque
-        Queue<TreeNode> queue = new ArrayDeque<>();
-        queue.add(root);
-        while (!queue.isEmpty())
-        {
-            TreeNode node = queue.poll();
-            // Java 的 pop 写作 poll()
-            if (node.left != null)
-            {
-                queue.add(node.left);
-            }
-            if (node.right != null)
-            {
-                queue.add(node.right);
-            }
-        }
-    }
-    ```
-- BFS cpp代码
+- 思路一：BFS cpp代码
     ```cpp
     class Solution {
     public:
