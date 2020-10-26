@@ -60,7 +60,7 @@
     ```cpp
     void order(TreeNode *root, vector<int> &path)
     {
-        if(root != NULL)
+        if(root != nullptr)
         {
             // preorderTraversal
             path.push_back(root->val);
@@ -94,7 +94,7 @@
             visited = s.top().second;
             s.pop();
             // 二遍复习忘记点：注意： 不要忘记root为空的处理
-            if(root == NULL)
+            if(root == nullptr)
                 continue;
             // 若此前已通过该结点将其局部入栈，则直接出栈输出即可
             if(visited)
@@ -129,89 +129,17 @@
         {
             root = s.top();
             s.pop();
-            if(root == NULL)
+            if(root == nullptr)
             {
                 continue;
             }
             else
             {
+                // 只剩下一个元素，因此从stack拿出来即可
                 path.push_back(root->val);
                 s.push(root->right);
                 s.push(root->left);
             }
-        }
-    }
-    ```
-1. 教科书上的非递归遍历
-    ```cpp
-    //非递归前序遍历
-    void preorderTraversal(TreeNode *root, vector<int> &path)
-    {
-        stack<TreeNode *> s;
-        TreeNode *p = root;
-        while(p != NULL || !s.empty())
-        {
-            // 沿左子树一直往下搜索，直至出现没有左子树的结点
-            while(p != NULL)
-            {
-                path.push_back(p->val);
-                s.push(p);
-                p = p->left;
-            }
-            if(!s.empty())
-            {
-                p = s.top();
-                s.pop();
-                p = p->right;
-            }
-        }
-    }
-    ```
-    ```cpp
-    //非递归中序遍历
-    void inorderTraversal(TreeNode *root, vector<int> &path)
-    {
-        stack<TreeNode *> s;
-        TreeNode *p = root;
-        while(p != NULL || !s.empty())
-        {
-            while(p != NULL)
-            {
-                s.push(p);
-                p = p->left;
-            }
-            if(!s.empty())
-            {
-                p = s.top();
-                path.push_back(p->val);
-                s.pop();
-                p = p->right;
-            }
-        }
-    }
-    ```
-    ```cpp
-    // 非递归后序遍历
-    void posOrderUnRecur(TreeNode* root) {
-        if (root == nullptr) {
-            return;
-        }
-        std::stack<TreeNode*> s1, s2;
-        s1.push(root);
-        while (!s1.empty()) {
-            TreeNode* root = s1.top();
-            s2.push(root);
-            s1.pop();
-            if (root->left != nullptr) {
-                s1.push(root->left);
-            }
-            if (root->right != nullptr) {
-                s1.push(root->right);
-            }
-        }
-        while (!s2.empty()) {
-            std::cout << s2.top()->value << ",";
-            s2.pop();
         }
     }
     ```
@@ -252,7 +180,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/minimum-depth-of-binary-tre
     ```cpp
     class Solution {
     public:
-        int minDepth(TreeNode* root) 
+        int minDepth(TreeNode* root)
         {
             if(root == nullptr)
             {
@@ -344,7 +272,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
     ```cpp
     class Solution {
     public:
-        bool isBalanced(TreeNode* root) 
+        bool isBalanced(TreeNode* root)
         {
             if (root == nullptr)
             {
@@ -382,25 +310,26 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
             {
                 return 0;
             }
-            dfs(root);
-            return maxValue_;
+            int max_value = INT_MIN;
+            dfs(root, max_value);
+            return max_value;
         }
 
-        int dfs(TreeNode* root)
+        int dfs(TreeNode* root, int& max_value)
         {
             if(root == nullptr)
             {
                 return 0;
             }
-            int leftMax = std::max(0,dfs(root->left));
-            int rightMax = std::max(0,dfs(root->right));
-            maxValue_ = std::max(maxValue_,root->val+leftMax+rightMax);
+            // 空节点的最大贡献值等于0
+            int leftMax = std::max(0, dfs(root->left, max_value));
+            int rightMax = std::max(0, dfs(root->right, max_value));
+            // 更新最大值
+            max_value = std::max(max_value, root->val+leftMax+rightMax);
+            cout<<"max_value: "<<max_value<<endl;
+            // 注意返回节点的最大贡献值
             return root->val + std::max(leftMax,rightMax);
         }
-
-    private:
-        const int kMinInt = INT_MIN;
-        int maxValue_ = kMinInt;
     };
     ```
 ---
@@ -411,17 +340,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
 linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a-binary-tree/ "二叉树的最近公共祖先")
 > 给定一个二叉树, 找到该树中两个指定节点的最近公共祖先
 - 思路一：递归版本**ADT**
-    left == null && right == null return null
-    left == null && right ！= null return right
-    right == null && left ！= null return left
-    right ！= null && left ！=null return root
+    - 通过递归子节点分别找到不同的4种情况
 
     ```cpp
     class Solution {
     public:
         TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q)
         {
-            if(root == NULL)
+            if(root == nullptr)
             {
                 return root;
             }
@@ -431,19 +357,19 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lowest-common-ancestor-of-a
             }
             TreeNode* left_son = lowestCommonAncestor(root->left,p,q);
             TreeNode* right_son = lowestCommonAncestor(root->right,p,q);
-            if(left_son == NULL && right_son == NULL)
+            if(left_son == nullptr && right_son == nullptr)
             {
-                return NULL;
+                return nullptr;
             }
-            if(left_son != NULL && right_son == NULL)
+            if(left_son != nullptr && right_son == nullptr)
             {
                 return left_son;
             }
-            if(left_son == NULL && right_son != NULL)
+            if(left_son == nullptr && right_son != nullptr)
             {
                 return right_son;
             }
-            if(left_son != NULL && right_son != NULL)
+            if(left_son != nullptr && right_son != nullptr)
             {
                 return root;
             }
@@ -472,7 +398,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
         vector<vector<int>> levelOrder(TreeNode* root) 
         {
             vector<vector<int>> level_lists;
-            if(root == NULL)
+            if(root == nullptr)
             {
                 return level_lists;
             }
@@ -489,8 +415,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
                     level_list.push_back(cur->val);
                     q.pop();
                     // 注意每一层的处理
-                    if(cur->left != NULL) q.push(cur->left);
-                    if(cur->right != NULL) q.push(cur->right);
+                    if(cur->left != nullptr) q.push(cur->left);
+                    if(cur->right != nullptr) q.push(cur->right);
                 }
                 level_lists.push_back(level_list);
             }
