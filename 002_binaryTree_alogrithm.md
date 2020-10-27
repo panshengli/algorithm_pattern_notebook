@@ -626,7 +626,7 @@ public:
     ```cpp
     class Solution {
     public:
-        TreeNode* insertIntoBST(TreeNode* root, int val) 
+        TreeNode* insertIntoBST(TreeNode* root, int val)
         {
             // 重点1：一定赋予临时变量， 直接操作root只返回插入后的三个值
             TreeNode* res = root;

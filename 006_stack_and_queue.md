@@ -59,6 +59,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/min-stack/ "最小栈")
   - vector删除最后一个元素可用pop_back();
   - stack删除最后一个元素用pop(),stack返回栈顶元素用top();
   ```cpp
+    class MinStack {
+    public:
+      /** initialize your data structure here. */
       MinStack() {
           num_.clear();
       }
@@ -72,7 +75,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/min-stack/ "最小栈")
       int top() {
           return num_.at(num_.size()-1);
       }
-      int getMin() 
+      int getMin()
       {
             int count = num_.size();
             int get_min = INT_MAX;
