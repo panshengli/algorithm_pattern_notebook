@@ -22,12 +22,12 @@
 - 二叉树遍历
   * <a href="#bt">1. [代码框架] binary-tree(相关题型#94，二叉树中序遍历)</a>
   * <a href="#midobt">2. minimum-depth-of-binary-tree(#111)</a>
-  * <a href="#mdobt">3. maximum-depth-of-binary-tree(#104)</a>
+  * <a href="#mdobt">3. maximum-depth-of-binary-tree(#104，相似的题型#101, #112)</a>
   * <a href="#bbt">4. balanced-binary-tree(#110)</a>
   * <a href="#btnps">5. binary-tree-maximum-path-sum(#124)</a>
   * <a href="#lcaoabt">6. lowest-common-ancestor-of-a-binary-tree(#236)</a>
 - BFS 层次应用
-  * <a href="#btlot">7. binary-tree-level-order-traversal(#102)[与3类似]</a>
+  * <a href="#btlot">7. binary-tree-level-order-traversal(#102)[与3类似,相关#116，#117, #297]</a>
   * <a href="#btlotii">8. binary-tree-level-order-traversal-ii(#107)[与7类似]</a>
   * <a href="#btzlot">9. binary-tree-zigzag-level-order-traversal(#103)[与8类似]</a>
 - 二叉搜索树应用
