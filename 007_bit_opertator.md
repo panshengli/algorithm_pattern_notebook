@@ -52,7 +52,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/single-number/ "只出现�
     ```cpp
     class Solution {
     public:
-        int singleNumber(vector<int>& nums) 
+        int singleNumber(vector<int>& nums)
         {
             int ans = nums[0];
             for(int i = 1; i<nums.size();i++)
@@ -68,20 +68,20 @@ linkage: [leetcode](https://leetcode-cn.com/problems/single-number/ "只出现�
     ```cpp
     class Solution {
     public:
-        int singleNumber(vector<int>& nums) 
+        int singleNumber(vector<int>& nums)
         {
             int result;
             std::unordered_map<int,int> counts;
+            // 重点：找出字典中count为1次的情况
+            std::unordered_map<int,int>::iterator itor = counts.begin();
             // 将vector存入字典，对应元素个数
             for(auto i: nums)
             {
                 counts[i]++;
             }
-            // 找出字典中count为1次的情况
-            std::unordered_map<int,int>::iterator itor = counts.begin();
             for(;itor != counts.end();itor++)
             {
-                std::cout<<"itor->first: "<<itor->first<< "  itor->second: "<<itor->second<<endl;
+                //　重点２: itor为指针
                 if(itor->second == 1)
                 {
                     result = itor->first;
@@ -132,7 +132,7 @@ public:
     int hammingWeight(uint32_t n) {
         return hammingWeight_2(n);
     }
-    //解法1: C++二进制容器
+    //解法1: C++二进制容器,效率最高
     int hammingWeight_1(uint32_t n) {
         std::bitset<32> b(n);
         return b.count();
@@ -174,7 +174,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/counting-bits/ "比特位�
   - 利用解法2，超出内存限制
   - 利用解法3，超出时间限制
 - 思路二：直接利用stl
-  - 利用题4解法1
+  - 利用题4解法1，不易想
     ```cpp
     class Solution {
     public:
@@ -191,13 +191,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/counting-bits/ "比特位�
     };
     ```
 - 思路三：奇偶数判别(**推荐**)
+  - 需要归纳总结
   - 所有的数字，只有两类：
   - 奇数：二进制中，奇数一定比前面那个偶数多一个1
   - 偶数：二进制，偶数中1的个数和除以2的那个数一样多
     ```cpp
     class Solution {
     public:
-        vector<int> countBits(int num) 
+        vector<int> countBits(int num)
         {
             // 初始化vector
             vector<int> result(num+1,0);
@@ -227,7 +228,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-bits/ "颠倒二进
     ```cpp
     class Solution {
     public:
-        uint32_t reverseBits(uint32_t n) 
+        uint32_t reverseBits(uint32_t n)
         {
             uint32_t results = 0;
             uint32_t bit = 31;
