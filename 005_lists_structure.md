@@ -47,12 +47,12 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
 ```cpp
 class Solution {
 public:
-    ListNode* deleteDuplicates(ListNode* head) 
+    ListNode* deleteDuplicates(ListNode* head)
     {
-        ListNode* _head = head;
+        ListNode* cur = head;
         if(head == nullptr)
         {
-            return _head;
+            return cur;
         }
         // 注意1：判断当前head->next是否为空，并非head为空
         while(head->next!=nullptr)
@@ -67,7 +67,7 @@ public:
                 head = head->next;
             }
         }
-        return _head;
+        return cur;
     }
 };
 ```
@@ -76,7 +76,8 @@ public:
     ```cpp
     class Solution {
     public:
-        ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* deleteDuplicates(ListNode* head)
+        {
             if(head == nullptr || head->next == nullptr)
             {
                 return head;
@@ -100,7 +101,8 @@ public:
     ```cpp
     class Solution {
     public:
-        ListNode* deleteDuplicates(ListNode* head) {
+        ListNode* deleteDuplicates(ListNode* head)
+        {
             if(head == nullptr || head->next == nullptr)
             {
                 return head;
@@ -113,13 +115,13 @@ public:
             }
             return head;
         }
-    }; 
+    };
     ```
 - 快慢指针
     ```cpp
     class Solution {
     public:
-        ListNode* deleteDuplicates(ListNode* head) 
+        ListNode* deleteDuplicates(ListNode* head)
         {
             ListNode* slow = head;
             ListNode* fast = head;
@@ -150,7 +152,7 @@ public:
 <div id="remove-duplicates-from-sorted-list-ii" onclick="window.location.hash">
 
 #### ​​2. remove-duplicates-from-sorted-list-ii​(#82)
-linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素")
+linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list-ii/ "删除排序链表中的重复元素 II")
 > 给定一个排序链表，**删除所有含有重复数字**的节点，只保留原始链表中 没有重复出现 的数字
 - 方式一： 迭代方法(注意元素去重以及边界条件处理)
     ```cpp
@@ -197,7 +199,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
     ```cpp
     class Solution {
     public:
-        ListNode* deleteDuplicates(ListNode* head) 
+        ListNode* deleteDuplicates(ListNode* head)
         {
             if(head == nullptr || head->next == nullptr)
             {
@@ -212,12 +214,13 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
                     next = next -> next;
                 }
                 // 因为要将重复的都删了，所以直接返回递归函数
-                return deleteDuplicates(next);
+                head = deleteDuplicates(next);
+                return head;
             }
             else
             {
                 //如果不重复就将当前节点指向递归函数
-                head->next = deleteDuplicates(head->next);
+                head->next = deleteDuplicates(next);
                 return head;
             }
         }
@@ -255,6 +258,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反�
                 cur->next = pre;
                 // 双指针移动
                 pre = cur;
+                //　二遍复习: 注意为什么不能cur = cur->next
                 cur = tmp_next;
             }
             return pre;
@@ -262,41 +266,44 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反�
     };
     ```
 - 思路二：递归方式
-- 使用递归函数，一直递归到链表的最后一个结点，该结点就是反转后的头结点，记作ret
-- 每次函数在返回的过程中，让当前结点的下一个结点的next指针指向当前节点
-- 同时让当前结点的next指针指向NULL，从而实现从链表尾部开始的局部反转
-- 当递归函数全部出栈后，链表反转完成
+  - 一直递归到链表的最后一个结点，记作ret
+  - 每次返回过程，让当前结点的下一个结点的next指针指向当前节点
+  - 让当前结点的next指针指向NULL，实现局部反转
+  - 当递归函数全部出栈后，链表反转完成
 ![alt text][image2]
-    ```cpp
-    class Solution {
-    public:
-        ListNode* reverseList(ListNode* head) 
+```cpp
+class Solution {
+public:
+    ListNode* reverseList(ListNode* head)
+    {
+        // 注意：head->next == nullptr要添加，为了使cur指向最后一个node->val
+        if(head == nullptr || head->next == nullptr)
         {
-            // 注意：head->next == nullptr要添加，为了使cur指向最后一个node->val
-            if(head == nullptr || head->next == nullptr)
-            {
-                return head;
-            }
-            // 注意：不要忘了此处定义的cur，作为链表的开头
-            ListNode* cur = reverseList(head->next);
-            head->next->next = head;
-            head->next = nullptr;
-            return cur;
+            return head;
         }
-    };
-    ```
+        // 注意：不要忘了此处定义的cur，作为链表的开头
+        ListNode* cur = reverseList(head->next);
+        // 二遍复习: 注意head的位置 
+        head->next->next = head;
+        head->next = nullptr;
+        return cur;
+    }
+};
+```
 ---
 
 <div id="rlli" onclick="window.location.hash">
 
 #### 4. ​​​reverse-linked-list​​​-ii(#92)
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "反转链表 II")
-> 反转从位置 m 到 n 的链表。请使用一趟扫描完成反转
+> 反转从位置m到n的链表。请使用一趟扫描完成反转
 - 方法一：迭代法-头插法
+  - 节点交换思路主要为渐进式的交换节点顺序
+  - [reference linkage](https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/tu-jie-die-dai-he-di-gui-jie-fa-chao-xiang-xi-by-s/)
     ```cpp
     class Solution {
     public:
-        ListNode* reverseBetween(ListNode* head, int m, int n) 
+        ListNode* reverseBetween(ListNode* head, int m, int n)
         {
             ListNode* dummy = new ListNode();
             dummy->next = head;
@@ -304,7 +311,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
             for(int i=1;i<m;i++)
             {
                 pre = pre->next;
-            }    
+            }
             head = pre->next;
             for(int i=m;i<n;i++)
             {
@@ -329,7 +336,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
     ```cpp
     class Solution {
     public:
-        ListNode* reverseBetween(ListNode* head, int m, int n) 
+        ListNode* reverseBetween(ListNode* head, int m, int n)
         {
             if(head == nullptr)
             {
@@ -364,25 +371,25 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
                 int tmp_val = right->val;
                 right->val = left_->val;
                 left_->val = tmp_val;
-                // 注意四：交换后左值向右移，右值通过traceback自动向前移动
+                // 注意四：交换后左值向右移，右值通过backtrace自动向前移动
                 left_ = left_->next;
             }
         }
 
     private:
         bool flag_ = false;
-        ListNode* left_;
+        ListNode* left_ = new ListNode();
     };
     ```
 
-- 方法三：递归法(反向传递法)
+- 方法三：递归法(反向传递法,推荐)
 - 该方法继承`​​​reverse-linked-list​​​`中迭代方法
 - [参考方法: 如何递归地反转链表的一部分](https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/bu-bu-chai-jie-ru-he-di-gui-di-fan-zhuan-lian-biao/ "步步拆解：如何递归地反转链表的一部分")
 - 本方法一定要注意**递归的出口**和**调用**及**返回值的连接**
     ```cpp
     class Solution {
     public:
-        ListNode* reverseBetween(ListNode* head, int m, int n) 
+        ListNode* reverseBetween(ListNode* head, int m, int n)
         {
             if(head == nullptr)
             {
@@ -397,25 +404,24 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list-ii/ "�
             head->next = reverseBetween(head->next,m-1,n-1);
             return head;
         }
-        
+
         ListNode* reverseN(ListNode* head, int n)
         {
+            //　二遍复习：注意successor变量的定义
+            static ListNode* successor = nullptr;
             if(n == 1)
             {
-                // 注意：pre_flag_需要指向最后节点的下一节点
-                pre_flag_ = head->next;
+                // 注意：successor_后驱节点
+                successor = head->next;
                 // 注意：一定要有递归的出口，即返回值
                 return head;
             }
             ListNode* last = reverseN(head->next,n-1);
             head->next->next = head;
             // 注意：反转之后的head节点和后面的节点连起来
-            head->next = pre_flag_;
+            head->next = successor;
             return last;
         }
-
-    private:
-        ListNode* pre_flag_ = nullptr;
     };
     ```
 ---
@@ -481,7 +487,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
     ```cpp
     class Solution {
     public:
-        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) 
+        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
         {
             // 终止条件：当两个链表都为空时，表示我们对链表已合并完成
             if(l1==nullptr)
@@ -509,19 +515,19 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
 
 #### 6. ​​partition-list​​​​(#86)
 linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链表")
-> 给定一个链表和一个特定值 x，对链表进行分隔，使得所有小于 x 的节点都在大于或等于 x 的节点之前。
+> 给定一个链表和一个特定值x，对链表进行分隔，使得所有小于x的节点都在大于或等于x的节点之前。
 - **思路：将大于等于x的节点，放到另外一个链表，最后连接这两个链表**
 - 独立写出，需要注意
   - **写出两个链表后连接时，不要忘了尾端链表指向为空**
     ```cpp
     class Solution {
     public:
-        ListNode* partition(ListNode* head, int x) 
+        ListNode* partition(ListNode* head, int x)
         {
             if (head == nullptr)
             {
                 return head;
-            }    
+            }
             ListNode* small_list = new ListNode();
             ListNode* large_list = new ListNode();
             ListNode* small_tmp = small_list;
@@ -542,7 +548,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
             }
             // 注意：一定要添加较大列表尾端指向为nullptr
             large_tmp->next = nullptr;
-            // 添加较小列表尾端指向较大列表的首部
+            // 添加较小列表尾端指向较大 列表 的首部
             small_tmp->next =large_list->next;
             return small_list->next;
         }
@@ -555,19 +561,17 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
 #### 7. ​sort-list(#148)
 linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
 > **O(nlogn)时间复杂度**和常数级空间复杂度，对链表排序
-- 只有 heapSort, mergeSort, quickSort
-- **时间复杂度想到二分法**，从而联想到归并排序
-- [参考思路：快慢指针+二路归并（C++）](https://leetcode-cn.com/problems/sort-list/solution/kuai-man-zhi-zhen-er-lu-gui-bing-c-by-jiangtianyu0/)
-- 主要思路（根据思路做出）：
-  - 利用**快慢指针**进行列表的**二分(迭代)**分割，调用**有序链表**两两合并
-  - **中点确认**：快指针走两步，慢指针走一步，遍历完时，慢指针指向中点
-  - 确认完中点后，**切开链表**，需要用一个变量**保存中点节点的前驱**
-  - 调用**有序链表**两两合并(**两路归并**),见`6. ​​partition-list`
-- 注意点：
-  - 调用两路归并算法时，不能用迭代方式，因为题目要求空间复杂度为常数级
+- 思路：只有 heapSort, mergeSort, quickSort
+  - **时间复杂度想到二分法**，从而联想到归并排序
+  - [参考思路：快慢指针+二路归并（C++）](https://leetcode-cn.com/problems/sort-list/solution/kuai-man-zhi-zhen-er-lu-gui-bing-c-by-jiangtianyu0/)
+  - 主要步骤：
+    - 利用**快慢指针**进行列表的**二分(迭代)**分割，调用**有序链表**两两合并
+    - **中点确认**：快指针走两步，慢指针走一步，遍历完时，慢指针指向中点
+    - 确认完中点后，**切开链表**，需要用一个变量**保存中点节点的前驱**
+    - 调用**有序链表**两两合并(**两路归并**),见`6. ​​partition-list`
+  - 注意点：
+    - 调用两路归并算法时，不能用迭代方式，因为题目要求空间复杂度为常数级
 - 思路一: 递归版本(**两路归并用递归，如果不要求空间复杂度情况下**)
-  - 执行用时：88 ms, 在所有 C++ 提交中击败了37.07% 的用户
-  - 内存消耗：31 MB, 在所有 C++ 提交中击败了6.29% 的用户
     ```cpp
     class Solution {
     public:
@@ -618,12 +622,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     };
     ```
 - 思路二：迭代版本（注意思路，特别时mergeTwoList中，ListNode的定义）
-  - 执行用时：100 ms, 在所有 C++ 提交中击败了23.40% 的用户
-  - 内存消耗：36.4 MB, 在所有 C++ 提交中击败了5.15% 的用户
     ```cpp
     class Solution {
     public:
-        ListNode* sortList(ListNode* head) 
+        ListNode* sortList(ListNode* head)
         {
             // 同上
         }
@@ -726,7 +728,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
     ```cpp
     class Solution {
     public:
-        void reorderList(ListNode* head) 
+        void reorderList(ListNode* head)
         {
             // 注意：需要加上判断head->next的判断情况，由于快慢指针的原因
             if(head == nullptr || head->next == nullptr)

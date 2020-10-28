@@ -258,7 +258,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/bitwise-and-of-numbers-rang
     ```cpp
     class Solution {
     public:
-        int rangeBitwiseAnd(int m, int n) 
+        int rangeBitwiseAnd(int m, int n)
         {
             // 找公共前缀
             int shift = 0;
