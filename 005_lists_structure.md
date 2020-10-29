@@ -25,6 +25,11 @@
 * <a href="#pll">11. ​palindrome-linked-list(#234)[3题，5题的强化应用]​​​​​</a>
 * <a href="#clwrp">12. ​copy-list-with-random-pointer​​​​​​(#138)[链表的插入，复制，拆分，**很棒的思路**]</a>
 
+### 扩展题型：
+- 链表的定义操作: #707.设计链表　[linkage](https://leetcode-cn.com/problems/design-linked-list/)
+- 双指针操作:
+  - #160.相交链表(比较巧妙地思路) [linkage](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
+  - #19.删除链表的倒数第N个节点(重点为思路) [linkage](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
 
 
 
@@ -805,6 +810,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
         {
             if(head == nullptr || head->next == nullptr)
             {
+                // 二遍复习: 不要返回head,和递归不同
                 return false;
             }
             // 注意：快慢指针如何声明
@@ -1013,17 +1019,101 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
                 return true;
             }
             // 注意：回文串的判断循环
-            for(int i = 0, j=values.size()-1;i<j;i++,j--)
-            {
-                if(values[i] != values[j])
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
+            for(int i = 0, j=vclass MyLinkedList {
+public:
+    // 定义链表节点结构体 
+    struct LinkedNode
+    {
+        int val;
+        LinkedNode* next;
+        LinkedNode(int val):val(val), next(nullptr){}
     };
-    ```
+
+    /** Initialize your data structure here. */
+    MyLinkedList()
+    {
+        size_ = 0;
+        dummy_head_ = new LinkedNode(0);
+    }
+    
+    /** Get the value of the index-th node in the linked list. If the index is invalid, return -1. */
+    int get(int index)
+    {
+        if(index >= size_ || index < 0)
+            return -1;
+        LinkedNode* cur = dummy_head_->next;
+        int res = -1;
+        for(int i = 0; i < size_; i++)
+        {
+            if(i == index)
+            {
+                res = cur->val;
+                break;
+            }
+            cur = cur->next;
+        }
+        return res;
+    }
+    
+    /** Add a node of value val before the first element of the linked list. After the insertion, the new node will be the first node of the linked list. */
+    void addAtHead(int val)
+    {
+        LinkedNode* head = new LinkedNode(val);
+        head->next = dummy_head_->next;
+        dummy_head_->next = head;
+        size_++;
+    }
+    
+    /** Append a node of value val to the last element of the linked list. */
+    void addAtTail(int val)
+    {
+        LinkedNode* tail = new LinkedNode(val);
+        LinkedNode* cur = dummy_head_;
+        while(cur->next != nullptr)
+        {
+            cur = cur->next;
+        }
+        cur->next = tail;
+        size_++;
+    }
+    
+    /** Add a node of value val before the index-th node in the linked list. If index equals to the length of linked list, the node will be appended to the end of linked list. If index is greater than the length, the node will not be inserted. */
+    void addAtIndex(int index, int val)
+    {
+        if(index > size_)
+            return;
+        LinkedNode* node = new LinkedNode(val);
+        LinkedNode* cur = dummy_head_;
+        while(index--)
+        {
+            cur = cur->next;
+        }
+        node->next = cur->next;
+        cur->next = node;
+        size_++;
+
+    }
+    
+    /** Delete the index-th node in the linked list, if the index is valid. */
+    void deleteAtIndex(int index)
+    {
+        if (index >= size_ || index < 0)
+            return;
+        LinkedNode* cur = dummy_head_;
+        while(index--)
+        {
+            cur = cur->next;
+        }
+        LinkedNode* del_node = cur->next;
+        cur->next = cur->next->next;
+        delete del_node;
+        size_--;
+    }
+
+private:
+    int size_;
+    LinkedNode* dummy_head_;
+};
 ---
 
 <div id="clwrp" onclick="window.location.hash">
