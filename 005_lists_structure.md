@@ -577,7 +577,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     public:
         ListNode* sortList(ListNode* head)
         {
-            // 注意if在recursion中的判断条件
+            // 注意if在recursion中的判断条件和快慢指针的条件
             if(head == nullptr || head->next == nullptr)
             {
                 return head;
@@ -730,7 +730,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
     public:
         void reorderList(ListNode* head)
         {
-            // 注意：需要加上判断head->next的判断情况，由于快慢指针的原因
+            // 二遍复习：需要加上判断head->next的判断情况，由于快慢指针的原因
             if(head == nullptr || head->next == nullptr)
             {
                 return;
@@ -738,10 +738,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
             // 快慢指针找中点
             ListNode* slow = head;
             ListNode* pre_slow = new ListNode();
+            pre_slow->next = slow;
             ListNode* fast = head;
-            // 合并指针临时变量
-            ListNode* reorder_list = head;
-            ListNode* cur = new ListNode();
 
             // 第一步：快慢指针找中点
             while(fast != nullptr && fast->next != nullptr)
@@ -755,6 +753,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
             // 第二步：翻转后面列表
             ListNode* reverse_list = reverseList(slow);
 
+            // 合并指针临时变量
+            ListNode* reorder_list = head;
+            ListNode* cur = new ListNode();
             // 第三步：合并列表
             while(head != nullptr)
             {
@@ -800,7 +801,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
     ```cpp
     class Solution {
     public:
-        bool hasCycle(ListNode *head) 
+        bool hasCycle(ListNode *head)
         {
             if(head == nullptr || head->next == nullptr)
             {
@@ -840,7 +841,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环�
     ```cpp
     class Solution {
     public:
-        ListNode *detectCycle(ListNode *head) 
+        ListNode *detectCycle(ListNode *head)
         {
             if(head == nullptr || head->next == nullptr)
             {
@@ -878,25 +879,24 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环�
     ```cpp
     class Solution {
     public:
-        ListNode *detectCycle(ListNode *head) 
+        ListNode *detectCycle(ListNode *head)
         {
             // 注意：此处if的判断条件，不能包含 || head->next == nullptr
             if(head == nullptr)
             {
                 return head;
             }
-            ListNode* cur = head;
             std::unordered_map<ListNode*,int> u_map;
-            while(cur != nullptr)
+            while(head != nullptr)
             {
                 // 如果map的索引大于1，则说明入环位置
-                if(u_map[cur]>1)
+                if(u_map[head]>1)
                 {
-                    return cur;
+                    return head;
                 }
                 // 不要忘了，向map里面添加键和值
-                u_map[cur]++;
-                cur = cur->next;
+                u_map[head]++;
+                head = head->next;
             }
             return nullptr;
         }
@@ -1077,7 +1077,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
     ```cpp
     class Solution {
     public:
-        Node* copyRandomList(Node* head) 
+        Node* copyRandomList(Node* head)
         {
             if(head == nullptr)
             {
