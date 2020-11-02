@@ -134,7 +134,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
     ```cpp
     class Solution {
     public:
-        void sortColors(vector<int>& nums) 
+        void sortColors(vector<int>& nums)
         {
             if(nums.size() == 0) return;
             int start = 0;
@@ -143,6 +143,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
         }
         void mergeSort(vector<int>& nums, int start, int end)
         {
+            // 二遍注意：(end - start) >> 1 要加括号！
             int mid = start + ((end - start) >> 1);
             if(end - start > 0)
             {
