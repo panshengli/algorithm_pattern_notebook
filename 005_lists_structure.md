@@ -34,6 +34,8 @@
 - 双指针操作:
   - #160.相交链表(比较巧妙地思路) [linkage](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
   - #19.删除链表的倒数第N个节点(重点为思路)[linkage](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
+- 用栈的方式处理双链表
+  - ＃430.扁平化多级双向链表 [linkage](https://leetcode-cn.com/problems/flatten-a-multilevel-doubly-linked-list/)
 
 
 
