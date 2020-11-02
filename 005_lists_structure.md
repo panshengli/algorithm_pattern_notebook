@@ -31,6 +31,7 @@
   - #203.移除链表 [linkage](https://leetcode-cn.com/problems/remove-linked-list-elements/)
   - #328.奇偶链表 [linkage](https://leetcode-cn.com/problems/odd-even-linked-list/)
   - #2.两数加和 [linkage](https://leetcode-cn.com/problems/add-two-numbers/submissions/)
+  - #61.旋转链表　[linkage](https://leetcode-cn.com/problems/rotate-list/submissions/)
 - 双指针操作:
   - #160.相交链表(比较巧妙地思路) [linkage](https://leetcode-cn.com/problems/intersection-of-two-linked-lists/)
   - #19.删除链表的倒数第N个节点(重点为思路)[linkage](https://leetcode-cn.com/problems/remove-nth-node-from-end-of-list/)
