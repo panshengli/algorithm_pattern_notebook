@@ -228,8 +228,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
                 //从两边向中间逼近
                 while(low < high && nums[high] >= pivotKey)
                 {
-                    high -- ;
+                    high --;
                 }
+                // 优化不必要的交换
                 nums[low] = nums[high];
                 while(low < high && nums[low] <= pivotKey)
                 {
@@ -237,7 +238,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
                 }
                 nums[high] = nums[low];
             }
-            // 重点：减少不必要的交换后要还原nums[low]
+            // 重点：跳出循环时low==high 此时low位置就是pivotKey元素的正确位置
             nums[low] = pivotKey;
             return low;
         }
@@ -247,7 +248,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
     ```cpp
     class Solution {
     public:
-        int findKthLargest(vector<int>& nums, int k) 
+        int findKthLargest(vector<int>& nums, int k)
         {
             int low = 0;
             int high = nums.size()-1;
@@ -257,7 +258,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
         // 采用最优的quickSort方式
         // 1. 两者中取最短，为了减少递归层数
         // 2. 尾递归方式
-        // 3. partition中利用三数取中
+        // 3. partition中利用三数取中:选取三个数排序，然后选取中间的数
         // 4. 利用值交换方式代替swap
         void quickSort(vector<int>& nums, int low, int high)
         {
@@ -357,7 +358,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
   - 三. 删除堆(大顶堆的根节点一定是最大值)
     - 1. 进行循环删除的过程
     - 2. 在删除将最后一个值赋值到第一个
-    - 3. 将heapSize大小减一
+    - 3. 将heapSize减一
     - 4. 将最大堆进行调整,调用步骤二
     ```cpp
     class Solution {
