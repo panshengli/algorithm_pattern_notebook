@@ -39,7 +39,45 @@
         return -1;
     }
     ```
+- 模板　#2 二分查找的高级模板
+  - 查找条件需要访问元素的直接右邻居
+  - 保证查找空间在每一步中至少有2个元素
+  - 需要进行后处理
+    ```cpp
+    int binarySearch(vector<int>& nums, int target)
+    {
+        if(nums.size() == 0)
+            return -1;
 
+        int left = 0;
+        int right = nums.size();
+        while(left < right)
+        {
+            // Prevent (left + right) overflow
+            int mid = left + (right - left) / 2;
+            // 终止条件
+            if(nums[mid] == target)
+                return mid;
+            else if(nums[mid] < target)
+            {
+                // 向右查找
+                left = mid + 1;
+            }
+            else
+            {
+                // 向左查找
+                right = mid;
+            }
+
+        }
+
+        // Post-processing:
+        // End Condition: left == right
+        if(left != nums.size() && nums[left] == target)
+            return left;
+        return -1;
+    }
+    ```
 ![binary_search_template][image1]
 - 这 3 个模板的不同之处在于：
   - 左、中、右索引的分配。
@@ -336,7 +374,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/first-bad-version/ "第一�
                 }
                 else
                 {
-                    end = mid-1;
+                    end = mid - 1;
                 }
             }
             return start;
@@ -486,7 +524,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/search-in-rotated-sorted-ar
                 if(nums[0] <= nums[mid])
                 {
                     // 如果target在前半部分有序部分，将end = mid
-                    if(target >= nums[0] && target <= nums[mid])
+                    if(target >= nums[start] && target <= nums[mid])
                         end = mid;
                     else
                         start = mid;
