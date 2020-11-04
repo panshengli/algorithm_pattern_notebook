@@ -14,6 +14,32 @@
   - 3、比较**中点和目标值**：A[mid] ==、 <、> target
   - 4、**临界条件判断**：A[start]、A[end] ? target
 - 三种模板,**注意判断循环退出条件**
+- 模板 #1 标准的二分查找模板
+  - 单个索引来确定的元素
+  - 不需要后处理
+    ```cpp
+    int binarySearch(vector<int>& nums, int target)
+    {
+        if(nums.size() == 0)
+            return -1;
+
+        int left = 0, right = nums.size() - 1;
+        while(left <= right)
+        {
+            // Prevent (left + right) overflow
+            int mid = left + (right - left) / 2;
+            if(nums[mid] == target)
+                return mid;
+            else if(nums[mid] < target)
+                left = mid + 1;
+            else
+                right = mid - 1;
+        }
+        // End Condition: left > right
+        return -1;
+    }
+    ```
+
 ![binary_search_template][image1]
 - 这 3 个模板的不同之处在于：
   - 左、中、右索引的分配。
@@ -36,7 +62,9 @@
 * <a href="#sirsaii">9. ​search-in-rotated-sorted-array-ii​(#81)[**利用二分法查找重复target**]</a>
 
 
-
+## 扩展题型
+  - 二分应用：
+    - #69.x的平方根(模板#1,#374与之相同) [linkage](https://leetcode-cn.com/problems/sqrtx/)
 
 
 
@@ -55,7 +83,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
     ```cpp
     class Solution {
     public:
-        int search(vector<int>& nums, int target) 
+        int search(vector<int>& nums, int target)
         {
             if(nums.size() == 0)
                 return -1;
@@ -71,7 +99,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
                 else if(nums.at(mid) > target)
                     end = mid;
                 else if(nums.at(mid) < target)
-                    // 也可以写start = mid
                     start = mid;
             }
             // 注意处理边界条件
@@ -81,42 +108,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
         }
     };
     ```
-
-    ```cpp
-    // 模板三：大部分场景模板#3 都能解决问题，而且还能找第一次/最后一次出现的位置，应用更加广泛
-    class Solution {
-    public:
-        int search(vector<int>& nums, int target) 
-        {
-            if(nums.size() == 0)
-                return -1;
-            // [左开右闭]初始化
-            int start = 0;
-            int end = nums.size();
-            // 循环条件退出
-            while(start + 1 < end)
-            {
-                int mid = start+(end-start)/2;
-                if(nums.at(mid) == target)
-                    return mid;
-                else if(nums.at(mid) > target)
-                    end = mid;
-                else if(nums.at(mid) < target)
-                    // 也可以写start = mid
-                    start = mid;
-            }
-            return -1;
-        }
-    };
-    ```
 - 思路二：STL库
   - 注意：stl库的用法
     ```cpp
     class Solution {
     public:
-        int search(vector<int>& nums, int target) 
+        int search(vector<int>& nums, int target)
         {
-            auto ans = std::lower_bound(nums.begin(), nums.end(),target);
+            auto ans = std::lower_bound(nums.begin(), nums.end(), target);
             // 注意：需要判断*ans和target的情况
             if(ans != nums.end() && *ans == target)
             {
@@ -132,7 +131,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
     ```cpp
     class Solution {
     public:
-        int search(vector<int>& nums, int target) 
+        int search(vector<int>& nums, int target)
         {
             if(nums.size() == 0)
                 return -1;
@@ -278,7 +277,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/search-a-2d-matrix/ "搜索
 ```cpp
 class Solution {
 public:
-    bool searchMatrix(vector<vector<int>>& matrix, int target) 
+    bool searchMatrix(vector<vector<int>>& matrix, int target)
     {
         if(matrix.size() == 0 || matrix[0].size() == 0)
         {
@@ -320,7 +319,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/first-bad-version/ "第一�
     ```cpp
     class Solution {
     public:
-        int firstBadVersion(int n) 
+        int firstBadVersion(int n)
         {
             if(n == 0)
             {
@@ -387,7 +386,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sor
 ```cpp
 class Solution {
 public:
-    int findMin(vector<int>& nums) 
+    int findMin(vector<int>& nums)
     {
         int start = 0;
         int end = nums.size()-1;

@@ -156,8 +156,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-colors/ "颜色分类"
         {
             int length = end - start + 1;
             int mid = start + ((end - start)>>1);
-            vector<int> tmp;
-            tmp.resize(length);
+            vector<int> tmp(length);
             int index = 0;
             int lhs = start;
             int rhs = mid +1;
@@ -242,8 +241,30 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
             nums[low] = pivotKey;
             return low;
         }
+
+        // 两种写法注意思路和顺序
+        int partition(vector<int>& nums, int start, int end)
+        {
+            int pivot_key = nums[end];
+            while(end-start>0)
+            {
+                while(start < end && nums[start] <= pivot_key)
+                {
+                    start++;
+                }
+                nums[end] = nums[start];
+                while(start < end && nums[end] >= pivot_key)
+                {
+                    end--;
+                }
+                nums[start] = nums[end];
+            }
+            nums[end] = pivot_key;
+            return end;
+        }
     };
     ```
+
 - 思路二： quickSort(优化版)
     ```cpp
     class Solution {
