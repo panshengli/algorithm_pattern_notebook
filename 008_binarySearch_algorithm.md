@@ -68,7 +68,6 @@
                 // 向左查找
                 right = mid;
             }
-
         }
 
         // Post-processing:
@@ -78,6 +77,36 @@
         return -1;
     }
     ```
+- 模板　#3 二分查找的另一种独特形式(不建议)
+  - 访问元素的直接左右邻居
+  - 保证每个步骤中至少有3个元素
+  - 需要进行后处理
+```cpp
+int binarySearch(vector<int>& nums, int target)
+{
+    if(nums.size() == 0)
+        return -1;
+
+    int left = 0, right = nums.size() - 1;
+    while (left + 1 < right)
+    {
+        // Prevent (left + right) overflow
+        int mid = left + (right - left) / 2;
+        if (nums[mid] == target)
+            return mid;
+        else if (nums[mid] < target)
+            left = mid;
+        else
+            right = mid;
+    }
+
+    // Post-processing:
+    // End Condition: left + 1 == right
+    if(nums[left] == target) return left;
+    if(nums[right] == target) return right;
+    return -1;
+}
+```
 ![binary_search_template][image1]
 - 这 3 个模板的不同之处在于：
   - 左、中、右索引的分配。
@@ -102,7 +131,10 @@
 
 ## 扩展题型
   - 二分应用：
-    - #69.x的平方根(模板#1,#374与之相同) [linkage](https://leetcode-cn.com/problems/sqrtx/)
+    - #69. x的平方根(模板#1,#374与之相同) [linkage](https://leetcode-cn.com/problems/sqrtx/)
+    - #162. 寻找峰值(模板#3) [linkage](https://leetcode-cn.com/problems/find-peak-element/submissions/)
+    - ＃34. 在排序数组中查找元素的第一个和最后一个位置(比较经典的二分查找应用) [linkage](https://leetcode-cn.com/problems/find-first-and-last-position-of-element-in-sorted-array/)
+    - #658. 找到K个最接近的元素(模板#2的应用,暴力求解超时) [linkage](https://leetcode-cn.com/problems/find-k-closest-elements/)
 
 
 
@@ -419,7 +451,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/find-minimum-in-rotated-sor
         }
     };
     ```
-- 思路二：左开右闭区间(**推荐**)
+- 思路二：左开右闭区间
   - 注意最后边界条件的处理
 ```cpp
 class Solution {
@@ -446,6 +478,7 @@ public:
         }
         if(nums[start] < nums[end])
             return nums[start];
+        // 注意返回的条件
         return nums[end];
     }
 };
