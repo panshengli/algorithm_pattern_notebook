@@ -162,6 +162,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-not
             std::stack<int> numbers;
             for(int i=0;i<tokens.size();i++)
             {
+                // 注意为""而非''
                 if(tokens.at(i) == "+" || tokens.at(i) == "-" 
                     || tokens.at(i) == "*" || tokens.at(i) == "/")
                 {
@@ -207,15 +208,16 @@ linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串�
     ```cpp
     class Solution {
     public:
-        string decodeString(string s) 
+        string decodeString(string s)
         {
             int num = 0;
             string str = "";
             std::stack<int> nums;
             std::stack<string> strs;
-            int s_len = s.length();
+            int s_len = s.size();
             for(int i = 0; i<s_len;i++)
             {
+                //　两位数数字
                 if(s[i]<='9'&&s[i]>='0')
                 {
                     num = 10 * num + (s[i]-'0');
@@ -224,6 +226,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串�
                 {
                     str = str + s[i];
                 }
+                // 将‘[’前的数字压入nums栈内， 字母字符串压入strs栈内
                 else if(s[i] == '[')
                 {
                     nums.push(num);
@@ -231,6 +234,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串�
                     strs.push(str);
                     str = "";
                 }
+                // 遇到‘]’时，操作与之相配的‘[’之间的字符，使用分配律
                 else
                 {
                     int repeat = nums.top();
@@ -241,8 +245,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/decode-string/ "字符串�
                     }
                     // 取出重复元素
                     str = strs.top();
-                    //之后若还是字母，就会直接加到res之后，因为它们是同一级的运算
-                    //若是左括号，res会被压入strs栈，作为上一层的运算
+                    // 之后若还是字母，就会直接加到res之后，因为它们是同一级的运算
+                    // 若是左括号，res会被压入strs栈，作为上一层的运算
                     strs.pop();
                 }
             }
@@ -357,40 +361,36 @@ public:
     {
         if(grid.size() == 0)
             return 0;
-        outer_size_ = grid.size();
-        inner_size_ = grid[0].size();
-        for(int i = 0; i<outer_size_;i++)
+        int outer_size = grid.size();
+        int inner_size = grid[0].size();
+        int res = 0;
+        for(int i = 0; i<outer_size;i++)
         {
-            for(int j =0;j<inner_size_;j++)
+            for(int j =0;j<inner_size;j++)
             {
                 if(grid[i][j] == '1')
                 {
-                    count_++;
-                    dfs(grid, i, j);
+                    res++;
+                    dfs(grid, i, j, outer_size, inner_size);
                 }
             }
         }
-        return count_;
+        return res;
     }
 
-    void dfs(vector<vector<char>>& grid, int i, int j)
+    void dfs(vector<vector<char>>& grid, int i, int j, int outer_size, int inner_size)
     {
-        if(i<0 || i>=outer_size_ || j<0 || j>=inner_size_)
+        if(i<0 || i>=outer_size || j<0 || j>=inner_size)
             return;
         if(grid[i][j] == '0')
             return;
         // 注意：不要忘了将遍历过的grid[i][j]赋值为'0'
         grid[i][j] = '0';
-        dfs(grid,i-1,j);
-        dfs(grid,i+1,j);
-        dfs(grid,i,j-1);
-        dfs(grid,i,j+1);
+        dfs(grid,i-1,j,outer_size,inner_size);
+        dfs(grid,i+1,j,outer_size,inner_size);
+        dfs(grid,i,j-1,outer_size,inner_size);
+        dfs(grid,i,j+1,outer_size,inner_size);
     }
-
-private:
-    int inner_size_;
-    int outer_size_;
-    int count_;
 };
 ```
 - 思路二：bfs
@@ -409,7 +409,7 @@ void bfs(vector<vector<char>>& grid, int i, int j)
             int lhs = cur_index.first;
             int rhs = cur_index.second;
             neighbor_index.pop();
-            if(lhs>=0 && lhs<outer_size_ && rhs>=0 && rhs<inner_size_ && grid[lhs][rhs] == '1')
+            if(lhs>=0 && lhs<outer_size && rhs>=0 && rhs<inner_size && grid[lhs][rhs] == '1')
             {
                 grid[lhs][rhs] = '0';
                 neighbor_index.push(std::make_pair(lhs-1,rhs));
@@ -479,7 +479,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/largest-rectangle-in-histog
     ```cpp
     class Solution {
     public:
-        int largestRectangleArea(vector<int>& heights) 
+        int largestRectangleArea(vector<int>& heights)
         {
             if(heights.size() == 0)
             {
