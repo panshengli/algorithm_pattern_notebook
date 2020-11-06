@@ -119,7 +119,7 @@ int binarySearch(vector<int>& nums, int target)
 
 ## 📑 index
 * <a href="#bs">1. binary-search(#704)[**典型示例，注意不同模板和递归的写法**]</a>
-* <a href="#sfr">2. ​search-for-range​(#61_lintcode)</a>
+* <a href="#sfr">2. ​search-for-range​(#61_lintcode,与#34_leetcode类似)</a>
 * <a href="#sip">3. ​search-insert-position​(#35)</a>
 * <a href="#sa2m">4. search-a-2d-matrix​​(#74)[重点查看矩阵的遍历]</a>
 * <a href="#fbv">5. ​first-bad-version​​​(#278)</a>
@@ -232,7 +232,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-search/ "二分查�
 <div id="sfr" onclick="window.location.hash">
 
 #### 2. ​search-for-range​(#61_lintcode)
-linkage: [leetcode](https://www.lintcode.com/problem/search-for-a-range/description "搜索区间
+linkage: [lintcode](https://www.lintcode.com/problem/search-for-a-range/description "搜索区间
 ")
 > n个整数**排序数组**，找出target起始和结束位置
 > 如不存在，返回[-1, -1]
