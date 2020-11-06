@@ -162,8 +162,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/evaluate-reverse-polish-not
             std::stack<int> numbers;
             for(int i=0;i<tokens.size();i++)
             {
-                // 注意为""而非''
-                if(tokens.at(i) == "+" || tokens.at(i) == "-" 
+                // 注意为"", 而非''
+                if(tokens.at(i) == "+" || tokens.at(i) == "-"
                     || tokens.at(i) == "*" || tokens.at(i) == "/")
                 {
                     int res;
