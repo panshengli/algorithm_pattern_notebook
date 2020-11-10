@@ -289,7 +289,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "高�
             {
                 return 0;
             }
-            return 1+std::max(heightTree(root->left),heightTree(root->right));
+            return 1 + std::max(heightTree(root->left),heightTree(root->right));
         }
     };
     ```
@@ -326,7 +326,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-maximum-path-su
             int rightMax = std::max(0, dfs(root->right, max_value));
             // 更新最大值
             max_value = std::max(max_value, root->val+leftMax+rightMax);
-            cout<<"max_value: "<<max_value<<endl;
             // 注意返回节点的最大贡献值
             return root->val + std::max(leftMax,rightMax);
         }
@@ -500,7 +499,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
     ```cpp
     class Solution {
     public:
-        bool isValidBST(TreeNode* root) 
+        bool isValidBST(TreeNode* root)
         {
             if (root == nullptr)
             {

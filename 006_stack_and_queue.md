@@ -10,7 +10,7 @@
     queue | -- | -- | front() | back() | push()<br>emplace() | pop() [删除头] | empty()
     deque | -- | -- | front() | back() | push_front()<br>push_back() | pop_front()<br>pop_back() | empty()
     priority_deque | -- | -- | top() | back() | push() | pop()[删除头] | empty()
-- Note: 
+- Note:
   - **定义：priority_queue<Type, Container, Functional>**
     ```cpp
     //升序队列
@@ -272,28 +272,24 @@ class Solution {
 public:
     Node* cloneGraph(Node* node)
     {
-        if(node == nullptr)
-        {
-            return node;
-        }
-        // 防止陷入死循环，遍历过直接返回
-        if(nodes_map_.find(node) != nodes_map_.end())
-        {
-            return nodes_map_[node];
-        }
-        // 不相等进行赋值
-        nodes_map_[node] = new Node(node->val);
-        // 开始处理neighbors节点
-        for(auto &i : node->neighbors)
-        {
-            // 开始处理neighbors节点
-            nodes_map_[node]->neighbors.push_back(cloneGraph(i));
-        }
-        return nodes_map_[node];
+        unordered_map<Node*, Node*> umap;
+        return dfs(node, umap);
     }
 
-private:
-    std::unordered_map<Node*, Node*> nodes_map_;
+    // 注意：umap一定为引用，由于递归更新
+    Node* dfs(Node* node, unordered_map<Node*, Node*> &umap)
+    {
+        if(node == nullptr)
+            return nullptr;
+        if(umap.find(node) != umap.end())
+            return umap[node];
+        umap[node] = new Node(node->val);
+        for(auto &x : node->neighbors)
+        {
+            umap[node]->neighbors.push_back(dfs(x, umap));
+        }
+        return umap[node];
+    }
 };
 ```
 - 思路二：bfs(queue)
@@ -562,7 +558,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/01-matrix/ "01矩阵")
     ```cpp
     class Solution {
     public:
-        vector<vector<int>> updateMatrix(vector<vector<int>>& matrix) 
+        vector<vector<int>> updateMatrix(vector<vector<int>>& matrix)
         {
             if(matrix.size() == 0)
             {
