@@ -9,7 +9,8 @@
 #### 1. strStr(#28)
 linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符串查找")
 > 给定一个字符串和一个目标字符串，在字符串中找出目标字符串出现的第一个位置(从0开始)，否则返回-1
-1. **Rabin-Karp Algorithm** instead of kmp
+- 思路一：Rabin-Karp算法
+  -  **Rabin-Karp Algorithm** instead of kmp
 
     ```cpp
     class Solution {
@@ -70,11 +71,32 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符�
         }
     };
     ```
-
-2. **暴力匹配**算法
- - 需要注意点
- - 循环时，i 不需要到 len-1
- - 如果找到目标字符串，len(needle)==j
+- 思路二：
+  - 利用substr
+    ```cpp
+    class Solution {
+    public:
+        int strStr(string haystack, string needle)
+        {
+            if(needle.size() == 0)
+                return 0;
+            int len = haystack.size() - needle.size();
+            string tar = "";
+            for(int i = 0; i <= len; i++)
+            {
+                tar = haystack.substr(i, needle.size());
+                if(tar == needle)
+                    return i;
+            }
+            return -1;
+        }
+    };
+    ```
+－ 思路三：暴力匹配
+  - **暴力匹配**算法
+   - 需要注意点
+   - 循环时，i 不需要到 len-1
+   - 如果找到目标字符串，len(needle)==j
   
     ```cpp
     class Solution {
@@ -82,7 +104,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符�
         int strStr(string haystack, string needle) {
             if(haystack.length() == 0 )
             {
-                if (needle.length() ==0)
+                if (needle.length() == 0)
                 {
                     return 0;
                 }
@@ -101,7 +123,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符�
                 for(j = 0; j<needle.length();++j)
                 {
                     // 二遍复习重点：注意此处和i+j比较
-                    if(haystack[i+j]!=needle[j])
+                    if(haystack[i+j] != needle[j])
                         break;
                 }
                 if(needle.length()==j)
