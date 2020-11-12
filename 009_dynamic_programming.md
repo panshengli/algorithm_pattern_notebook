@@ -597,59 +597,106 @@ public:
     - 2. 边界条件: (j-1)-(i+1)+1 < 2, 即 j-i < 3
     - 3. 初值：p[i][i] = true
     - 4. 最终答案: P(i,j)=true中记录起始位置，最后截取
-  ```cpp
-  class Solution {
-  public:
-      string longestPalindrome(string s) 
-      {
-          int len = s.size();
-          if(len < 2)
-          {
-              return s;
-          }
-          vector<vector<bool>> dp(len, vector<bool>(len,false));
-          // 注意初值的选取
-          int max_len = 1;
-          int begin = 0;
-          // 1. 初始化：填充对角线元素，一定是回文串
-          for(int i = 0; i < len; i++)
-          {
-              dp[i][i] = true;
-          }
-          // 填充左下角位置[i+1][j-1]
-          for(int j = 1; j < len; j++)
-          {
-              for(int i = 0; i < j; i++)
-              {
-                  if(s[i] != s[j])
-                  {
-                      dp[i][j] = false;
-                  }
-                  else
-                  {
-                      // 边界条件: 长度为0和1时 j-1-(i+1)+1 < 2
-                      if(j-i < 3)
-                      {
-                          dp[i][j] = true;
-                      }
-                      // 状态方程
-                      else
-                      {
-                          dp[i][j] = dp[i+1][j-1];
-                      }
-                  }
-                  // 输出条件
-                  if(dp[i][j] && j-i+1 > max_len)
-                  {
-                      max_len = j-i+1;
-                      begin = i;
-                  }
-              }
-          }
-          return s.substr(begin,max_len);
-      }
-  };
-  ```
+    ```cpp
+    class Solution {
+    public:
+        string longestPalindrome(string s)
+        {
+            int len = s.size();
+            if(len < 2)
+            {
+                return s;
+            }
+            vector<vector<bool>> dp(len, vector<bool>(len,false));
+            // 注意初值的选取
+            int max_len = 1;
+            int begin = 0;
+            // 1. 初始化：填充对角线元素，一定是回文串
+            for(int i = 0; i < len; i++)
+            {
+                dp[i][i] = true;
+            }
+            // 填充左下角位置[i+1][j-1]
+            for(int j = 1; j < len; j++)
+            {
+                for(int i = 0; i < j; i++)
+                {
+                    if(s[i] != s[j])
+                    {
+                        dp[i][j] = false;
+                    }
+                    else
+                    {
+                        // 边界条件: 长度为0和1时 j-1-(i+1)+1 < 2
+                        if(j-i < 3)
+                        {
+                            dp[i][j] = true;
+                        }
+                        // 状态方程
+                        else
+                        {
+                            dp[i][j] = dp[i+1][j-1];
+                        }
+                    }
+                    // 输出条件
+                    if(dp[i][j] && j-i+1 > max_len)
+                    {
+                        max_len = j-i+1;
+                        begin = i;
+                    }
+                }
+            }
+            return s.substr(begin,max_len);
+        }
+    };
+    ```
+- 思路三：中心扩展法
+  - 思路：
+    - 找数组索引左右两端；数组间隔左右两端的字符串是否相等
+    ```cpp
+    class Solution {
+    public:
+        string longestPalindrome(string s)
+        {
+            if(s == "" || s.size() < 2)
+            {
+                return s;
+            }
+            int len = s.size();
+            int max_len = 0;
+            int start_index = 0;
+            for(int i = 0; i < len; i++)
+            {
+                // 以ｉ的右边为间隔，向左右扩展
+                int len1 = expandCompare(s, i, i+1);
+                // 以ｉ为中心，向左右扩展
+                int len2 = expandCompare(s, i-1, i+1);
+                if(len1 > len2 && len1 > max_len)
+                {
+                    max_len = len1;
+                    start_index = i - (max_len >> 1) + 1;
+                }
+                if(len1 < len2 && len2 > max_len)
+                {
+                    max_len = len2;
+                    start_index = i - (max_len >> 1);
+                }
+            }
+
+            return s.substr(start_index, max_len);
+        }
+
+        int expandCompare(string& s, int start, int end)
+        {
+            while(start >=0 && end < s.size() && s[start] == s[end])
+            {
+                start--;
+                end ++;
+            }
+            return end - start - 1;
+        }
+    };
+    ```
 ---
 
 <div id="lis" onclick="window.location.hash">
@@ -662,7 +709,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/longest-increasing-subseque
   ```cpp
   class Solution {
   public:
-      int lengthOfLIS(vector<int>& nums) 
+      int lengthOfLIS(vector<int>& nums)
       {
           int len = nums.size();
           if(len < 2)
