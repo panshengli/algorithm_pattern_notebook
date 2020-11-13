@@ -19,8 +19,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符�
         {
             int needle_size = needle.length();
             int haystack_size = haystack.length();
-            if(haystack_size < needle_size || (haystack_size == 0 && needle_size != 0))
-                return -1;
             if(needle_size == 0)
                 return 0;
             // using Rabin-Karp algorithm
