@@ -278,7 +278,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/balanced-binary-tree/ "é«˜å
             {
                 return true;
             }
-            return std::abs(heightTree(root->left)-heightTree(root->right))<2
+            return std::abs(heightTree(root->left) - heightTree(root->right)) < 2
                 && isBalanced(root->left) && isBalanced(root->right);
         }
 
