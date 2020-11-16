@@ -394,7 +394,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
     ```cpp
     class Solution {
     public:
-        vector<vector<int>> levelOrder(TreeNode* root) 
+        vector<vector<int>> levelOrder(TreeNode* root)
         {
             vector<vector<int>> level_lists;
             if(root == nullptr)
