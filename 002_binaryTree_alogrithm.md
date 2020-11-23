@@ -180,33 +180,32 @@ linkage: [leetcode](https://leetcode-cn.com/problems/minimum-depth-of-binary-tre
     ```cpp
     class Solution {
     public:
-        int minDepth(TreeNode* root)
+        int minDepth(TreeNode* root) 
         {
             if(root == nullptr)
-            {
                 return 0;
-            }
-            queue<pair<TreeNode*,int>> q;
-            int depth = 1;
-            q.push(make_pair(root,1));
+            int level = 1;
+            queue<pair<TreeNode *, int>> q;
+            q.push(make_pair(root, level));
             while(!q.empty())
             {
-                TreeNode *node = q.front().first;
-                depth = q.front().second;
+                root = q.front().first;
+                level = q.front().second;
                 q.pop();
-                if (node->left == nullptr && node->right == nullptr) {
-                    return depth;
-                }
-                if(node->left != nullptr)
+                if(root->right == nullptr && root->left == nullptr)
                 {
-                    q.push(make_pair(node->left, depth + 1));
+                    return level;
                 }
-                if(node->right != nullptr)
+                if(root->left != nullptr)
                 {
-                    q.push(make_pair(node->right, depth + 1));
+                    q.push(make_pair(root->left, level+1));
+                }
+                if(root->right != nullptr)
+                {
+                    q.push(make_pair(root->right, level+1));
                 }
             }
-            return depth;
+            return level;
         }
     };
     ```
@@ -240,7 +239,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
         int maxDepth(TreeNode* root)
         {
             if(root == nullptr) return 0;
-            std::deque<TreeNode*> q;
+            queue<TreeNode*> q;
             q.push_back(root);
             int deep = 0;
             while(!q.empty())
@@ -252,7 +251,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/maximum-depth-of-binary-tre
                 for(int i = 0; i < num; i++)
                 {
                     TreeNode* p = q.front();
-                    q.pop_front();
+                    q.pop();
                     if(p->left) q.push_back(p->left);
                     if(p->right) q.push_back(p->right);
                 }
@@ -401,7 +400,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/binary-tree-level-order-tra
             {
                 return level_lists;
             }
-            std::queue<TreeNode*> q;
+            queue<TreeNode*> q;
             q.push(root);
             while(!q.empty())
             {
@@ -524,7 +523,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
                 inorder_lists_.push_back(root->val);
                 inOrderTraversal(root->right);
             }
-            
         }
 
     private:
@@ -542,9 +540,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
             }
             inOrderTravesal(root);
             int num = vector_paths_.size();
-            for(int i=0; i<num-1;i++)
+            for(int i = 0; i < num-1;i++)
             {
-                if(vector_paths_[i]>=vector_paths_[i+1])
+                if(vector_paths_[i] >= vector_paths_[i+1])
                 {
                     return false;
                 }
@@ -561,7 +559,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
                 root = s.top().first;
                 visited = s.top().second;
                 s.pop();
-                if(root==nullptr)
+                if(root == nullptr)
                 {
                     continue;
                 }
@@ -572,9 +570,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
                 }
                 else
                 {
-                    s.push(std::make_pair(root->right,false));
-                    s.push(std::make_pair(root,true));
-                    s.push(std::make_pair(root->left,false));
+                    s.push(std::make_pair(root->right, false));
+                    s.push(std::make_pair(root, true));
+                    s.push(std::make_pair(root->left, false));
                 }
             }
         }
@@ -713,7 +711,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/delete-node-in-a-bst/ "åˆ é
     ```cpp
     class Solution {
     public:
-        TreeNode* deleteNode(TreeNode* root, int key) 
+        TreeNode* deleteNode(TreeNode* root, int key)
         {
             if(root == nullptr)
             {
@@ -772,3 +770,4 @@ linkage: [leetcode](https://leetcode-cn.com/problems/delete-node-in-a-bst/ "åˆ é
         }
     };
     ```
+---

@@ -396,7 +396,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
                 swap(nums[0],nums[index]);
                 heap_size--;
                 // 重点：因为交换了nums[0],对顶堆0进行调整
-                maxHeap(nums,0,heap_size);
+                adjustMaxHeap(nums,0,heap_size);
             }
             return nums[0];
         }
@@ -406,11 +406,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
             for(int root_index = heap_size/2;root_index >= 0;root_index--)
             {
                 // 2. 调整堆
-                maxHeap(nums, root_index,heap_size);
+                adjustMaxHeap(nums, root_index,heap_size);
             }
         }
 
-        void maxHeap(vector<int>& nums, int root_index,int heap_size)
+        void adjustMaxHeap(vector<int>& nums, int root_index,int heap_size)
         {
             int largest_index = root_index;
             int left_index = root_index*2+1;
@@ -428,7 +428,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
             {
                 swap(nums[root_index],nums[largest_index]);
                 // 交换后largest_index为root的索引，进行largest_index递归
-                maxHeap(nums,largest_index,heap_size);
+                adjustMaxHeap(nums,largest_index,heap_size);
             }
         }
     };
@@ -526,11 +526,11 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
         for(int i = 0; i <= nums.size()-2 && flag;i++)
         {
             flag = false;
-            for(int j =nums.size()-1;j>i;j--)
+            for(int j = nums.size()-1;j>i;j--)
             {
-                if(nums[j-1]>nums[j])
+                if(nums[j-1] > nums[j])
                 {
-                    swap(nums[j-1],nums[j]);
+                    swap(nums[j-1], nums[j]);
                     // 如果后面每一个元素都大于前面，则部分有序，提高效率
                     flag = true;
                 }

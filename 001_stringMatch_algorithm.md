@@ -42,24 +42,24 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符�
             {
                 // abc+d    a*31^3 + b*31^2 + c*31^1 + d*31^0
                 hash_code = (hash_code*kHashNum+haystack[i])%kBase;
-                if(i<needle_size-1)
+                if(i < needle_size-1)
                 {
                     continue;
                 }
                 // abcd-a
-                if(i>=needle_size)
+                if(i >= needle_size)
                 {
                     // 注意此处的hashcode取法
                     hash_code = hash_code -(haystack[i-needle_size]*power)%kBase;
-                    if(hash_code<0)
+                    if(hash_code < 0)
                     {
-                        hash_code+=kBase;
+                        hash_code += kBase;
                     }
                 }
-                if(hash_code==target_code)
+                if(hash_code == target_code)
                 {
                     // double check hashcode
-                    if(haystack.substr(i-needle_size+1,needle_size)==needle)
+                    if(haystack.substr(i-needle_size+1,needle_size) == needle)
                     {
                         return i-needle_size+1;
                     }

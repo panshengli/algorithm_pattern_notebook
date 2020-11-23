@@ -67,7 +67,7 @@ public:
             return cur;
         }
         // 注意1：判断当前head->next是否为空，并非head为空
-        while(head->next!=nullptr)
+        while(head->next! = nullptr)
         {
             if(head->next->val == head->val)
             {

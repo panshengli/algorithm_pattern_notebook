@@ -145,7 +145,7 @@ public:
         {
             if(n%2 == 1)
                 count++;
-            n/=2;
+            n/=2;   // n>>=1;
         }
         return count;
     }
