@@ -182,14 +182,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
                 return fast;
             }
             // 注意二：一定要包含fast!= nullptr,需要考虑边界条件
-            while(fast != nullptr&&fast->next != NULL)
+            while(fast != nullptr && fast->next != NULL)
             {
                 // 注意三：找重复节点
                 if(fast->val == fast->next->val)
                 {
                     int tmp_node = fast->val;
                     // 注意四：一定要包含fast->next!= nullptr,需要考虑边界条件
-                    while(fast->next != nullptr &&fast->next->val ==tmp_node)
+                    while(fast->next != nullptr && fast->next->val ==tmp_node)
                     {
                         fast = fast->next;
                     }
