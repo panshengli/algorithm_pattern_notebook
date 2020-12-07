@@ -78,7 +78,7 @@
     }
     ```
 2. **更简单的非递归遍历二叉树**
-- 有重合元素的**局部有序**一定能导致**整体有序**
+- 有重合元素的**局部有序**一定能导致**整体有序**,一个局部的“根”结点是另外一个局部的“子”结点;
 - 将栈顶元素取出，使以此元素为“根”结点的局部有序入栈，但若此前已通过该结点将其局部入栈，则直接出栈输出即可。
     ```cpp
     // 非递归遍历
@@ -115,30 +115,6 @@
                 s.push(make_pair(root, true));
                 s.push(make_pair(root->right, false));
                 s.push(make_pair(root->left, false));
-            }
-        }
-    }
-    ```
-    ```cpp
-    // 非递归前序遍历简化
-    void preorderTraversal(TreeNode *root, vector<int> &path)
-    {
-        stack<TreeNode *> s;
-        s.push(root);
-        while(!s.empty())
-        {
-            root = s.top();
-            s.pop();
-            if(root == nullptr)
-            {
-                continue;
-            }
-            else
-            {
-                // 只剩下一个元素，因此从stack拿出来即可
-                path.push_back(root->val);
-                s.push(root->right);
-                s.push(root->left);
             }
         }
     }
@@ -627,7 +603,7 @@ public:
         {
             // 重点1：一定赋予临时变量， 直接操作root只返回插入后的三个值
             TreeNode* res = root;
-            if(root==nullptr)
+            if(root == nullptr)
             {
                 // 注意要new
                 return new TreeNode(val);

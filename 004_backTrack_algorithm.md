@@ -18,13 +18,13 @@
     // 通过不停的选择，撤销选择，来穷尽所有可能性，最后将满足条件的结果返回
     result = []
     func backtrack(选择列表,路径):
-    if (终止条件):
-        result.add(路径)
-        return
-    for 选择 in 选择列表:
-        做选择
-        backtrack(选择列表,路径)
-        撤销选择
+        if (终止条件):
+            result.add(路径)
+            return
+        for 选择 in 选择列表:
+            做选择
+            backtrack(选择列表,路径)
+            撤销选择
     ```
 ---
 
@@ -61,9 +61,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/subsets/ "查找集合所�
             backtrack(nums,res,tmp,0);
             return res;
         }
-        void backtrack(vector<int>& nums,vector<vector<int>>& res,vector<int> tmp,int index)
+        void backtrack(vector<int>& nums, vector<vector<int>>& res,vector<int> tmp,int index)
         {
-            res.push_back(tmp);//由于所有子集都要，所以不用判断返回条件
+            // 由于所有子集都要，所以不用判断返回条件
+            res.push_back(tmp);
             for(int i=index;i<nums.size();i++)
             {
                 // 做出选择

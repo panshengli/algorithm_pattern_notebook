@@ -93,38 +93,30 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-strstr/ "字符�
 － 思路三：暴力匹配
   - **暴力匹配**算法
    - 需要注意点
-   - 循环时，i 不需要到 len-1
-   - 如果找到目标字符串，len(needle)==j
-  
+   - 循环时，i 不需要到len-1
+   - 如果找到目标字符串，len(needle) == j
     ```cpp
     class Solution {
     public:
         int strStr(string haystack, string needle) {
-            if(haystack.length() == 0 )
-            {
-                if (needle.length() == 0)
-                {
-                    return 0;
-                }
-                else
-                {
-                    return -1;
-                }
-            }
-            else if(haystack.length()<needle.length())
+            if(haystack.length() < needle.length())
             {
                 return -1;
             }
-            for(size_t i = 0;i<= haystack.length()-needle.length();++i)
+            if(haystack.length() == 0 || needle.length() == 0)
             {
-                size_t j;
-                for(j = 0; j<needle.length();++j)
+                return 0;
+            }
+            for(int i = 0; i <= haystack.length() - needle.length(); ++i)
+            {
+                int j;
+                for(j = 0; j < needle.length(); ++j)
                 {
                     // 二遍复习重点：注意此处和i+j比较
                     if(haystack[i+j] != needle[j])
                         break;
                 }
-                if(needle.length()==j)
+                if(needle.length() == j)
                     return i;
             }
             return -1;

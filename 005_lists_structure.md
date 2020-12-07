@@ -61,11 +61,11 @@ class Solution {
 public:
     ListNode* deleteDuplicates(ListNode* head)
     {
-        ListNode* cur = head;
         if(head == nullptr)
         {
-            return cur;
+            return head;
         }
+        ListNode* cur = head;
         // 注意1：判断当前head->next是否为空，并非head为空
         while(head->next! = nullptr)
         {
@@ -83,7 +83,7 @@ public:
     }
 };
 ```
-- 递归版本一
+- 递归版本一　[推荐]
 - 有重先去重，头结点定位到重复元素最后一个
     ```cpp
     class Solution {
@@ -179,7 +179,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
             ListNode* slow = tmp;
             if(head == NULL)
             {
-                return fast;
+                return head;
             }
             // 注意二：一定要包含fast!= nullptr,需要考虑边界条件
             while(fast != nullptr && fast->next != NULL)
@@ -187,9 +187,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
                 // 注意三：找重复节点
                 if(fast->val == fast->next->val)
                 {
-                    int tmp_node = fast->val;
                     // 注意四：一定要包含fast->next!= nullptr,需要考虑边界条件
-                    while(fast->next != nullptr && fast->next->val ==tmp_node)
+                    while(fast->next != nullptr && fast->next->val ==fast->val)
                     {
                         fast = fast->next;
                     }
@@ -217,22 +216,20 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
             {
                 return head;
             }
-            // 注意：下一个元素
-            ListNode * next = head->next;
-            if(next->val == head->val)
+            if(head->next->val == head->val)
             {
-                while(next != nullptr && next->val == head->val)
+                while(head->next != nullptr && head->next->val == head->val)
                 {
-                    next = next -> next;
+                    head->next = head->next->next;
                 }
                 // 因为要将重复的都删了，所以直接返回递归函数
-                head = deleteDuplicates(next);
+                head = deleteDuplicates(head->next);
                 return head;
             }
             else
             {
                 //如果不重复就将当前节点指向递归函数
-                head->next = deleteDuplicates(next);
+                head->next = deleteDuplicates(head->next);
                 return head;
             }
         }
@@ -817,7 +814,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
         {
             if(head == nullptr || head->next == nullptr)
             {
-                // 二遍复习: 不要返回head,和递归不同
                 return false;
             }
             // 注意：快慢指针如何声明
