@@ -1,15 +1,15 @@
 ## Search Algorithm
 
 - 各种排序算法指标对比
-    排序方法 | 平均情况 | 最好情况 | 最坏情况 | 辅助空间 | 稳定性
-    :-: | :-: | :-: | :-: | :-: | :-:
-    冒泡排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定
-    简单选择排序 | O(n2) | O(n2) | O(n2) | O(1) | 稳定
-    直接插入排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定
-    希尔排序 | O(nlogn)~O(n2) | O(n1.3) | O(n2) | O(1) | 不稳定
-    **堆排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | **O(1)** | 不稳定
-    **归并排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | O(n) | **稳定**
-    **快速排序** | **O(nlogn)** | O(nlogn) | O(n2) | O(logn)~O(n) | 不稳定
+|排序方法 | 平均情况 | 最好情况 | 最坏情况 | 辅助空间 | 稳定性|
+|:-: | :-: | :-: | :-: | :-: | :-:|
+|简单选择排序 | O(n2) | O(n2) | O(n2) | O(1) | 稳定|
+|直接插入排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定|
+|希尔排序 | O(nlogn)~O(n2) | O(n1.3) | O(n2) | O(1) | 不稳定|
+|冒泡排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定|
+|**快速排序** | **O(nlogn)** | O(nlogn) | O(n2) | O(logn)~O(n) | 不稳定|
+|**归并排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | O(n) | **稳定**|
+|**堆排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | **O(1)** | 不稳定|
 - 稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面
 - 不稳定：如果a原本在b的前面，而a=b，排序之后a可能会在b的后面
 -   **归并排序与快排**：
@@ -27,13 +27,13 @@
   * <a href="#sc">4. [**很棒的数组mergeSort**] sort-colors(#75)</a>
   * <a href="#kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
   * <a href="#tkfe">6. [**数组heapSort**] top-k-frequent-elements(#347)</a>
-* <a href="#bubbleSort">7. [代码框架] bubbleSort</a>
-* <a href="#selectSort">8. [代码框架] selectSort</a>
-* <a href="#insertSort">9. [代码框架] insertSort</a>
-* <a href="#shellSort">10. [代码框架] shellSort</a>
-* <a href="#countSort">11. [代码思想] countSort</a>
-* <a href="#bucketSort">12. [代码思想] bucketSort</a>
-* <a href="#radixSort">13. [代码思想] radixSort</a>
+  * <a href="#bubbleSort">7. [代码框架] bubbleSort</a>
+  * <a href="#selectSort">8. [代码框架] selectSort</a>
+  * <a href="#insertSort">9. [代码框架] insertSort</a>
+  * <a href="#shellSort">10. [代码框架] shellSort</a>
+  * <a href="#countSort">11. [代码思想] countSort</a>
+  * <a href="#bucketSort">12. [代码思想] bucketSort</a>
+  * <a href="#radixSort">13. [代码思想] radixSort</a>
 
 
 
@@ -241,27 +241,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
             nums[low] = pivotKey;
             return low;
         }
-
-        // 两种写法注意思路和顺序
-        int partition(vector<int>& nums, int start, int end)
-        {
-            int pivot_key = nums[end];
-            while(end-start>0)
-            {
-                while(start < end && nums[start] <= pivot_key)
-                {
-                    start++;
-                }
-                nums[end] = nums[start];
-                while(start < end && nums[end] >= pivot_key)
-                {
-                    end--;
-                }
-                nums[start] = nums[end];
-            }
-            nums[end] = pivot_key;
-            return end;
-        }
     };
     ```
 
@@ -335,34 +314,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
     ```cpp
     sort(nums.begin(),nums.end());
     ```
-- 思路四： priority_queue
-  - 1. 本质就是二叉堆，可以使用优先队列priority_queue
-  - 2. 维护一个k大小的小顶堆，堆顶就是第k个最大的数
-  - 3. 注意思路和方法
-    ```cpp
-    class Solution {
-    public:
-        int findKthLargest(vector<int>& nums, int k)
-        {
-            // priority_queue<Type, Container, Functional>
-            priority_queue<int,vector<int>,greater<int>> pq;
-            for (auto n : nums)
-            {
-                if (pq.size() == k && pq.top() >= n)
-                    continue;
-                if (pq.size() == k)
-                {
-                    pq.pop();
-                }
-                pq.push(n);
-            }
-            return pq.top();
-        }
-    };
-    ```
 ---
 
-- 思路五： heapSort(**很棒的堆排序思路**)
+- 思路四： heapSort(**很棒的堆排序思路**)
   - 二叉堆
   - 根节点索引 root / 2;
   - 左子树索引 root * 2 + 1
@@ -391,7 +345,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
             buildHeap(nums,heap_size);
             // 3. 删除堆
             // 注意：1. index的>=，而非<= 2. for循环注意使用nums.size()，而非heap_size
-            for(int index = nums.size()-1; index >= nums.size()-k+1;index--)
+            for(int index = nums.size()-1; index >= nums.size()-k+1;　index--)
             {
                 swap(nums[0],nums[index]);
                 heap_size--;
@@ -441,17 +395,13 @@ linkage: [leetcode](https://leetcode-cn.com/problems/kth-largest-element-in-an-a
 linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "前K个高频元素")
 > 非空整数数组，返回其中出现频率前k高的元素
 - 时间复杂度必须优于O(nlogn)
-- 思路：heapSort实现(根据题4思路四实现)
-  - 利用map和priority_queue实现
-  - 1. 注意临时变量的生命
-  - 2. 注意push pair的次序，和pair的比较准则
+- 思路：hashmap
     ```cpp
     class Solution {
     public:
-        vector<int> topKFrequent(vector<int>& nums, int k)
+        vector<int> topKFrequent(vector<int>& nums, int k) 
         {
             // priority_queue<Type, Container, Functional>
-            priority_queue<std::pair<int,int>,vector<std::pair<int,int>>,greater<std::pair<int,int>>> pq;
             std::unordered_map<int,int> counter;
             std::vector<int> res;
             // 添加元素并计数
@@ -459,16 +409,15 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
             {
                 counter[x]++;
             }
+            vector<pair<int, int>> tmp;
             for (auto pair : counter)
             {
-                // pair的比较，先比较第一个元素，第一个相等比较第二个
-                pq.push(std::make_pair(pair.second, pair.first));
-                if (pq.size() > k) pq.pop();
+                tmp.push_back(make_pair(pair.second, pair.first));
             }
-            while(!pq.empty())
+            sort(tmp.begin(),tmp.end());
+            for(int i = 0; i < k; i++)
             {
-                res.push_back(pq.top().second);
-                pq.pop();
+                res.push_back(tmp[tmp.size()-1-i].second);
             }
             return res;
         }
