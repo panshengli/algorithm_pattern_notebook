@@ -24,6 +24,11 @@
 * <a href="#llcii">10. ​​​linked-list-cycle-ii(#142)[思路篇：9的加强应用(**推荐**)]​​​​</a>
 * <a href="#pll">11. ​palindrome-linked-list(#234)[3题，5题的强化应用]​​​​​</a>
 * <a href="#clwrp">12. ​copy-list-with-random-pointer​​​​​​(#138)[链表的插入，复制，拆分，**很棒的思路**]</a>
+* <a href="#lruc">13. lru-cache(#146)[双链表的插入, 删除, LRU 缓存机制]</a>
+
+
+
+
 
 ### 扩展题型：
 - 链表的操作:
@@ -1132,6 +1137,114 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
             }
             return copy_list;
         }
+    };
+    ```
+---
+
+<div id="lruc" onclick="window.location.hash">
+#### 13. ​lruc​(#146)
+linkage: [leetcode](https://leetcode-cn.com/problems/lru-cache/ "LRU缓存机制")
+> 设计和实现一个LRU(最近最少使用)缓存机制
+> O(1)时间复杂度
+
+- 思路一：双向链表＋map方式
+    ```cpp
+    struct DeLinkList
+    {
+        DeLinkList():val(0),key(0),pre(nullptr),next(nullptr){}
+        DeLinkList(int _key, int _val):val(_val),key(_key),pre(nullptr),next(nullptr){}
+        int val;
+        int key;
+        DeLinkList* pre;
+        DeLinkList* next;
+    };
+
+    class LRUCache {
+    public:
+        LRUCache(int capacity)
+        {
+            capacity_ = capacity;
+            size_ = 0;
+            head_ = new DeLinkList();
+            tail_ = new DeLinkList();
+            head_->next = tail_;
+            tail_->pre = head_;
+        }
+        
+        int get(int key)
+        {
+            if(umap_.find(key) != umap_.end())
+            {
+                DeLinkList* node = umap_[key];
+                moveToHead(node);
+                return node->val;
+            }
+            return -1;
+        }
+
+        void put(int key, int value)
+        {
+            // 如果找到，更新新值
+            if(umap_.find(key) != umap_.end())
+            {
+                DeLinkList* node = umap_[key];
+                node->val = value;
+                moveToHead(node);
+            }
+            else
+            {
+                // 判断容量是否达到
+                if(size_ == capacity_)
+                {
+                    DeLinkList* tail = removeTail();
+                    umap_.erase(tail->key);
+                    // 注意要释放指针
+                    delete tail;
+                    size_ --;
+                }
+                DeLinkList* node = new DeLinkList(key, value);
+                umap_[key] = node;
+                addToHead(node);
+                size_ ++;
+            }
+        }
+
+    private:
+        DeLinkList* removeTail()
+        {
+            DeLinkList* node = tail_->pre; 
+            untieNode(node);
+            return node;
+        }
+
+        void moveToHead(DeLinkList* node)
+        {
+            untieNode(node);
+            addToHead(node);
+        }
+
+        void untieNode(DeLinkList* node)
+        {
+            // 删除节点
+            node->pre->next = node->next;
+            node->next->pre = node->pre;
+        }
+
+        void addToHead(DeLinkList* node)
+        {
+            // 连接前后节点的双向链表
+            head_->next->pre = node;
+            node->next = head_->next;
+            head_->next = node;
+            node->pre = head_;
+        }
+
+
+        int size_;
+        int capacity_;
+        DeLinkList * head_;
+        DeLinkList * tail_;
+        unordered_map<int, DeLinkList*> umap_;
     };
     ```
 ---
