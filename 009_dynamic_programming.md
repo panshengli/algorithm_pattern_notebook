@@ -290,7 +290,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/climbing-stairs/ "爬楼梯
   ```cpp
   if(n == 1 || n ==2)
       return n;
-  return climbStairs(n-1) + climbStairs(n-2);cpp
+  return climbStairs(n-1) + climbStairs(n-2);
   ```
 - **扩展：字节跳动20秋招T1**
   - 添加一个条件：不允许两次连续爬两阶
