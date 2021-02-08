@@ -60,7 +60,7 @@
 #### 1. ​remove-duplicates-from-sorted-list​(#83)
 linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sorted-list/ "删除排序链表中的重复元素")
 > 给定一个**排序链表**，删除所有重复的元素，使得每个元素只出现一次
-- 迭代版本（直接法）
+- 迭代版本(直接法)
 ```cpp
 class Solution {
 public:
@@ -247,10 +247,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/remove-duplicates-from-sort
 #### 3. ​​​reverse-linked-list​​​(#206)
 linkage: [leetcode](https://leetcode-cn.com/problems/reverse-linked-list/ "反转一个单链表")
 > 反转一个单链表
-- 定义两个指针： preprepre 和 curcurcur ；preprepre 在前 curcurcur 在后
-- 每次让 preprepre 的 nextnextnext 指向 curcurcur ，实现一次局部反转
-- 局部反转完成之后， preprepre 和 curcurcur 同时往前移动一个位置
-- 循环上述过程，直至 preprepre 到达链表尾部
+- 定义两个指针： pre 和 cur , pre 在前 cur 在后
+- 每次让 pre 的 next 指向 cur ，实现一次局部反转
+- 局部反转完成之后， pre 和 cur 同时往前移动一个位置
+- 循环上述过程，直至 pre 到达链表尾部
 ![alt text][image1]
 - 思路一：迭代双指针方式
     ```cpp
@@ -455,12 +455,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
     public:
         ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
         {
-            if(l1 == nullptr)
-            {
+            if(l1 == nullptr) {
                 return l2;
             }
-            if(l2 == nullptr)
-            {
+            if(l2 == nullptr) {
                 return l1;
             }
             // 注意：声明临时变量，用于返回
@@ -468,28 +466,23 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
             // 注意：对merge_list进行操作
             ListNode* cur = merge_list;
             // 注意：当遍历完某一个链表时，退出循环
-            while(l1 != nullptr && l2 != nullptr)
-            {
-                if(l1->val <= l2->val)
-                {
+            while(l1 != nullptr && l2 != nullptr) {
+                if(l1->val <= l2->val) {
                     // 注意：cur指向l1，并非cur =l1
                     cur->next = l1;
                     l1 = l1->next;
                 }
-                else
-                {
+                else {
                     cur->next = l2;
                     l2 = l2->next;
                 }
                 cur = cur->next;
             }
             // cur指向剩余链表
-            if(l1 == nullptr)
-            {
+            if(l1 == nullptr) {
                 cur->next = l2;
             }
-            if(l2 == nullptr)
-            {
+            if(l2 == nullptr) {
                 cur->next = l1;
             }
             return merge_list->next;
@@ -501,22 +494,19 @@ linkage: [leetcode](https://leetcode-cn.com/problems/merge-two-sorted-lists/ "�
     ```cpp
     class Solution {
     public:
-        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2)
-        {
+        ListNode* mergeTwoLists(ListNode* l1, ListNode* l2) {
             // 终止条件：当两个链表都为空时，表示我们对链表已合并完成
             if(l1==nullptr)
                 return l2;
             if(l2==nullptr)
                 return l1;
-            if(l1->val <= l2->val)
-            {
+            if(l1->val <= l2->val) {
                 // 注意递归需要连接，
                 l1->next = mergeTwoLists(l1->next,l2);
                 // 注意：递归的结束后返回的结果
                 return l1;
-            }
-            else
-            {
+            } 
+            else {
                 l2->next = mergeTwoLists(l1,l2->next);
                 return l2;
             }
@@ -538,23 +528,19 @@ linkage: [leetcode](https://leetcode-cn.com/problems/partition-list/ "分隔链�
     public:
         ListNode* partition(ListNode* head, int x)
         {
-            if (head == nullptr)
-            {
+            if (head == nullptr) {
                 return head;
             }
             ListNode* small_list = new ListNode();
             ListNode* large_list = new ListNode();
             ListNode* small_tmp = small_list;
             ListNode* large_tmp = large_list;
-            while(head != nullptr)
-            {
-                if(head->val < x)
-                {
+            while(head != nullptr) {
+                if(head->val < x) {
                     small_tmp->next = head;
                     small_tmp = small_tmp->next;
                 }
-                else
-                {
+                else {
                     large_tmp->next = head;
                     large_tmp = large_tmp->next;
                 }
@@ -589,11 +575,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     ```cpp
     class Solution {
     public:
-        ListNode* sortList(ListNode* head)
-        {
+        ListNode* sortList(ListNode* head) {
             // 注意if在recursion中的判断条件和快慢指针的条件
-            if(head == nullptr || head->next == nullptr)
-            {
+            if(head == nullptr || head->next == nullptr) {
                 return head;
             }
             // 注意：快慢指针初始时指向同一起点
@@ -602,8 +586,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
             pre_slow->next = slow;
             ListNode* fast = head;
             // 注意：运行fast = fast->next->next之前，需要检查fast和fast->next不为空
-            while(fast != nullptr && fast->next != nullptr)
-            {
+            while(fast != nullptr && fast->next != nullptr) {
                 pre_slow = slow;
                 slow = slow->next;
                 fast = fast->next->next;
@@ -612,23 +595,18 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
             pre_slow->next = nullptr;
             return mergeTwoList(sortList(head),sortList(slow));
         }
-        ListNode* mergeTwoList(ListNode* l1, ListNode* l2)
-        {
-            if(l1 == nullptr)
-            {
+        ListNode* mergeTwoList(ListNode* l1, ListNode* l2) {
+            if(l1 == nullptr) {
                 return l2;
             }
-            if(l2 == nullptr)
-            {
+            if(l2 == nullptr) {
                 return l1;
             }
-            if(l1->val <= l2->val)
-            {
+            if(l1->val <= l2->val) {
                 l1->next = mergeTwoList(l1->next,l2);
                 return l1;
             }
-            else
-            {
+            else {
                 l2->next = mergeTwoList(l1,l2->next);
                 return l2;
             }
@@ -639,44 +617,35 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     ```cpp
     class Solution {
     public:
-        ListNode* sortList(ListNode* head)
-        {
+        ListNode* sortList(ListNode* head) {
             // 同上
         }
-        ListNode* mergeTwoList(ListNode* l1, ListNode* l2)
-        {
-            if(l1 == nullptr)
-            {
+        ListNode* mergeTwoList(ListNode* l1, ListNode* l2) {
+            if(l1 == nullptr) {
                 return l2;
             }
-            if(l2 == nullptr)
-            {
+            if(l2 == nullptr) {
                 return l1;
             }
             // 注意思路
             ListNode* merge_list = new ListNode();
             ListNode* cur_head = merge_list;
             // 处理列表排序
-            while(l1 != nullptr && l2 != nullptr)
-            {
-                if(l1->val <= l2->val)
-                {
+            while(l1 != nullptr && l2 != nullptr) {
+                if(l1->val <= l2->val) {
                     cur_head->next = l1;
                     l1 = l1->next;
                 }
-                else
-                {
+                else {
                     cur_head->next = l2;
                     l2 = l2->next;
                 }
                 cur_head = cur_head->next;
             }
-            if(l1 != nullptr)
-            {
+            if(l1 != nullptr) {
                 cur_head->next = l1;
             }
-            if(l2 != nullptr)
-            {
+            if(l2 != nullptr) {
                 cur_head->next = l2;
             }
             return merge_list->next;
@@ -688,22 +657,18 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
     ```cpp
     class Solution {
     public:
-        ListNode* sortList(ListNode* head)
-        {
+        ListNode* sortList(ListNode* head) {
             quickSort(head, nullptr);
             return head;
         }
-        ListNode* partition(ListNode* begin, ListNode* end)
-        {
+        ListNode* partition(ListNode* begin, ListNode* end) {
             // 1. 基准选为首元素，声明两个变量
             ListNode* slow = begin;
             ListNode* fast = begin->next;
             int privot = begin->val;
             // 2. 小于key，更新slow指向，slow与fast值交换，更新fast指向
-            while (fast != end)
-            {
-                if (fast->val < privot)
-                {
+            while (fast != end) {
+                if (fast->val < privot) {
                     // slow始终指向<=key
                     // slow->next始终>key或者为fast指向的节点
                     slow = slow->next;
@@ -717,8 +682,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/sort-list/ "排序链表")
             return slow;
         }
 
-        void quickSort(ListNode* begin, ListNode* end)
-        {
+        void quickSort(ListNode* begin, ListNode* end) {
             if (begin != end) {
                 ListNode* temp = partition(begin, end);
                 quickSort(begin, temp);
@@ -745,8 +709,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
         void reorderList(ListNode* head)
         {
             // 二遍复习：需要加上判断head->next的判断情况，由于快慢指针的原因
-            if(head == nullptr || head->next == nullptr)
-            {
+            if(head == nullptr || head->next == nullptr) {
                 return;
             }
             // 快慢指针找中点
@@ -756,8 +719,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
             ListNode* fast = head;
 
             // 第一步：快慢指针找中点
-            while(fast != nullptr && fast->next != nullptr)
-            {
+            while(fast != nullptr && fast->next != nullptr) {
                 pre_slow = slow;
                 slow = slow->next;
                 fast = fast->next->next;
@@ -771,8 +733,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
             ListNode* reorder_list = head;
             ListNode* cur = new ListNode();
             // 第三步：合并列表
-            while(head != nullptr)
-            {
+            while(head != nullptr) {
                 cur->next = head;
                 cur = cur->next;
                 head = head->next;
@@ -785,10 +746,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/reorder-list/ "重排链表
             head = reorder_list;
         }
 
-        ListNode* reverseList(ListNode* head)
-        {
-            if(head == nullptr || head->next == nullptr)
-            {
+        ListNode* reverseList(ListNode* head) {
+            if(head == nullptr || head->next == nullptr) {
                 return head;
             }
             // 注意：返回的变量结果
@@ -815,21 +774,17 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle/ "环形�
     ```cpp
     class Solution {
     public:
-        bool hasCycle(ListNode *head)
-        {
-            if(head == nullptr || head->next == nullptr)
-            {
+        bool hasCycle(ListNode *head) {
+            if(head == nullptr || head->next == nullptr) {
                 return false;
             }
             // 注意：快慢指针如何声明
             ListNode* fast = head;
             ListNode* slow = head;
-            while(fast != nullptr && fast->next != nullptr)
-            {
+            while(fast != nullptr && fast->next != nullptr) {
                 fast = fast->next->next;
                 slow = slow->next;
-                if(slow == fast)
-                {
+                if(slow == fast) {
                     return true;
                 }
             }
@@ -855,26 +810,21 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环�
     ```cpp
     class Solution {
     public:
-        ListNode *detectCycle(ListNode *head)
-        {
-            if(head == nullptr || head->next == nullptr)
-            {
+        ListNode *detectCycle(ListNode *head) {
+            if(head == nullptr || head->next == nullptr) {
                 return nullptr;
             }
             ListNode* slow = head;
             ListNode* fast = head;
             // 为了找到有环的index
             ListNode* tmp = head;
-            while(fast != nullptr && fast->next != nullptr)
-            {
+            while(fast != nullptr && fast->next != nullptr) {
                 slow = slow->next;
                 fast = fast->next->next;
                 // 判断是否有环
-                if(slow == fast)
-                {
+                if(slow == fast) {
                     // 一个指针从头开始，慢指针继续走，两指针相遇，则为入环起点
-                    while(tmp != slow)
-                    {
+                    while(tmp != slow) {
                         tmp = tmp->next;
                         slow = slow->next;
                     }
@@ -893,19 +843,15 @@ linkage: [leetcode](https://leetcode-cn.com/problems/linked-list-cycle-ii/ "环�
     ```cpp
     class Solution {
     public:
-        ListNode *detectCycle(ListNode *head)
-        {
+        ListNode *detectCycle(ListNode *head) {
             // 注意：此处if的判断条件，不能包含 || head->next == nullptr
-            if(head == nullptr)
-            {
+            if(head == nullptr) {
                 return head;
             }
             std::unordered_map<ListNode*,int> u_map;
-            while(head != nullptr)
-            {
+            while(head != nullptr) {
                 // 如果map的索引大于1，则说明入环位置
-                if(u_map[head]>1)
-                {
+                if(u_map[head]>1) {
                     return head;
                 }
                 // 不要忘了，向map里面添加键和值
@@ -930,18 +876,15 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
     ```cpp
     class Solution {
     public:
-        bool isPalindrome(ListNode* head)
-        {
-            if(head == nullptr || head->next == nullptr)
-            {
+        bool isPalindrome(ListNode* head) {
+            if(head == nullptr || head->next == nullptr) {
                 return true;
             }
             ListNode* fast = head;
             ListNode* slow = head;
             ListNode* pre_slow = new ListNode();
             // 1. 找链表中点
-            while(fast != nullptr && fast->next != nullptr)
-            {
+            while(fast != nullptr && fast->next != nullptr) {
                 pre_slow = slow;
                 slow = slow->next;
                 fast = fast->next->next;
@@ -950,10 +893,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
             // 2. 翻转后半部分链表
             ListNode* reverse_list = reverseListRecursion(slow);
             // 3. 比较两个链表是否相等
-            while(head != nullptr)
-            {
-                if(head->val != reverse_list->val)
-                {
+            while(head != nullptr) {
+                if(head->val != reverse_list->val) {
                     return false;
                 }
                 head = head->next;
@@ -962,10 +903,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
             return true;
         }
 
-        ListNode* reverseListRecursion(ListNode* head)
-        {
-            if(head == nullptr || head->next == nullptr)
-            {
+        ListNode* reverseListRecursion(ListNode* head) {
+            if(head == nullptr || head->next == nullptr) {
                 return head;
             }
             // 注意:递归填入的条件为head->next
@@ -975,17 +914,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
             return first_head;
         }
 
-        ListNode* reverseListTraversal(ListNode* head)
-        {
-            if(head == nullptr)
-            {
+        ListNode* reverseListTraversal(ListNode* head) {
+            if(head == nullptr) {
                 return head;
             }
             // 注意：非遍历方式
             ListNode* cur = head;
             ListNode* pre = nullptr;
-            while(cur != nullptr)
-            {
+            while(cur != nullptr) {
                 // 注意：一定要用临时变量操作前后指针
                 ListNode* tmp_next = cur->next;
                 cur->next = pre;
@@ -1005,32 +941,25 @@ linkage: [leetcode](https://leetcode-cn.com/problems/palindrome-linked-list/ "�
     ```cpp
     class Solution {
     public:
-        bool isPalindrome(ListNode* head)
-        {
-            if(head == nullptr)
-            {
+        bool isPalindrome(ListNode* head) {
+            if(head == nullptr) {
                 return true;
             }
             std::vector<int> vector_values;
-            while(head!= nullptr)
-            {
+            while(head!= nullptr) {
                 vector_values.push_back(head->val);
                 head = head->next;
             }
             return isPalindrome(vector_values);
         }
 
-        bool isPalindrome(std::vector<int>& values)
-        {
-            if(values.size()<2)
-            {
+        bool isPalindrome(std::vector<int>& values) {
+            if(values.size()<2) {
                 return true;
             }
             // 注意：回文串的判断循环
-            for(int i = 0, j = values.size()-1; i < j; i++,j--)
-            {
-                if(values[i] != values[j])
-                {
+            for(int i = 0, j = values.size()-1; i < j; i++,j--) {
+                if(values[i] != values[j]) {
                     return false;
                 }
             }
@@ -1051,17 +980,14 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
     ```cpp
     class Solution {
     public:
-        Node* copyRandomList(Node* head)
-        {
-            if(head == nullptr)
-            {
+        Node* copyRandomList(Node* head) {
+            if(head == nullptr) {
                 return head;
             }
             std::unordered_map<Node*,Node*> umap;
             Node* cur = head;
             // 1. 将value拷贝到新的链表中
-            while(cur != nullptr)
-            {
+            while(cur != nullptr) {
                 umap[cur] = new Node(cur->val);
                 // 此时不能将下面两行放在此处，这样会改变其指向，导致copy的链表终止复制
                 // umap[cur]->random = umap[cur->random];
@@ -1070,8 +996,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
             }
             // 2. 复制链表next和random指针
             cur = head;
-            while(cur != nullptr)
-            {
+            while(cur != nullptr) {
                 // 注意：后面指向copy的list,而不是指向cur->random
                 umap[cur]->random = umap[cur->random];
                 umap[cur]->next = umap[cur->next];
@@ -1091,16 +1016,13 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
     ```cpp
     class Solution {
     public:
-        Node* copyRandomList(Node* head)
-        {
-            if(head == nullptr)
-            {
+        Node* copyRandomList(Node* head) {
+            if(head == nullptr) {
                 return head;
             }
             // 1. 创建组合链表
             Node* cur = head;
-            while(cur != nullptr)
-            {
+            while(cur != nullptr) {
                 // 注意：此处链表复制的写法
                 Node* copy = new Node(cur->val);
                 copy->next = cur->next;
@@ -1109,10 +1031,8 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
             }
             // 2. 拷贝random节点
             cur = head;
-            while(cur != nullptr)
-            {
-                if(cur->random != nullptr)
-                {
+            while(cur != nullptr) {
+                if(cur->random != nullptr) {
                     // 注意：random节点拷贝的对应关系
                     cur->next->random = cur->random->next;
                 }
@@ -1122,12 +1042,10 @@ linkage: [leetcode](https://leetcode-cn.com/problems/copy-list-with-random-point
             cur = head;
             Node* copy_list = head->next;
             Node* copy_node = copy_list;
-            while(cur != nullptr)
-            {
+            while(cur != nullptr) {
                 cur->next = copy_node->next;
                 // 注意：一定要判断copy_node->next是否为空,或者cur->next != nullptr
-                if(copy_node->next != nullptr)
-                {
+                if(copy_node->next != nullptr) {
                     copy_node->next = copy_node->next->next;
                 }
                 // 注意：由于前面已经修改了指向，
@@ -1161,8 +1079,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lru-cache/ "LRU缓存机制
 
     class LRUCache {
     public:
-        LRUCache(int capacity)
-        {
+        LRUCache(int capacity) {
             capacity_ = capacity;
             size_ = 0;
             head_ = new DeLinkList();
@@ -1171,8 +1088,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lru-cache/ "LRU缓存机制
             tail_->pre = head_;
         }
         
-        int get(int key)
-        {
+        int get(int key) {
             if(umap_.find(key) != umap_.end())
             {
                 DeLinkList* node = umap_[key];
@@ -1182,8 +1098,7 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lru-cache/ "LRU缓存机制
             return -1;
         }
 
-        void put(int key, int value)
-        {
+        void put(int key, int value) {
             // 如果找到，更新新值
             if(umap_.find(key) != umap_.end())
             {
@@ -1210,35 +1125,30 @@ linkage: [leetcode](https://leetcode-cn.com/problems/lru-cache/ "LRU缓存机制
         }
 
     private:
-        DeLinkList* removeTail()
-        {
+        DeLinkList* removeTail() {
             DeLinkList* node = tail_->pre; 
             untieNode(node);
             return node;
         }
 
-        void moveToHead(DeLinkList* node)
-        {
+        void moveToHead(DeLinkList* node) {
             untieNode(node);
             addToHead(node);
         }
 
-        void untieNode(DeLinkList* node)
-        {
+        void untieNode(DeLinkList* node) {
             // 删除节点
             node->pre->next = node->next;
             node->next->pre = node->pre;
         }
 
-        void addToHead(DeLinkList* node)
-        {
+        void addToHead(DeLinkList* node) {
             // 连接前后节点的双向链表
             head_->next->pre = node;
             node->next = head_->next;
             head_->next = node;
             node->pre = head_;
         }
-
 
         int size_;
         int capacity_;
