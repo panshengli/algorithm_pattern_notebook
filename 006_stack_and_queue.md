@@ -518,29 +518,43 @@ linkage: [leetcode](https://leetcode-cn.com/problems/implement-queue-using-stack
   - 主要在于pop()的写法
   - 利用**两个临时stack进行存储，一个用于出栈，一个入栈**
     ```cpp
-    int pop()
-    {
-        int top;
-        std::stack<int> out;
-        while(!s_.empty())
-        {
-            top = s_.top();
-            s_.pop();
-            out.push(top);
+    public:
+        void push(int x) {
+            s_.push(x);
         }
-        if(!out.empty())
-        {
-            out.pop();
+        int pop() {
+            int top;
+            std::stack<int> out;
+            while(!s_.empty()) {
+                top = s_.top();
+                s_.pop();
+                out.push(top);
+            }
+            if(!out.empty()) {
+                out.pop();
+            }
+            while(!out.empty()) {
+                int top1 = out.top();
+                out.pop();
+                s_.push(top1);
+            }
+            return top;
         }
-        while(!out.empty())
-        {
-            int top1 = out.top();
-            out.pop();
-            s_.push(top1);
+        int peek() {
+            std::stack<int> tmp = s_;
+            int top;
+            while(!tmp.empty()) {
+                top = tmp.top();
+                tmp.pop();
+            }
+            return top;
         }
-        return top;
-    }
-    ```
+        
+        bool empty() {
+            return s_.empty();
+        }
+    private:
+        std::stack<int> s_;
 ---
 
 <div id="01-matrix" onclick="window.location.hash">

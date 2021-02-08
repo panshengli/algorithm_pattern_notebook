@@ -1,8 +1,9 @@
 ## Search Algorithm
 
 - 各种排序算法指标对比
+
 |排序方法 | 平均情况 | 最好情况 | 最坏情况 | 辅助空间 | 稳定性|
-|:-: | :-: | :-: | :-: | :-: | :-:|
+| :-: | :-: | :-: | :-: | :-: | :-: |
 |简单选择排序 | O(n2) | O(n2) | O(n2) | O(1) | 稳定|
 |直接插入排序 | O(n2) | O(n) | O(n2) | O(1) | 稳定|
 |希尔排序 | O(nlogn)~O(n2) | O(n1.3) | O(n2) | O(1) | 不稳定|
@@ -10,6 +11,7 @@
 |**快速排序** | **O(nlogn)** | O(nlogn) | O(n2) | O(logn)~O(n) | 不稳定|
 |**归并排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | O(n) | **稳定**|
 |**堆排序** | **O(nlogn)** | O(nlogn) | O(nlogn) | **O(1)** | 不稳定|
+
 - 稳定：如果a原本在b前面，而a=b，排序之后a仍然在b的前面
 - 不稳定：如果a原本在b的前面，而a=b，排序之后a可能会在b的后面
 -   **归并排序与快排**：
@@ -21,12 +23,12 @@
 
 ## 📑 index
 - mergeSort & quickSort and heapSort
-  * <a href="#mergeSort">1. [代码框架] mergeSort</a>
-  * <a href="#quickSort">2. [代码框架] quickSort</a>
   * <a href="./005_lists_structure.md">3. [003_lists_structure 5&7] merge-sort</a>
   * <a href="#sc">4. [**很棒的数组mergeSort**] sort-colors(#75)</a>
   * <a href="#kleiaa">5. [**数组quickSort**] kth-largest-element-in-an-array(#215)</a>
   * <a href="#tkfe">6. [**数组heapSort**] top-k-frequent-elements(#347)</a>
+  * <a href="#mergeSort">1. [代码框架] mergeSort</a>
+  * <a href="#quickSort">2. [代码框架] quickSort</a>
   * <a href="#bubbleSort">7. [代码框架] bubbleSort</a>
   * <a href="#selectSort">8. [代码框架] selectSort</a>
   * <a href="#insertSort">9. [代码框架] insertSort</a>
@@ -55,72 +57,6 @@
 
 
 
-
-
-<div id="mergeSort" onclick="window.location.hash">
-
-#### 1. [代码框架] mergeSort
-- 排序思想：
-  1. 将序列一分为二，对两边进行递归分割操作，得到独立子序列
-  2. 对独立子序列递归的执行合并操作，得到有序的序列,如下图
-![][image4]
-- python版本
-    ```python
-    def merge(left, right):
-        l = 0
-        r = 0
-        m = []
-        while l < len(left) and r < len(right):
-            if left[l] <= right[r]:
-                m.append(left[l])
-                l += 1
-            else:
-                m.append(right[r])
-                r += 1
-        remains = right[r:] if l == len(left) else left[l:]
-        m.extend(remains)
-        return m
-
-    def merge_sort(arr):
-        if len(arr) <= 1:
-            return arr
-        middle = len(arr) // 2
-        left = merge_sort(arr[:middle])
-        right = merge_sort(arr[middle:])
-        return merge(left, right)
-    ```
----
-
-<div id="quickSort" onclick="window.location.hash">
-
-#### 2. [代码框架] quickSort
-- 排序思想：
-  - 基于分治思想的不稳定排序(基准前后放在一边)
-  - 快速排序缺点：**对小规模数据性能不是很好**
-  - 快排是原地交换，无合并过程传入的索引是存在的索引（如：0、length-1等），**越界可能导致崩溃**,如下图
-![][image5]
-- python版本
-    ```python
-    def quick_sort(b):
-        """快速排序"""
-        if len(b) < 2:
-            return arr
-        # 选取基准，随便选哪个都可以，选中间的便于理解
-        pivot = arr[len(b) // 2]
-        # 定义基准值左右两个数列
-        left, right = [], []
-        # 从原始数组中移除基准值
-        b.remove(pivot)
-        for item in b:
-            # 大于基准值放右边
-            if item >= pivot:
-                right.append(item)
-            else:
-                # 小于基准值放左边
-                left.append(item)
-        # 使用迭代进行比较
-        return quick_sort(left) + [pivot] + quick_sort(right)
-    ```
 ---
 
 <div id="sc" onclick="window.location.hash">
@@ -607,3 +543,69 @@ linkage: [leetcode](https://leetcode-cn.com/problems/top-k-frequent-elements/ "�
   - 依次类推，直到最高位
   - 基数排序的性能比桶排序要略差，如下图
 ![][image11]
+
+<div id="mergeSort" onclick="window.location.hash">
+
+#### 1. [代码框架] mergeSort
+- 排序思想：
+  1. 将序列一分为二，对两边进行递归分割操作，得到独立子序列
+  2. 对独立子序列递归的执行合并操作，得到有序的序列,如下图
+![][image4]
+- python版本
+    ```python
+    def merge(left, right):
+        l = 0
+        r = 0
+        m = []
+        while l < len(left) and r < len(right):
+            if left[l] <= right[r]:
+                m.append(left[l])
+                l += 1
+            else:
+                m.append(right[r])
+                r += 1
+        remains = right[r:] if l == len(left) else left[l:]
+        m.extend(remains)
+        return m
+
+    def merge_sort(arr):
+        if len(arr) <= 1:
+            return arr
+        middle = len(arr) // 2
+        left = merge_sort(arr[:middle])
+        right = merge_sort(arr[middle:])
+        return merge(left, right)
+    ```
+---
+
+<div id="quickSort" onclick="window.location.hash">
+
+#### 2. [代码框架] quickSort
+- 排序思想：
+  - 基于分治思想的不稳定排序(基准前后放在一边)
+  - 快速排序缺点：**对小规模数据性能不是很好**
+  - 快排是原地交换，无合并过程传入的索引是存在的索引（如：0、length-1等），**越界可能导致崩溃**,如下图
+![][image5]
+- python版本
+    ```python
+    def quick_sort(b):
+        """快速排序"""
+        if len(b) < 2:
+            return arr
+        # 选取基准，随便选哪个都可以，选中间的便于理解
+        pivot = arr[len(b) // 2]
+        # 定义基准值左右两个数列
+        left, right = [], []
+        # 从原始数组中移除基准值
+        b.remove(pivot)
+        for item in b:
+            # 大于基准值放右边
+            if item >= pivot:
+                right.append(item)
+            else:
+                # 小于基准值放左边
+                left.append(item)
+        # 使用迭代进行比较
+        return quick_sort(left) + [pivot] + quick_sort(right)
+    ```
+---

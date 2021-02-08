@@ -482,9 +482,9 @@ linkage: [leetcode](https://leetcode-cn.com/problems/validate-binary-search-tree
             }
             inOrderTraversal(root);
             int inorder_num = inorder_lists_.size();
-            for(int i = 1; i<inorder_num;i++)
+            for(int i = 1; i < inorder_num; i++)
             {
-                if(inorder_lists_[i-1]>=inorder_lists_[i])
+                if(inorder_lists_[i-1] >= inorder_lists_[i])
                     return false;
             }
             return true;
@@ -649,40 +649,6 @@ linkage: [leetcode](https://leetcode-cn.com/problems/delete-node-in-a-bst/ "删�
 > 给定一个二叉搜索树的根节点root和一个值key，删除二叉搜索树中的key对应的节点
 > 返回根节点
 - 思路一：递归
-  - 方法：
-    - 删除节点分为两步， 1. 找到删除位置； 2. 分析不同情况
-    - 画图分析可知：
-      - 1. 当删除节点在叶子节点，代码：
-        ```cpp
-        root = nullptr
-        ```
-        ![][image2]
-      - 2. 当节点在后继successor上，找到其右子树对应的左节点,代码如下：
-        ```cpp
-        TreeNode* successorNode(TreeNode* root)
-        {
-            root = root->right;
-            while(root->left != nullptr)
-            {
-                root = root->left;
-            }
-            return root;
-        }
-        ```
-        ![][image3]
-      - 3. 节点在前驱predecessor上，找到其左子树对应的右节点
-        ```cpp
-        TreeNode* predecessorNode(TreeNode* root)
-        {
-            root = root->left;
-            while(root->right != nullptr)
-            {
-                root = root->right;
-            }
-            return root;
-        }
-        ```
-        ![][image4]
     - 最终利用递归，代码如下：
     ```cpp
     class Solution {
@@ -746,4 +712,38 @@ linkage: [leetcode](https://leetcode-cn.com/problems/delete-node-in-a-bst/ "删�
         }
     };
     ```
+  - 方法：
+    - 删除节点分为两步， 1. 找到删除位置； 2. 分析不同情况
+    - 画图分析可知：
+      - 1. 当删除节点在叶子节点，代码：
+        ```cpp
+        root = nullptr
+        ```
+        ![][image2]
+      - 2. 当节点在后继successor上，找到其右子树对应的左节点,代码如下：
+        ```cpp
+        TreeNode* successorNode(TreeNode* root)
+        {
+            root = root->right;
+            while(root->left != nullptr)
+            {
+                root = root->left;
+            }
+            return root;
+        }
+        ```
+        ![][image3]
+      - 3. 节点在前驱predecessor上，找到其左子树对应的右节点
+        ```cpp
+        TreeNode* predecessorNode(TreeNode* root)
+        {
+            root = root->left;
+            while(root->right != nullptr)
+            {
+                root = root->right;
+            }
+            return root;
+        }
+        ```
+        ![][image4]
 ---
